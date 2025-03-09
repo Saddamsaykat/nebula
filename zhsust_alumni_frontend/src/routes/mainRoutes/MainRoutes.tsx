@@ -1,0 +1,63 @@
+import { createBrowserRouter } from "react-router-dom";
+import Dashboard from "../../pages/dashboard/Dashboard";
+import Profile from "../../pages/dashboard/pages/Profile";
+import Home from "../../pages/home/Home";
+import Register from "../../pages/register/Register";
+import Login from "../../pages/login/Login";
+
+const MainRoutes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+    children: [
+      {
+        path: "/",
+        element: <div>Home</div>,
+      },
+      {
+        path: "about",
+        element: <div>About</div>,
+      },
+      {
+        path: "contact",
+        element: <div>Contact</div>,
+      },
+      {
+        path: "news",
+        element: <div>News</div>,
+      },
+      {
+        path: "/login",
+        element: <Register />,
+      },
+      {
+        path: "/events",
+        element: <Login />,
+      },
+      {
+        path: "events",
+        element: <div>Events</div>,
+      },
+      {
+        path: "donate",
+        element: <div>Donate</div>,
+      },
+      {
+        path: "*",
+        element: <div>Not Found</div>,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "/dashboard/profile",
+            element: <Profile />,
+          },
+        ],
+      },
+    ],
+  },
+]);
+
+export default MainRoutes;

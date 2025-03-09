@@ -1,0 +1,207 @@
+   const sideBarData = <>
+        {
+            <>
+
+                {/* <li>
+                    <Link to="/dashboard">
+                        <div>
+                            <div className="avatar">
+                                <div className="w-24 rounded-xl flex justify-center">
+                                    <img src={user?.photoURL} />
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                </li> */}
+
+
+                <li>
+                    <NavLink
+                        to="/dashboard/profile"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        My Profile
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to="/dashboard/addAPet"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        Add a pet
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to="/dashboard/myaddedpets"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        My added pets
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="/dashboard/adoption"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        Adoption Request
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="/dashboard/CreateDonationCampaign"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        Create Donation Campaign
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="/dashboard/MyDonationCampaigns"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        My Donation Campaigns
+
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
+                        to="/dashboard/myDonation"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        My Donations
+                    </NavLink>
+
+                </li>
+
+                <li>
+                    <NavLink
+                        to="/payment"
+                        className={({ isActive, isPending }) =>
+                            isPending ? "pending" : isActive ? "active" : ""
+                        }
+                    >
+
+                        Payment
+                    </NavLink>
+
+                </li>
+
+                        <div className=" divider divider-success"></div>
+
+                <div>
+
+                    <li>
+                        <NavLink
+                            to="/"
+                            className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? "active" : ""
+                            }
+                        >
+
+                            Home
+                        </NavLink>
+
+                    </li>
+
+                    <li>
+                        <NavLink
+                            to="/petListing"
+                            className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? "active" : ""
+                            }
+                        >
+
+                            Pet List
+                        </NavLink>
+
+                    </li>
+
+                    <li>
+                        <NavLink
+                            to="/campaigns"
+                            className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? "active" : ""
+                            }
+                        >
+
+                            Campagin
+                        </NavLink>
+
+                    </li>
+
+
+                </div>
+
+
+
+
+
+            </>
+        }
+
+        {/* {
+            data?.role === "Admin" && <>
+            <li>
+                <NavLink
+                    to="/dashboard/users"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                >
+
+                   All User
+                </NavLink>
+            </li>
+            <li>
+                <NavLink
+                    to="/dashboard/allPets"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                >
+
+                    All Pets
+                </NavLink>
+            </li>
+            <li>
+                <NavLink
+                    to="/dashboard/donation"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                >
+
+                    All Donation
+                </NavLink>
+            </li>
+
+          
+            </>
+
+        } */}
+
+    </>

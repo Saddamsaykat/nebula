@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Vanilla';
+    src: url('./assets/HeadlineBanglaRegularUnicode.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  body {
+    font-family: 'Vanilla', sans-serif;
+  }
+  
