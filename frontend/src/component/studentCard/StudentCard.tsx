@@ -1,7 +1,5 @@
 const StudentCard = ({ handleDelete, post }) => {
-
-    
-
+// console.log(post)
   return (
     <div>
       <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden border-black border-2 rounded-lg shadow-md dark:bg-gray-50 dark:text-gray-800">

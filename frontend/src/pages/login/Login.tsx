@@ -2,14 +2,19 @@ import StudentCard from "../../component/studentCard/StudentCard";
 import {
   useAddPostMutation,
   useDeletePostMutation,
+  useGetPostsQuery,
 } from "../../redux/slice/postDataSlice";
-import useBatchWiseStudents from "../../utils/getBatchWiseStudents";
 
 const Login = () => {
   const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
-const data = useBatchWiseStudents()
-const isData = [data]
-console.log(isData)
+  const { data } = useGetPostsQuery();
+
+  const mapData = data
+    ?.map((studentlist) => studentlist?.alumniStudentInfo)
+    .flat();
+  const filterData = mapData?.filter((student) => student.batch === "8"); // batch is a string
+  console.log(filterData);
+
   const [deletePost] = useDeletePostMutation();
 
   const handleDelete = async (deletedData) => {
@@ -62,11 +67,11 @@ console.log(isData)
         {isError && <p>Error adding post.</p>}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2">
-        {/* {data?.map((post) => (
+        {data?.map((post) => (
           <div key={post._id}>
-            <StudentCard post={post} handleDelete={handleDelete}/>
+            <StudentCard post={post} handleDelete={handleDelete} />
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );

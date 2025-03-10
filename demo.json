@@ -1,25 +1,35 @@
 [
-    {
-      "_id": "number",
-      "studentInfo": [
-        {
-          "batch": "number",
-          "department": [
-            {
-              "name": "string",
-              "students": [
-                {
-                  "name": "string",
-                  "contract": "number",
-                  "email": "string",
-                  "present_address": "string",
-                  "permanent_address": "string",
-                  "graduation_year": 2029
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+  {
+    "batch": 10,
+    "department": [
+      {
+        "cse": [
+          {
+            "name": "John Doe",
+            "major": "Computer Science",
+            "graduation_year": 2022
+          },
+          {
+            "name": "Alice Johnson",
+            "major": "Computer Science",
+            "graduation_year": 2021
+          }
+        ]
+      },
+      {
+        "eee": [
+          {
+            "name": "Jane Smith",
+            "major": "Electrical Engineering",
+            "graduation_year": 2020
+          },
+          {
+            "name": "Bob Brown",
+            "major": "Electrical Engineering",
+            "graduation_year": 2019
+          }
+        ]
+      }
+    ]
+  }
 ]

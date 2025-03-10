@@ -28,37 +28,32 @@ const Register = () => {
     const confirmPassword = event.target.confirmPassword.value;
     // graduation_year: new Date().getFullYear() + 4, // Example: 4-year course
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    const student = {
-      name: `${firstName} ${lastName}`,
-      contract: number,
-      email,
-      present_address: presentAddress,
-      permanent_address: permanentAddress,
-    };
-
-    // Construct the data structure
-    const studentInfo = [
+    // if (password !== confirmPassword) {
+    //   alert("Passwords do not match");
+    //   return;
+    // }
+    const dataDept =  selectedDepartment;
+    const dataBatch =  selectedBatch;
+    const alumniStudentInfo = [
       {
-        batch: selectedBatch,
+        batch: dataBatch,
         department: [
           {
-            name: selectedDepartment,
-            students: [student],
-          },
-        ],
-      },
+            [dataDept]: [
+              {
+                name: `${firstName} ${lastName}`,
+                email,
+                number,
+                presentAddress,
+                permanentAddress
+              }
+            ]
+          }
+        ]
+      }
     ];
-    
-
-    console.log(studentInfo);
-    await addPost({studentInfo}).unwrap();
+    await addPost({ alumniStudentInfo }).unwrap();
   };
-
   return (
     <form
       onSubmit={handleSubmit}
