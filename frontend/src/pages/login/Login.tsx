@@ -1,12 +1,15 @@
+import StudentCard from "../../component/studentCard/StudentCard";
 import {
   useAddPostMutation,
   useDeletePostMutation,
-  useGetPostsQuery,
 } from "../../redux/slice/postDataSlice";
+import useBatchWiseStudents from "../../utils/getBatchWiseStudents";
 
 const Login = () => {
   const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
-  const { data } = useGetPostsQuery();
+const data = useBatchWiseStudents()
+const isData = [data]
+console.log(isData)
   const [deletePost] = useDeletePostMutation();
 
   const handleDelete = async (deletedData) => {
@@ -17,7 +20,6 @@ const Login = () => {
       console.log(error);
     }
   };
-  console.log(data);
 
   const handleSubmitted = async (e) => {
     e.preventDefault();
@@ -59,23 +61,12 @@ const Login = () => {
         {isSuccess && <p>Post added successfully!</p>}
         {isError && <p>Error adding post.</p>}
       </div>
-      <div>
-        {data?.map((post) => (
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2">
+        {/* {data?.map((post) => (
           <div key={post._id}>
-            <h3>{post.email}</h3>
-            <p>{post.password}</p>
-            <button
-              className="cursor-pointer"
-              onClick={() => {
-                handleDelete(post?._id);
-                console.log(post?._id);
-              }}
-            >
-              Delete
-            </button>
-            <hr />
+            <StudentCard post={post} handleDelete={handleDelete}/>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

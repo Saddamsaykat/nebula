@@ -1,155 +1,70 @@
 import { useState } from "react";
 import BatchUtils from "../../utils/BatchUtils";
 import Department from "../../component/registerComponent/Department";
+import PersonalInformation from "../../component/registerComponent/PersonalInformation";
+import { useAddPostMutation } from "../../redux/slice/postDataSlice";
 
 const Register = () => {
+  const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
   const [selectedBatch, setSelectedBatch] = useState("");
-  console.log(selectedBatch);
-
   const handleChangeBatch = (event) => {
     setSelectedBatch(event.target.value);
   };
-
   const [selectedDepartment, setSelectedDepartment] = useState("");
 
   const handleChangeDepartment = (event) => {
     setSelectedDepartment(event.target.value);
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const firstName = event.target.firstName.value;
+    const lastName = event.target.lastName.value;
+    const email = event.target.email.value;
+    const number = event.target.number.value;
+    const presentAddress = event.target.presentAddress.value;
+    const permanentAddress = event.target.permanentAddress.value;
+    const password = event.target.password.value;
+    const confirmPassword = event.target.confirmPassword.value;
+    // graduation_year: new Date().getFullYear() + 4, // Example: 4-year course
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const student = {
+      name: `${firstName} ${lastName}`,
+      contract: number,
+      email,
+      present_address: presentAddress,
+      permanent_address: permanentAddress,
+    };
+
+    // Construct the data structure
+    const studentInfo = [
+      {
+        batch: selectedBatch,
+        department: [
+          {
+            name: selectedDepartment,
+            students: [student],
+          },
+        ],
+      },
+    ];
+    
+
+    console.log(studentInfo);
+    await addPost({studentInfo}).unwrap();
+  };
+
   return (
-    <form className="flex justify-center gap-1.5 mt-2.5">
-      <div className="p-4 max-w-[720px] rounded-md shadow-sm dark:bg-gray-50">
-        {/* First Name, Last Name */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-          <div>
-            <label
-              htmlFor="firstName"
-              className="text-sm lg:text-xl md:text-xl"
-            >
-              First Name
-            </label>
-            <input
-              id="firstName"
-              type="text"
-              placeholder="First Name"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-                 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName" className="text-sm lg:text-xl md:text-xl">
-              Last Name
-            </label>
-            <input
-              id="lastName"
-              type="text"
-              placeholder="Last Name"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-                 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
-            />
-          </div>
-        </div>
-
-        {/* Email */}
-        <div className="col-span-full sm:col-span-3">
-          <label htmlFor="email" className="text-sm">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="Email"
-            className="w-full rounded-md focus:ring focus:ring-opacity-75
-                 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
-          />
-        </div>
-        {/* Number */}
-        <div className="col-span-full sm:col-span-3">
-          <label htmlFor="number" className="text-sm">
-            Contact Number
-          </label>
-          <input
-            id="number"
-            type="number"
-            placeholder="Contact Number"
-            className="w-full rounded-md focus:ring focus:ring-opacity-75
-                 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl resize-none
-             appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-moz-number-spin-box]:appearance-none
-                 "
-          />
-        </div>
-
-        {/* Password */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-          <div>
-            <label htmlFor="password" className="text-sm">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-                 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
-            />
-          </div>
-          <div>
-            <label htmlFor="confirmPassword" className="text-sm">
-              Confirm Password
-            </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirm Password"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-                 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
-            />
-          </div>
-        </div>
-
-        {/* Address */}
-
-        <div className="grid grid-cols-2 gap-2">
-          <div className="">
-            <label htmlFor="address" className="text-sm">
-              Present Address
-            </label>
-            <textarea
-              id="address"
-              placeholder="Address"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-              dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 p-1 border-amber-300 text-xl resize-none"
-              required
-            />
-          </div>
-          <div className="">
-            <label htmlFor="address" className="text-sm">
-              Permanent Address
-            </label>
-            <textarea
-              required
-              id="address"
-              placeholder="Address"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-              dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl resize-none"
-            />
-          </div>
-        </div>
-
-        <div className="col-span-full sm:col-span-2">
-          <label htmlFor="city" className="text-sm">
-            City
-          </label>
-          <input
-            id="city"
-            type="text"
-            placeholder=""
-            className="w-full rounded-md focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300"
-          />
-        </div>
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      className="flex justify-center gap-1.5 mt-2.5"
+    >
+      <PersonalInformation />
 
       {/* </fieldset> */}
 
@@ -170,7 +85,11 @@ const Register = () => {
             />
           </div>
         </div>
+        <button type="submit">Submit</button>
       </div>
+      {isLoading && <p>Loading...</p>}
+      {isSuccess && <p>Post added successfully!</p>}
+      {isError && <p>Error adding post.</p>}
     </form>
   );
 };

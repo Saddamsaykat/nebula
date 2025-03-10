@@ -1,0 +1,25 @@
+[
+    {
+      "_id": "number",
+      "studentInfo": [
+        {
+          "batch": "number",
+          "department": [
+            {
+              "name": "string",
+              "students": [
+                {
+                  "name": "string",
+                  "contract": "number",
+                  "email": "string",
+                  "present_address": "string",
+                  "permanent_address": "string",
+                  "graduation_year": 2029
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+]
