@@ -7,6 +7,7 @@ import {
   useGetPostsQuery,
 } from "../../redux/slice/postDataSlice";
 import { useLocation } from "react-router-dom";
+import Chatbot from "../../component/chatBot/Chatbot";
 
 interface Student {
   name: string;
@@ -144,6 +145,7 @@ const Register: React.FC = () => {
         </div>
         <button type="submit">Submit</button>
       </div>
+      <Chatbot/>
       {isLoading && <p>Loading...</p>}
       {isSuccess && <p>Post added successfully!</p>}
       {isError && <p>Error adding post.</p>}

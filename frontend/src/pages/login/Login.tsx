@@ -1,3 +1,4 @@
+import Chatbot from "../../component/chatBot/Chatbot";
 import StudentCard from "../../component/studentCard/StudentCard";
 import {
   useAddPostMutation,
@@ -73,6 +74,7 @@ const Login = () => {
           </div>
         ))}
       </div>
+      <Chatbot/>
     </div>
   );
 };

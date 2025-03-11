@@ -10,6 +10,7 @@ const port = process.env.port || 5000;
 app.use(cors());
 app.use(express.json());
 
+
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri =`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jceqwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 // const uri ='mongodb+srv://zhsust_db:2eMJpLZHKFUiARxd@cluster0.62tdp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
@@ -87,11 +88,6 @@ async function run() {
   }
 });
 
-
-
-
-
-
     app.get("/getPosts", async (req, res) => {
       const result = await postsCollection.find().toArray();
       console.log(result);
@@ -146,6 +142,44 @@ async function run() {
         res.status(500).json({ error: "Server error" });
       }
     });
+
+
+    // Ai Chat bot
+
+    app.post("/api/chat", async (req, res) => {
+      const { message } = req.body;
+    
+      try {
+        const response = await axios.post(
+          "https://api.openai.com/v1/chat/completions",
+          {
+            model: "gpt-3.5-turbo", // or use another model like gpt-4
+            messages: [{ role: "user", content: message }],
+          },
+          {
+            headers: {
+              "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+    
+        const reply = response.data.choices[0].message.content;
+        res.json({ reply });
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Error fetching AI response" });
+      }
+    });
+    // Simulate an AI response (use an actual AI API like OpenAI or a custom bot for real answers)
+    async function getChatbotReply(message) {
+      if (message.toLowerCase().includes("university")) {
+        return "Z. H. Sikder University of Science & Technology is a prestigious institution!";
+      }
+      return "I'm sorry, I didn't quite understand that. Could you please rephrase?";
+    }
+
+
 
     console.log("Connected to MongoDB");
     await client.db("admin").command({
