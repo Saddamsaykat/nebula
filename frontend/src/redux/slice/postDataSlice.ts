@@ -1,36 +1,54 @@
-import { baseUrl } from './../../api/baseUrl';
+export interface Department {
+  CSE: Student[];
+}
+
+export interface Student {
+  name: string;
+  email: string;
+  number: string;
+  presentAddress: string;
+  permanentAddress: string;
+}
+
+export interface Post {
+  _id: string;
+  batch: string;
+  department: Department;
+}
+
+import { baseUrl } from "./../../api/baseUrl";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const postDataSlice = createApi({
   reducerPath: "postApi",
-  baseQuery: fetchBaseQuery({ baseUrl }), 
-  tagTypes: ["Post"], // Define a tag type for caching
+  baseQuery: fetchBaseQuery({ baseUrl }),
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
-    getPosts: builder.query({
+    getPosts: builder.query<Post[], void>({
       query: () => ({
         url: "/getPosts",
         method: "GET",
         headers: { "Content-Type": "application/json" },
       }),
-      providesTags: ["Post"], // Provides cache tags
+      providesTags: ["Post"],
     }),
-    addPost: builder.mutation({
+    addPost: builder.mutation<Post, Partial<Post>>({
       query: (postData) => ({
         url: "createPost",
         method: "POST",
         body: postData,
         headers: { "Content-Type": "application/json" },
       }),
-      invalidatesTags: ["Post"], // Refetch after mutation
+      invalidatesTags: ["Post"],
     }),
-    deletePost: builder.mutation({
+    deletePost: builder.mutation<{ success: boolean }, string>({
       query: (postId) => ({
         url: `deletePost/${postId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Post"], // Refetch after deletion
+      invalidatesTags: ["Post"],
     }),
-    patchPost: builder.mutation({
+    patchPost: builder.mutation<Post, Partial<Post>>({
       query: (postData) => ({
         url: `updatePost/${postData._id}`,
         method: "PATCH",
@@ -42,5 +60,11 @@ export const postDataSlice = createApi({
   }),
 });
 
-export const { useAddPostMutation, useGetPostsQuery, useDeletePostMutation, usePatchPostMutation } = postDataSlice;
+export const {
+  useAddPostMutation,
+  useGetPostsQuery,
+  useDeletePostMutation,
+  usePatchPostMutation,
+} = postDataSlice;
+
 export default postDataSlice;
