@@ -8,12 +8,12 @@ import {
 const Login = () => {
   const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
   const { data } = useGetPostsQuery();
-
+  console.log(data);
   const mapData = data
     ?.map((studentlist) => studentlist?.alumniStudentInfo)
     .flat();
-  const filterData = mapData?.filter((student) => student.batch === "8"); // batch is a string
-  console.log(filterData);
+  const filterData = mapData?.filter((student) => student?.batch === "1"); // batch is a string
+  // console.log(filterData);
 
   const [deletePost] = useDeletePostMutation();
 

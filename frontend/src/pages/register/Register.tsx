@@ -2,7 +2,10 @@ import { useState } from "react";
 import BatchUtils from "../../utils/BatchUtils";
 import Department from "../../component/registerComponent/Department";
 import PersonalInformation from "../../component/registerComponent/PersonalInformation";
-import { useAddPostMutation } from "../../redux/slice/postDataSlice";
+import {
+  useAddPostMutation,
+  useGetPostsQuery,
+} from "../../redux/slice/postDataSlice";
 
 const Register = () => {
   const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
@@ -16,8 +19,12 @@ const Register = () => {
     setSelectedDepartment(event.target.value);
   };
 
+  const { data } = useGetPostsQuery();
+  const existingAlumniStudentInfo = data;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const firstName = event.target.firstName.value;
     const lastName = event.target.lastName.value;
     const email = event.target.email.value;
@@ -26,34 +33,76 @@ const Register = () => {
     const permanentAddress = event.target.permanentAddress.value;
     const password = event.target.password.value;
     const confirmPassword = event.target.confirmPassword.value;
-    // graduation_year: new Date().getFullYear() + 4, // Example: 4-year course
 
-    // if (password !== confirmPassword) {
-    //   alert("Passwords do not match");
-    //   return;
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const dataDept = selectedDepartment;
+    const dataBatch = selectedBatch;
+
+    // Ensure that alumniStudentInfo is mutable
+    let alumniStudentInfo = existingAlumniStudentInfo
+      ? JSON.parse(JSON.stringify(existingAlumniStudentInfo))
+      : [];
+
+    // Find the batch
+    let batch = alumniStudentInfo.find((batch) => batch.batch === dataBatch);
+
+    if (!batch) {
+      // Create new batch
+      batch = { batch: dataBatch, department: {} };
+      alumniStudentInfo.push(batch);
+    }
+
+    // Ensure department exists
+    if (!batch.department[dataDept]) {
+      batch.department[dataDept] = [];
+    }
+
+    // Prevent duplicate student entries
+    const isDuplicate = batch.department[dataDept].some(
+      (student) => student.email === email
+    );
+    if (!isDuplicate) {
+      batch.department[dataDept].push({
+        name: `${firstName} ${lastName}`,
+        email,
+        number,
+        presentAddress,
+        permanentAddress,
+      });
+console.log(dataBatch)
+    //   try {
+    //     await addPost({
+    //       batch: dataBatch,
+    //       department: batch.department,
+    //     }).unwrap();
+    //     console.log("Student added successfully!");
+    //   } catch (error) {
+    //     console.error("Error submitting data:", error);
+    //   }
+    // } else {
+    //   alert("This student is already registered!");
     // }
-    const dataDept =  selectedDepartment;
-    const dataBatch =  selectedBatch;
-    const alumniStudentInfo = [
-      {
+    try {
+      await addPost({
         batch: dataBatch,
-        department: [
-          {
-            [dataDept]: [
-              {
-                name: `${firstName} ${lastName}`,
-                email,
-                number,
-                presentAddress,
-                permanentAddress
-              }
-            ]
-          }
-        ]
+        department: batch.department,
+      }).unwrap();
+      console.log("Student added successfully!");
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      if (error?.data?.message) {
+        alert(error.data.message); // Display backend error message
       }
-    ];
-    await addPost({ alumniStudentInfo }).unwrap();
+    }
+    } else {
+      alert("This student is already registered!");
+    }
   };
+
   return (
     <form
       onSubmit={handleSubmit}

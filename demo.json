@@ -1,35 +1,24 @@
 [
   {
-    "batch": 10,
+    "_id": "67cffef93eb0b438aad9e959",
+    "batch": "3",
     "department": [
-      {
-        "cse": [
-          {
-            "name": "John Doe",
-            "major": "Computer Science",
-            "graduation_year": 2022
-          },
-          {
-            "name": "Alice Johnson",
-            "major": "Computer Science",
-            "graduation_year": 2021
-          }
-        ]
-      },
-      {
-        "eee": [
-          {
-            "name": "Jane Smith",
-            "major": "Electrical Engineering",
-            "graduation_year": 2020
-          },
-          {
-            "name": "Bob Brown",
-            "major": "Electrical Engineering",
-            "graduation_year": 2019
-          }
-        ]
-      }
+      "EEE": [
+        {
+          "name": "Saddam Saykat",
+          "email": "feadmintwo@gmail.com",
+          "number": "01761796480",
+          "presentAddress": "Rayer Bazar",
+          "permanentAddress": "sd"
+        }
+      ],
+      "CSE": [
+        {
+          "name": "Saddam Saykat",
+          "email": "",
+          "number": "01761796480",
+        }
+      ]
     ]
   }
 ]

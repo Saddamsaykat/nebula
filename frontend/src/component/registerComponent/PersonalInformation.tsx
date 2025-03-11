@@ -38,7 +38,7 @@ const PersonalInformation = () => {
         </label>
         <input
           id="email"
-          required
+          // required
           type="email"
           name="email"
           placeholder="Email"
@@ -53,7 +53,7 @@ const PersonalInformation = () => {
         </label>
         <input
           id="number"
-          required
+          // required
           type="number"
           name="number"
           placeholder="Contact Number"
@@ -74,7 +74,7 @@ const PersonalInformation = () => {
           </label>
           <input
             id="password"
-            required
+            // required
             type="password"
             name="password"
             placeholder="Password"
@@ -88,7 +88,7 @@ const PersonalInformation = () => {
           </label>
           <input
             id="confirmPassword"
-            required
+            // required
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
@@ -111,7 +111,7 @@ const PersonalInformation = () => {
             name="presentAddress"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
               dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 p-1 border-amber-300 text-xl resize-none"
-            required
+            // required
           />
         </div>
         <div className="">
@@ -119,7 +119,7 @@ const PersonalInformation = () => {
             Permanent Address
           </label>
           <textarea
-            required
+            // required
             id="address"
             name="permanentAddress"
             placeholder="Address"
@@ -137,7 +137,7 @@ const PersonalInformation = () => {
             id="city"
             type="text"
             name="city"
-            required
+            // required
             placeholder="City"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
               dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl resize-none"
@@ -151,7 +151,7 @@ const PersonalInformation = () => {
             id="country"
             type="text"
             name="country"
-            required
+            // required
             placeholder="Country"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
               dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl resize-none"
