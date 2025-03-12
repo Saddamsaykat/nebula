@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { postDataSlice } from './slice/postDataSlice';
-import chatbotSlice from './slice/chatbotSlice';
 
 
 export const store = configureStore({
   reducer: {
     [postDataSlice.reducerPath]: postDataSlice.reducer,
-    chatbot: chatbotSlice
     
 
   },

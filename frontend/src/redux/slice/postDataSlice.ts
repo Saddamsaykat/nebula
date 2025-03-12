@@ -26,7 +26,7 @@ export const postDataSlice = createApi({
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
       query: () => ({
-        url: "/getPosts",
+        url: "getPosts",
         method: "GET",
         headers: { "Content-Type": "application/json" },
       }),
@@ -34,7 +34,7 @@ export const postDataSlice = createApi({
     }),
     addPost: builder.mutation<Post, Partial<Post>>({
       query: (postData) => ({
-        url: "createPost",
+        url: "/createPost",
         method: "POST",
         body: postData,
         headers: { "Content-Type": "application/json" },

@@ -1,15 +1,14 @@
-import Chatbot from "../../component/chatBot/Chatbot";
 import StudentCard from "../../component/studentCard/StudentCard";
 import {
-  useAddPostMutation,
+  // useAddPostMutation,
   useDeletePostMutation,
   useGetPostsQuery,
 } from "../../redux/slice/postDataSlice";
 
 const Login = () => {
-  const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
+  // const [addPost, { isLoading, isError, isSuccess }] = useAddPostMutation();
   const { data } = useGetPostsQuery();
-  console.log(data);
+  // console.log(data);
   const mapData = data
     ?.map((studentlist) => studentlist?.alumniStudentInfo)
     .flat();
@@ -27,18 +26,18 @@ const Login = () => {
     }
   };
 
-  const handleSubmitted = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    const postData = { email, password };
-    console.log(postData);
-    await addPost(postData);
-  };
+  // const handleSubmitted = async (e) => {
+  //   e.preventDefault();
+  //   const email = e.target.email.value;
+  //   const password = e.target.password.value;
+  //   const postData = { email, password };
+  //   console.log(postData);
+  //   await addPost(postData);
+  // };
 
   return (
     <div>
-      <div>
+      {/* <div>
         <form
           onSubmit={handleSubmitted}
           className="flex flex-col items-center justify-center"
@@ -66,7 +65,7 @@ const Login = () => {
         {isLoading && <p>Loading...</p>}
         {isSuccess && <p>Post added successfully!</p>}
         {isError && <p>Error adding post.</p>}
-      </div>
+      </div> */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 p-2">
         {data?.map((post) => (
           <div key={post._id}>
@@ -74,7 +73,6 @@ const Login = () => {
           </div>
         ))}
       </div>
-      <Chatbot/>
     </div>
   );
 };
