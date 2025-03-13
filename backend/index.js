@@ -11,10 +11,12 @@ app.use(cors());
 app.use(express.json());
 
 
-const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const uri =`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jceqwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-// const uri ='mongodb+srv://zhsust_db:2eMJpLZHKFUiARxd@cluster0.62tdp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const {
+  MongoClient,
+  ServerApiVersion,
+  ObjectId
+} = require("mongodb");
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jceqwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -29,64 +31,83 @@ async function run() {
 
     const db = client.db("zhsust_alumni");
     const postsCollection = db.collection("department");
-    
-// Post collection for registering
-    app.post("/createPost", async (req, res) => {
-  try {
-    const { batch, department } = req.body;
 
-    // Extract all emails from the new submission
-    const newEmails = Object.values(department).flat().map(s => s.email);
+    // Post collection for registering
+    app.post('/createPost', async (req, res) => {
+      try {
+        const {
+          batch,
+          department
+        } = req.body;
 
-    // Check if any of these emails already exist in the database
-    const existingStudent = await postsCollection.findOne({
-      "department.CSE.email": { $in: newEmails }
-    });
-
-    if (existingStudent) {
-      return res.status(400).json({ message: "This email is already registered in another batch/department" });
-    }
-
-    // Find existing batch
-    const existingBatch = await postsCollection.findOne({ batch });
-
-    if (existingBatch) {
-      const updatedDepartment = { ...existingBatch.department };
-
-      for (const dept in department) {
-        if (!updatedDepartment[dept]) {
-          updatedDepartment[dept] = department[dept]; // Add new department
-        } else {
-          // Avoid duplicate students in the department array
-          const existingEmails = new Set(updatedDepartment[dept].map(student => student.email));
-
-          department[dept].forEach(student => {
-            if (!existingEmails.has(student.email)) {
-              updatedDepartment[dept].push(student);
-              existingEmails.add(student.email);
-            }
+        if (!batch || !department) {
+          return res.status(400).json({
+            message: "Batch and department are required."
           });
         }
+
+        const selectedDepartment = Object.keys(department)[0];
+        const newStudents = department[selectedDepartment];
+
+        if (!newStudents || !Array.isArray(newStudents)) {
+          return res.status(400).json({
+            message: "Invalid department structure."
+          });
+        }
+
+        // const db = client.db("zhsust_alumni");
+        // const batches = db.collection("department");
+
+        // Fetch the batch data or initialize it
+        let batchData = await postsCollection.findOne({
+          batch
+        });
+        if (!batchData) {
+          batchData = {
+            batch,
+            department: {}
+          };
+        }
+
+        // Initialize department if missing
+        if (!batchData.department[selectedDepartment]) {
+          batchData.department[selectedDepartment] = [];
+        }
+
+        // Add the new students, ensuring no duplicates
+        newStudents.forEach((student) => {
+          const isDuplicate = batchData.department[selectedDepartment].some(
+            (existingStudent) => existingStudent.email === student.email
+          );
+
+          if (!isDuplicate) {
+            batchData.department[selectedDepartment].push(student);
+          }
+        });
+
+        // Save the updated batch data
+        await batches.updateOne({
+          batch
+        }, {
+          $set: {
+            department: batchData.department
+          }
+        }, {
+          upsert: true
+        });
+
+        res.status(200).json({
+          message: "Students added successfully!",
+          data: batchData,
+        });
+      } catch (error) {
+        console.error("Error processing /createPost:", error);
+        res.status(500).json({
+          message: "Internal Server Error",
+          error: error.message
+        });
       }
-
-      // Update batch in the database
-      const result = await postsCollection.updateOne(
-        { batch },
-        { $set: { department: updatedDepartment } }
-      );
-
-      res.json({ message: "Student added successfully", result });
-    } else {
-      // Insert a new batch if it doesn’t exist
-      const newBatch = { batch, department };
-      const result = await postsCollection.insertOne(newBatch);
-      res.json({ message: "New batch created", result });
-    }
-  } catch (error) {
-    console.error("Error creating/updating post:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+    });
 
     app.get("/getPosts", async (req, res) => {
       const result = await postsCollection.find().toArray();
@@ -96,33 +117,46 @@ async function run() {
 
     app.get("/getBatch/:batch", async (req, res) => {
       const batchNumber = parseInt(req.params.batch);
-      
+
       try {
-        const batchData = await postsCollection.findOne({ batch: batchNumber });
-        
+        const batchData = await postsCollection.findOne({
+          batch: batchNumber
+        });
+
         if (!batchData) {
-          return res.status(404).json({ message: "Batch not found" });
+          return res.status(404).json({
+            message: "Batch not found"
+          });
         }
-    
+
         res.json(batchData);
       } catch (error) {
-        res.status(500).json({ message: "Error fetching batch", error });
+        res.status(500).json({
+          message: "Error fetching batch",
+          error
+        });
       }
     });
-    
+
 
     app.delete("/deletePost/:id", async (req, res) => {
       try {
         const id = req.params.id;
         if (!ObjectId.isValid(id)) {
-          return res.status(400).json({ error: "Invalid ID format" });
+          return res.status(400).json({
+            error: "Invalid ID format"
+          });
         }
-        const query = { _id: new ObjectId(id) }; // Convert id to ObjectId
+        const query = {
+          _id: new ObjectId(id)
+        }; // Convert id to ObjectId
         console.log("Query:", query);
         const result = await postsCollection.deleteOne(query);
         res.json(result);
       } catch (error) {
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({
+          error: "Server error"
+        });
       }
     });
 
@@ -130,56 +164,26 @@ async function run() {
       try {
         const id = req.params.id;
         if (!ObjectId.isValid(id)) {
-          return res.status(400).json({ error: "Invalid ID format" });
+          return res.status(400).json({
+            error: "Invalid ID format"
+          });
         }
-        const query = { _id: new ObjectId(id) };
-        const update = { $set: req.body };
+        const query = {
+          _id: new ObjectId(id)
+        };
+        const update = {
+          $set: req.body
+        };
         console.log("Query:", query);
         console.log("Update:", update);
         const result = await postsCollection.updateOne(query, update);
         res.json(result);
       } catch (error) {
-        res.status(500).json({ error: "Server error" });
+        res.status(500).json({
+          error: "Server error"
+        });
       }
     });
-
-
-    // Ai Chat bot
-
-    app.post("/api/chat", async (req, res) => {
-      const { message } = req.body;
-    
-      try {
-        const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            model: "gpt-3.5-turbo", // or use another model like gpt-4
-            messages: [{ role: "user", content: message }],
-          },
-          {
-            headers: {
-              "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-    
-        const reply = response.data.choices[0].message.content;
-        res.json({ reply });
-      } catch (error) {
-        console.error("Error:", error);
-        res.status(500).json({ error: "Error fetching AI response" });
-      }
-    });
-    // Simulate an AI response (use an actual AI API like OpenAI or a custom bot for real answers)
-    async function getChatbotReply(message) {
-      if (message.toLowerCase().includes("university")) {
-        return "Z. H. Sikder University of Science & Technology is a prestigious institution!";
-      }
-      return "I'm sorry, I didn't quite understand that. Could you please rephrase?";
-    }
-
-
 
     console.log("Connected to MongoDB");
     await client.db("admin").command({
@@ -188,8 +192,7 @@ async function run() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
-  } finally {
-  }
+  } finally {}
 }
 run().catch(console.dir);
 

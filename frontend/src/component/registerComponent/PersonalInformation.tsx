@@ -11,7 +11,7 @@ const PersonalInformation = () => {
             id="firstName"
             type="text"
             name="firstName"
-            placeholder="firstName"
+            placeholder="First Name"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
                  dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
           />

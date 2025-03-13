@@ -8,6 +8,7 @@ interface acadidicInfoProps {
   selectedBatch: string;
   handleChangeDepartment: () => void;
   selectedDepartment: string;
+  loading: boolean;
 }
 
 const AcademicsInformation: React.FC<acadidicInfoProps> = ({
@@ -15,6 +16,7 @@ const AcademicsInformation: React.FC<acadidicInfoProps> = ({
   selectedBatch,
   handleChangeDepartment,
   selectedDepartment,
+  loading
 }) => {
   return (
     <div>
@@ -109,7 +111,7 @@ const AcademicsInformation: React.FC<acadidicInfoProps> = ({
           className="w-full p-2 bg-blue-500 text-white rounded"
           type="submit"
         >
-          Submit
+           {loading ? "Submitting..." : "Submit"}
         </button>
       </div>{" "}
     </div>

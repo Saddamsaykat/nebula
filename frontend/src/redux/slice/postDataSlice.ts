@@ -16,12 +16,12 @@ export interface Post {
   department: Department;
 }
 
-import { baseUrl } from "./../../api/baseUrl";
+// import { baseUrl } from "./../../api/baseUrl";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const postDataSlice = createApi({
   reducerPath: "postApi",
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
@@ -34,7 +34,7 @@ export const postDataSlice = createApi({
     }),
     addPost: builder.mutation<Post, Partial<Post>>({
       query: (postData) => ({
-        url: "/createPost",
+        url: 'createPost',
         method: "POST",
         body: postData,
         headers: { "Content-Type": "application/json" },

@@ -7,3 +7,47 @@ git remote add origin https://github.com/Saddamsaykat/nebula.git
 git push -u origin main
 
 
+firebase login
+firebase init
+firebase deploy
+
+
+// ImageBB upload API key and endpoint
+// const iamge_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+// const image_hosting_api = `https://api.imgbb.com/1/upload?key=${iamge_hosting_key}`
+
+// let imageUrl: string = "";
+          // Upload image to ImageBB if there's an image file
+      // if (image && image instanceof File) {
+      //   // const imageFormData = new FormData();
+      //   formData.append("image", image);
+
+      //   const imageUploadResponse = await fetch(image_hosting_api, {
+      //     method: "POST",
+      //     body: formData,
+      //   });
+
+      //   const imageUploadData = await imageUploadResponse.json();
+      //   console.log(imageUploadData);
+      //   if (imageUploadData.success) {
+      //     imageUrl = imageUploadData.data.url;
+      //   } else {
+      //     throw new Error("Image upload failed");
+      //   }
+      // } else {
+      //   console.error("No valid image file found");
+      // }
+
+       // imageUrl: imageUrl || "",
+
+
+
+       // Function to generate a random ID
+// const generateRandomId = (length = 25) => {
+//   const characters =
+//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//   return Array.from(
+//     { length },
+//     () => characters[Math.floor(Math.random() * characters.length)]
+//   ).join("");
+// };

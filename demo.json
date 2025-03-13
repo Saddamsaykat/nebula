@@ -1,24 +1,40 @@
 [
   {
-    "_id": "67cffef93eb0b438aad9e959",
-    "batch": "3",
-    "department": [
+    "_id": "string",
+    "batch": "string",
+    "department": {
       "EEE": [
         {
-          "name": "Saddam Saykat",
-          "email": "feadmintwo@gmail.com",
-          "number": "01761796480",
-          "presentAddress": "Rayer Bazar",
-          "permanentAddress": "sd"
+          "name": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
+        },
+        {
+          "name": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
         }
       ],
       "CSE": [
         {
-          "name": "Saddam Saykat",
-          "email": "",
-          "number": "01761796480",
+          "name": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
+        },
+        {
+          "name": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
         }
       ]
-    ]
+    }
   }
 ]

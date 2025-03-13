@@ -22,7 +22,7 @@ const Register: React.FC = () => {
     setSelectedDepartment(event.target.value);
   };
 
-  const { handleSubmit, isSubmitting, error } = useAlumniStudentSubmit(
+  const { handleSubmit, isLoading, error } = useAlumniStudentSubmit(
     existingAlumniStudentInfo,
     selectedBatch,
     selectedDepartment
@@ -40,9 +40,9 @@ const Register: React.FC = () => {
           handleChangeDepartment={handleChangeDepartment}
           selectedBatch={selectedBatch}
           selectedDepartment={selectedDepartment}
+          loading={isLoading}
         />
       </div>
-      {isSubmitting && <p>Loading...</p>}
       {error && <p>{error}</p>}
     </form>
   );
