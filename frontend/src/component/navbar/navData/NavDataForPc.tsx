@@ -88,18 +88,7 @@ const NavDataForPc = ({ user }) => {
             Donate
           </NavLink>
         </li>
-        <li>
-          <NavLink
-            to="/events"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            Login
-          </NavLink>
-        </li>
+       
       </ul>
       <div className="hidden md:flex">
         {user ? (

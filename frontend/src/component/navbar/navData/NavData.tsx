@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import iconImg from "../../../assets/FavIcon.jpg";
 import NavDataOtherDevice from "./NavDataOtherDevice";

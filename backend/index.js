@@ -10,6 +10,26 @@ const port = process.env.port || 5000;
 app.use(cors());
 app.use(express.json());
 
+// JWT Middleware
+function verifyJWT(req, res, next) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ message: "Authorization token is required" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ message: "Invalid or expired token" });
+    }
+
+    req.user = decoded; // Attach user information to request
+    next();
+  });
+}
+
 
 const {
   MongoClient,
@@ -35,67 +55,53 @@ async function run() {
     // Post collection for registering
     app.post('/createPost', async (req, res) => {
       try {
-        const {
-          batch,
-          department
-        } = req.body;
-
+        const { batch, department } = req.body;
+    
         if (!batch || !department) {
           return res.status(400).json({
-            message: "Batch and department are required."
+            message: "Batch and department are required.",
           });
         }
-
-        const selectedDepartment = Object.keys(department)[0];
-        const newStudents = department[selectedDepartment];
-
-        if (!newStudents || !Array.isArray(newStudents)) {
-          return res.status(400).json({
-            message: "Invalid department structure."
-          });
-        }
-
-        // const db = client.db("zhsust_alumni");
-        // const batches = db.collection("department");
-
-        // Fetch the batch data or initialize it
-        let batchData = await postsCollection.findOne({
-          batch
-        });
+    
+        let batchData = await postsCollection.findOne({ batch });
         if (!batchData) {
-          batchData = {
-            batch,
-            department: {}
-          };
+          batchData = { batch, department: {} };
         }
-
-        // Initialize department if missing
-        if (!batchData.department[selectedDepartment]) {
-          batchData.department[selectedDepartment] = [];
+    
+        for (const selectedDepartment in department) {
+          const newStudents = department[selectedDepartment];
+    
+          if (!newStudents || !Array.isArray(newStudents)) {
+            console.warn(`Invalid structure for department: ${selectedDepartment}`);
+            continue; // Skip invalid department
+          }
+    
+          if (!batchData.department[selectedDepartment]) {
+            batchData.department[selectedDepartment] = [];
+          }
+    
+          newStudents.forEach((student) => {
+            if (!student.email) {
+              console.error("Invalid student entry:", student);
+              return; // Skip invalid student
+            }
+            const isDuplicate = batchData.department[selectedDepartment].some(
+              (existingStudent) => existingStudent.email === student.email
+            );
+    
+            if (!isDuplicate) {
+              batchData.department[selectedDepartment].push(student);
+            }
+          });
         }
-
-        // Add the new students, ensuring no duplicates
-        newStudents.forEach((student) => {
-          const isDuplicate = batchData.department[selectedDepartment].some(
-            (existingStudent) => existingStudent.email === student.email
-          );
-
-          if (!isDuplicate) {
-            batchData.department[selectedDepartment].push(student);
-          }
-        });
-
-        // Save the updated batch data
-        await batches.updateOne({
-          batch
-        }, {
-          $set: {
-            department: batchData.department
-          }
-        }, {
-          upsert: true
-        });
-
+    
+        const result = await postsCollection.updateOne(
+          { batch },
+          { $set: { department: batchData.department } },
+          { upsert: true }
+        );
+        console.log("Update result:", result);
+    
         res.status(200).json({
           message: "Students added successfully!",
           data: batchData,
@@ -104,12 +110,13 @@ async function run() {
         console.error("Error processing /createPost:", error);
         res.status(500).json({
           message: "Internal Server Error",
-          error: error.message
+          error: error.message,
         });
       }
     });
+    
 
-    app.get("/getPosts", async (req, res) => {
+    app.get("/getPosts",verifyJWT, async (req, res) => {
       const result = await postsCollection.find().toArray();
       console.log(result);
       res.json(result);

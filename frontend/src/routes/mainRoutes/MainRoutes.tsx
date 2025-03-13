@@ -28,11 +28,15 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Register />,
+        element: <Login />,
       },
       {
         path: "/events",
-        element: <Login />,
+        element: <>sdjjdsfl</>,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "events",

@@ -39,11 +39,11 @@ const AcademicsInformation: React.FC<acadidicInfoProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 p-2 items-center">
         <div className="p-2">
           <label htmlFor="studentBatchId">
-            Department ID
+            Student ID
             <input
               id="studentBatchId"
               type="number"
-              name="departmentID"
+              name="studentId"
               placeholder="123456789"
               className="w-full rounded-md focus:ring focus:ring-opacity-75
               dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl  appearance-none [&::-webkit-inner-spin-button]:appearance-none 

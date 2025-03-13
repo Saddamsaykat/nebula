@@ -43,7 +43,6 @@ const Register: React.FC = () => {
           loading={isLoading}
         />
       </div>
-      {error && <p>{error}</p>}
     </form>
   );
 };
