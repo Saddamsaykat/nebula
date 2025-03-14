@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { postDataSlice } from './slice/postDataSlice';
-
+import themeSlice from './slice/themeSlice';
 
 export const store = configureStore({
   reducer: {
     [postDataSlice.reducerPath]: postDataSlice.reducer,
+    theme: themeSlice,
     
 
   },

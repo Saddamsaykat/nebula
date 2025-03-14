@@ -76,7 +76,7 @@ export const useAlumniStudentSubmit = (
     // Image upload logic
     let imageUrl: string = "";
     const imageFile = formData.get("image") as File;
-  
+
     if (imageFile && imageFile instanceof File) {
       const imageFormData = new FormData();
       imageFormData.append("image", imageFile);
@@ -145,6 +145,7 @@ export const useAlumniStudentSubmit = (
       console.error("❌ Error submitting data:", error);
       alert(error?.data?.message || "Failed to submit data. Please try again.");
     }
+    // console.log(error)
   };
   
   return { handleSubmit, isLoading };

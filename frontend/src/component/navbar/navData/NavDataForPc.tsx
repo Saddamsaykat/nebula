@@ -1,96 +1,36 @@
 import { NavLink } from "react-router-dom";
+import NavLinkPath from "../../../json/NavLinkPath.json";
 
-const NavDataForPc = ({ user }) => {
+
+interface NavDataPcProps {
+  user: string;
+  themes: string[];
+  handleThemeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  theme: string;
+}
+
+const NavDataForPc: React.FC<NavDataPcProps> = ({ user , themes, handleThemeChange, theme}) => {
+
   const navData = (
-    <>
+    <div className="flex gap-14">
       <ul className="hidden md:flex gap-6 text-gray-700">
-        <li>
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            About
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            Contact
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/news"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            News
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/events"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            Events
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            Dashboard
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/donate"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
-            }
-          >
-            Donate
-          </NavLink>
-        </li>
-       
+        {NavLinkPath.map(({ to, label }) => (
+          <li key={to}>
+            <NavLink
+              to={to}
+              className={({ isActive }) =>
+                isActive
+                  ? "text-blue-500 font-medium text-2xl"
+                  : "hover:text-blue-500"
+              }
+            >
+              {label}
+            </NavLink>
+          </li>
+        ))}
       </ul>
-      <div className="hidden md:flex">
+
+      <div className="hidden md:flex items-center gap-4">
         {user ? (
           <NavLink
             to="/profile"
@@ -114,8 +54,21 @@ const NavDataForPc = ({ user }) => {
             Login
           </NavLink>
         )}
+        <div className="relative">
+          <select
+            value={theme}
+            onChange={handleThemeChange}
+            className="border border-violet-500 rounded-full px-4 py-2 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
+          >
+            {themes.map((t) => (
+              <option key={t} value={t} className="text-black cursor-pointer">
+                {t.charAt(0).toUpperCase() + t.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-    </>
+    </div>
   );
 
   return <>{navData}</>;

@@ -1,8 +1,21 @@
+import { useState } from "react";
+
 const PersonalInformation = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
   return (
     <div className="p-4 max-w-[720px] rounded-md shadow-sm dark:bg-gray-50">
       {/* First Name, Last Name */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 items-center">
         <div>
           <label htmlFor="firstName" className="text-sm">
             First Name
@@ -30,7 +43,6 @@ const PersonalInformation = () => {
           />
         </div>
       </div>
-
       {/* Email */}
       <div className="col-span-full sm:col-span-3">
         <label htmlFor="email" className="text-sm">
@@ -65,49 +77,59 @@ const PersonalInformation = () => {
                  "
         />
       </div>
-
       {/* Password */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-        <div>
+        {/* Password Field */}
+        <div className="relative">
           <label htmlFor="password" className="text-sm">
             Password
           </label>
           <input
             id="password"
-            // required
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
                  dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
           />
+          <span
+            onClick={handleShowPassword}
+            className="absolute right-3 top-8.5 cursor-pointer text-gray-600 hover:text-indigo-500"
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </span>
         </div>
-        <div>
+
+        {/* Confirm Password Field */}
+        <div className="relative">
           <label htmlFor="confirmPassword" className="text-sm">
             Confirm Password
           </label>
           <input
             id="confirmPassword"
-            // required
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             name="confirmPassword"
             placeholder="Confirm Password"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
                  dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl"
           />
+          <span
+            onClick={handleShowConfirmPassword}
+            className="absolute right-3 top-8.5 cursor-pointer text-gray-600 hover:text-indigo-500"
+          >
+            {showConfirmPassword ? "🙈" : "👁️"}
+          </span>
         </div>
       </div>
-
       {/* Address */}
-
       <div className="grid grid-cols-2 gap-2">
         <div className="">
-          <label htmlFor="address" className="text-sm">
+          <label htmlFor="AddressP" className="text-sm">
             Present Address
           </label>
           <textarea
-            id="address"
-            placeholder="Address"
+            id="AddressP"
+            placeholder="Present Address"
             name="presentAddress"
             className="w-full rounded-md focus:ring focus:ring-opacity-75
               dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 p-1 border-amber-300 text-xl resize-none"
@@ -115,12 +137,12 @@ const PersonalInformation = () => {
           />
         </div>
         <div className="">
-          <label htmlFor="address" className="text-sm">
+          <label htmlFor="AddressPer" className="text-sm">
             Permanent Address
           </label>
           <textarea
             // required
-            id="address"
+            id="AddressPer"
             name="permanentAddress"
             placeholder="Address"
             className="w-full rounded-md focus:ring focus:ring-opacity-75

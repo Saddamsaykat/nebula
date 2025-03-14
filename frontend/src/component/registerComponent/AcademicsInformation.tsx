@@ -4,9 +4,9 @@ import Department from "./Department";
 import ImageUpload from "./ImageUpload";
 
 interface acadidicInfoProps {
-  handleChangeBatch: () => void;
+  handleChangeBatch: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   selectedBatch: string;
-  handleChangeDepartment: () => void;
+  handleChangeDepartment: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   selectedDepartment: string;
   loading: boolean;
 }

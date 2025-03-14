@@ -4,6 +4,10 @@ export interface Student {
   number: string;
   presentAddress: string;
   permanentAddress: string;
+  imageUrl: string;
+  role: string;
+  generateStudentRandomNumber: string;
+  studentId: string;
 }
 
 export interface DepartmentData {

@@ -11,24 +11,24 @@ app.use(cors());
 app.use(express.json());
 
 // JWT Middleware
-function verifyJWT(req, res, next) {
-  const authHeader = req.headers.authorization;
+// function verifyJWT(req, res, next) {
+//   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    return res.status(401).json({ message: "Authorization token is required" });
-  }
+//   if (!authHeader) {
+//     return res.status(401).json({ message: "Authorization token is required" });
+//   }
 
-  const token = authHeader.split(" ")[1];
+//   const token = authHeader.split(" ")[1];
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(403).json({ message: "Invalid or expired token" });
-    }
+//   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+//     if (err) {
+//       return res.status(403).json({ message: "Invalid or expired token" });
+//     }
 
-    req.user = decoded; // Attach user information to request
-    next();
-  });
-}
+//     req.user = decoded; // Attach user information to request
+//     next();
+//   });
+// }
 
 
 const {
@@ -116,7 +116,7 @@ async function run() {
     });
     
 
-    app.get("/getPosts",verifyJWT, async (req, res) => {
+    app.get("/getPosts", async (req, res) => {
       const result = await postsCollection.find().toArray();
       console.log(result);
       res.json(result);

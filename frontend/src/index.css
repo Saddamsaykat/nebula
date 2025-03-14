@@ -1,6 +1,33 @@
 @import "tailwindcss";
 
-@font-face {
+html {
+  background-color: #edf2f7; /* Tailwind's light bg-gray-200 */
+  color: #1a202c; /* Tailwind's light text-gray-900 */
+}
+
+html.light {
+  background-color: #edf2f7; /* Tailwind's bg-gray-200 */
+  color: #1a202c; /* Tailwind's text-gray-900 */
+}
+
+html.dark {
+  background-color: #1a202c; /* Tailwind's bg-gray-800 */
+  color: #f7fafc; /* Tailwind's text-gray-100 */
+}
+
+html.blue {
+  background-color: #2b6cb0; /* Tailwind's blue-600 */
+  color: #ebf8ff; /* Tailwind's text-blue-100 */
+}
+
+html.green {
+  background-color: #2f855a; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+
+
+
+/* @font-face {
     font-family: 'Vanilla';
     src: url('./assets/HeadlineBanglaRegularUnicode.ttf') format('truetype');
     font-weight: 200;
@@ -9,5 +36,17 @@
   
   body {
     font-family: 'Vanilla', sans-serif;
+  } */
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+  .oswald {
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; /* Change this to desired weight */
+    font-style: normal;
+  }
+  
+  body {
+    font-family: "Oswald", sans-serif; /* Change 'Vanilla' if incorrect */
   }
   
