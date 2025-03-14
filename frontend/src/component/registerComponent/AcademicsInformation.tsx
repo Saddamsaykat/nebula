@@ -18,6 +18,7 @@ const AcademicsInformation: React.FC<acadidicInfoProps> = ({
   selectedDepartment,
   loading
 }) => {
+ 
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 p-2">

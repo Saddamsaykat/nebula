@@ -4,7 +4,7 @@ export interface Student {
   number: string;
   presentAddress: string;
   permanentAddress: string;
-  imageUrl: string;
+  // imageUrl: string;
   role: string;
   generateStudentRandomNumber: string;
   studentId: string;

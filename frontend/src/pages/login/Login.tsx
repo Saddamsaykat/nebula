@@ -12,7 +12,7 @@ const Login = () => {
     >
       <form className="relative bg-opacity-10 backdrop-blur-md border-2 border-white p-10 rounded-xl w-96">
         <Link to={'/home'} className="flex justify-center mb-2">
-          <img className="w-10 h-10 rounded-md" src={logoZhsust} alt="" />
+          <img className="w-12 h-12 rounded-md" src={logoZhsust} alt="" />
         </Link>
         <h1 className="text-center text-2xl font-medium text-white mb-6">
           Login
