@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import NavLinkPath from "../../../json/NavLinkPath.json";
 
-
 interface NavDataPcProps {
   user: string;
   themes: string[];

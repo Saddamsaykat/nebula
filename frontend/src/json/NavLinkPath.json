@@ -1,5 +1,5 @@
 [
-    { "to": "/", "label": "Home" },
+    { "to": "/home", "label": "Home" },
     { "to": "/about", "label": "About" },
     { "to": "/contact", "label": "Contact" },
     { "to": "/news", "label": "News" },

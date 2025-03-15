@@ -2,6 +2,7 @@ import React from "react";
 import BatchUtils from "../../utils/BatchUtils";
 import Department from "./Department";
 import ImageUpload from "./ImageUpload";
+import InputField from "../../utils/inputField/InputField";
 
 interface acadidicInfoProps {
   handleChangeBatch: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -16,9 +17,8 @@ const AcademicsInformation: React.FC<acadidicInfoProps> = ({
   selectedBatch,
   handleChangeDepartment,
   selectedDepartment,
-  loading
+  loading,
 }) => {
- 
   return (
     <div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 p-2">
@@ -39,80 +39,47 @@ const AcademicsInformation: React.FC<acadidicInfoProps> = ({
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 p-2 items-center">
         <div className="p-2">
-          <label htmlFor="studentBatchId">
-            Student ID
-            <input
-              id="studentBatchId"
-              type="number"
-              name="studentId"
-              placeholder="123456789"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-              dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl  appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-moz-number-spin-box]:appearance-none"
-            />
-          </label>
+          <InputField
+            id={"studentBatchId"}
+            label={"Student Id"}
+            type="number"
+          />
         </div>
+
         <div>
-          <div>
-            <label htmlFor="github">
-              Github
-              <input
-                id="github"
-                type="url"
-                name="github"
-                placeholder="https://github.com/"
-                className="w-full rounded-md focus:ring focus:ring-opacity-75
-                dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl  appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-             [&::-webkit-outer-spin-button]:appearance-none
-             [&::-moz-number-spin-box]:appearance-none"
-              />
-            </label>
-          </div>
+          <InputField
+            id={"github"}
+            label={"github"}
+            type="text"
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 p-2">
         {/* whatsup */}
         <div>
-          <label htmlFor="whatsUp">
-            Whatsapp Number
-            <input
-              id="whatsUp"
-              type="number"
-              name="whatsUp"
-              placeholder="09123456789"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-              dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl  appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-moz-number-spin-box]:appearance-none"
-            />
-          </label>
+          <InputField
+            id={"whatsUp"}
+            label={"whatsUp"}
+            type="text"
+          />
         </div>
         <div>
-          <label htmlFor="facebook">
-            Facebook Profile
-            <input
-              id="facebook"
-              type="url"
-              name="facebook"
-              placeholder="https://www.facebook.com/profile"
-              className="w-full rounded-md focus:ring focus:ring-opacity-75
-                dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl  appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-             [&::-webkit-outer-spin-button]:appearance-none
-             [&::-moz-number-spin-box]:appearance-none"
-            />
-          </label>
+          <InputField
+            id={"facebook"}
+            label={"Facebook"}
+            type="text"
+          />
         </div>
       </div>
       <div>
-        <ImageUpload/>
+        <ImageUpload />
       </div>
       <div className="p-2">
         <button
           className="w-full p-2 bg-blue-500 text-white rounded"
           type="submit"
         >
-           {loading ? "Submitting..." : "Submit"}
+          {loading ? "Submitting..." : "Submit"}
         </button>
       </div>{" "}
     </div>

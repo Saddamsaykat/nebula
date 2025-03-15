@@ -4,6 +4,7 @@ import Profile from "../../pages/dashboard/pages/Profile";
 import Home from "../../pages/home/Home";
 import Register from "../../pages/register/Register";
 import Login from "../../pages/login/Login";
+import RootPage from "../../pages/rootPage/RootPage";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -11,8 +12,8 @@ const MainRoutes = createBrowserRouter([
     element: <Home />,
     children: [
       {
-        path: "/",
-        element: <div>Home</div>,
+        path: "/home",
+        element: <RootPage />,
       },
       {
         path: "about",

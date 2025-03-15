@@ -55,9 +55,9 @@ const Login = () => {
             <input type="checkbox" className="w-4 h-4" />
             <label>Remember me</label>
           </div>
-          <a href="#" className="hover:underline">
+          <Link to={'/forgatPassword'} className="hover:underline">
             Forgot Password?
-          </a>
+          </Link>
         </div>
 
         <button className="w-full py-3 bg-white text-black font-medium rounded-lg mt-6">

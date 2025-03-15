@@ -5,8 +5,9 @@ import Footer from "../../component/footer/Footer";
 const Home = () => {
   const location = useLocation();
 
-  const hideNavbarFooter = location.pathname === "/login" || location.pathname === "/register";
-  
+  const hideNavbarFooter =
+    location.pathname === "/login" || location.pathname === "/register";
+
   return (
     <div>
       {!hideNavbarFooter && (
@@ -16,9 +17,7 @@ const Home = () => {
         </p>
       )}
       {!hideNavbarFooter && <Navbar />}
-      <div className="min-h-screen">
-        <Outlet /> {/* Renders the nested routes */}
-      </div>
+      <Outlet />
       {!hideNavbarFooter && <Footer />}
     </div>
   );
