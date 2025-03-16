@@ -24,6 +24,14 @@ html.green {
   background-color: #2f855a; /* Tailwind's green-700 */
   color: #f0fff4; /* Tailwind's text-green-100 */
 }
+html.magenta {
+  background-color: #be31ac; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+html.orange {
+  background-color: #df7c20; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
 
 
 

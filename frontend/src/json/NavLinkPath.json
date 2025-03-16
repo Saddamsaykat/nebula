@@ -4,7 +4,6 @@
     { "to": "/contact", "label": "Contact" },
     { "to": "/news", "label": "News" },
     { "to": "/events", "label": "Events" },
-    { "to": "/dashboard", "label": "Dashboard" },
     { "to": "/donate", "label": "Donate" }
   ]
   

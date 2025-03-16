@@ -1,17 +1,48 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import bgImage from "../../assets/ZHSUST.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import logoZhsust from "../../assets/FavIcon.jpg";
-const Login = () => {
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { signInWithEmail } from "../../authActions/authActions";
+
+interface loginProps {
+  handleLogin: () => void;
+  showPassword: boolean;
+  handleShowPassword: () => void;
+}
+
+const Login: React.FC<loginProps> = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await dispatch(signInWithEmail(email, password));
+      navigate("/home");
+    } catch (error) {
+      console.error("Login failed:", error);
+    } finally {
+      setLoading(false); // Set loading to false when login completes
+    }
+  };
 
   return (
     <div
       className="relative h-screen flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <form className="relative bg-opacity-10 backdrop-blur-md border-2 border-white p-10 rounded-xl w-96">
-        <Link to={'/home'} className="flex justify-center mb-2">
+      <form
+        onSubmit={handleLogin}
+        className="relative bg-opacity-10 backdrop-blur-md border-2 border-white p-10 rounded-xl w-96"
+      >
+        <Link to={"/home"} className="flex justify-center mb-2">
           <img className="w-12 h-12 rounded-md" src={logoZhsust} alt="" />
         </Link>
         <h1 className="text-center text-2xl font-medium text-white mb-6">
@@ -24,9 +55,12 @@ const Login = () => {
             <div className="relative w-full">
               <input
                 type="email"
+                value={email} // Bind email state
+                onChange={(e) => setEmail(e.target.value)} // Update email state
                 required
                 className="w-full bg-transparent text-white py-2 focus:outline-none"
-                placeholder="Username"
+                placeholder="E-Mail"
+                name="email"
               />
             </div>
           </div>
@@ -36,16 +70,19 @@ const Login = () => {
             <div className="relative w-full">
               <input
                 type={showPassword ? "text" : "password"}
+                value={password} // Bind password state
+                onChange={(e) => setPassword(e.target.value)} // Update password state
                 required
                 className="w-full bg-transparent text-white py-2 focus:outline-none"
                 placeholder="Password"
+                name="password"
               />
-              <i
-                className={`ri-${
-                  showPassword ? "eye-line" : "eye-off-line"
-                } absolute right-3 top-3 cursor-pointer text-white`}
+              <div
+                className="absolute right-3 top-3 cursor-pointer text-white"
                 onClick={() => setShowPassword(!showPassword)}
-              ></i>
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </div>
             </div>
           </div>
         </div>
@@ -55,13 +92,23 @@ const Login = () => {
             <input type="checkbox" className="w-4 h-4" />
             <label>Remember me</label>
           </div>
-          <Link to={'/forgatPassword'} className="hover:underline">
+          <Link to={"/forgetPassword"} className="hover:underline">
             Forgot Password?
           </Link>
         </div>
 
-        <button className="w-full py-3 bg-white text-black font-medium rounded-lg mt-6">
-          Login
+        <button
+          type="submit"
+          disabled={!email || !password || loading} // Disable button while loading
+          className={`w-full py-3 font-medium rounded-lg mt-6 ${
+            loading ? "bg-gray-400" : "bg-white text-black"
+          }`}
+        >
+          {loading ? (
+            <span>Loading...</span> // Show loading text or spinner
+          ) : (
+            "Login"
+          )}
         </button>
 
         <p className="text-center text-white text-sm mt-4">

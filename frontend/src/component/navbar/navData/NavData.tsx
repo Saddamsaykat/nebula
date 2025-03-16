@@ -13,7 +13,7 @@ const NavData = () => {
 
   const dispatch = useDispatch();
   const theme = useSelector((state: any) => state.theme.theme);
-  const themes = ["light", "dark", "blue", "green"];
+  const themes = ["light", "dark", "blue", "green", "magenta", "orange",];
 
   useEffect(() => {
     document.documentElement.classList.remove(...themes);

@@ -5,6 +5,7 @@ import Home from "../../pages/home/Home";
 import Register from "../../pages/register/Register";
 import Login from "../../pages/login/Login";
 import RootPage from "../../pages/rootPage/RootPage";
+import ForgetPassword from "../../pages/forgatPassword/ForgetPassword";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const MainRoutes = createBrowserRouter([
       {
         path: "donate",
         element: <div>Donate</div>,
+      },
+      {
+        path: "/forgetPassword",
+        element: <ForgetPassword/>,
       },
       {
         path: "*",
