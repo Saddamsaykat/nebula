@@ -30,24 +30,61 @@ async function run() {
     // Jwt Authentication
     app.post("/jwtAuth", async (req, res) => {
       const user = req.body;
+      // const user = { name: "admin" };
       const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, {
         expiresIn: "10h",
       });
       res.send({ token });
     });
 
+    app.get("/jwtAuth", async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, {
+        expiresIn: "10h",
+      });
+      res.send({ token });
+    });
+
+    // const verifyToken = async (req, res, next) => {
+    //   console.log(req.headers.authorization);
+
+    //   if (!req?.headers?.authorization) {
+    //     return res.status(401).send({ message: "Unauthorized Access Host" });
+    //   }
+    //   const token = req?.headers?.authorization.split(" ")[1];
+    //   jwt.verify(token, process.env.JWT_SECRET, (err, decoder) => {
+    //     if (err) {
+    //       return res.status(401).send({ message: "Unauthorized Access" });
+    //     }
+    //     req.user = decoder;
+    //     next();
+    //   });
+    // };
+
     const verifyToken = async (req, res, next) => {
-      console.log(req.headers.authorization);
+      console.log("Received Authorization Header:", req.headers.authorization);
 
       if (!req?.headers?.authorization) {
-        return res.status(401).send({ message: "Unauthorized Access Host" });
+        return res
+          .status(401)
+          .json({ message: "Unauthorized Access - No Token Provided" });
       }
-      const token = req?.headers?.authorization.split(" ")[1];
-      jwt.verify(token, process.env.JWT_SECRET, (err, decoder) => {
+
+      const token = req.headers.authorization.split(" ")[1];
+      if (!token) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized Access - Invalid Token Format" });
+      }
+
+      jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, decoded) => {
         if (err) {
-          return res.status(401).send({ message: "Unauthorized Access" });
+          console.error("JWT Verification Error:", err);
+          return res
+            .status(401)
+            .json({ message: "Unauthorized Access - Invalid Token" });
         }
-        req.user = decoder;
+        req.user = decoded;
         next();
       });
     };
@@ -117,16 +154,27 @@ async function run() {
       }
     });
 
-    app.get('/users', verifyToken,  async (req, res) => {
-      const allUsers = await postsCollection.find().toArray()
-      res.send(allUsers)
-      console.log(allUsers)
-  })
+    app.get("/users", verifyToken, async (req, res) => {
+      const allUsers = await postsCollection.find().toArray();
+      res.send(allUsers);
+      console.log(allUsers);
+    });
+
+    // app.get("/getPosts", verifyToken,  async (req, res) => {
+    //   const result = await postsCollection.find().toArray();
+    //   console.log(result);
+    //   res.json(result);
+    // });
 
     app.get("/getPosts", verifyToken, async (req, res) => {
-      const result = await postsCollection.find().toArray();
-      console.log(result);
-      res.json(result);
+      try {
+        const result = await postsCollection.find().toArray();
+        console.log("Fetched Posts:", result);
+        res.json(result);
+      } catch (error) {
+        console.error("Database Query Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+      }
     });
 
     app.get("/getBatch/:batch", async (req, res) => {
