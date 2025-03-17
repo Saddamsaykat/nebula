@@ -117,6 +117,12 @@ async function run() {
       }
     });
 
+    app.get('/users', verifyToken,  async (req, res) => {
+      const allUsers = await postsCollection.find().toArray()
+      res.send(allUsers)
+      console.log(allUsers)
+  })
+
     app.get("/getPosts", verifyToken, async (req, res) => {
       const result = await postsCollection.find().toArray();
       console.log(result);

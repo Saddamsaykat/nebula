@@ -4,7 +4,7 @@ interface ThemeState {
   theme: string;
 }
 
-const themes = ["light", "dark", "blue", "green", "magenta", "orange"];
+const themes = ["light", "dark", "blue", "green", "magenta", "orange", "purple", "red", "teal", "yellow"];
 
 const initialState: ThemeState = {
   theme: localStorage.getItem("theme") || "light",

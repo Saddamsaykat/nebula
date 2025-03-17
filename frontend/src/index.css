@@ -7,7 +7,7 @@ html {
 
 html.light {
   background-color: #edf2f7; /* Tailwind's bg-gray-200 */
-  color: #1a202c; /* Tailwind's text-gray-900 */
+  color: black; /* Tailwind's text-gray-900 */
 }
 
 html.dark {
@@ -30,6 +30,44 @@ html.magenta {
 }
 html.orange {
   background-color: #df7c20; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+html.yellow {
+  background-color: #df7c20; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+html.red {
+  background-color: #e53e3e; /* Tailwind's green-700 */
+  color: #ffffff; /* Tailwind's text-green-100 */
+}
+
+html.purple {
+  background-color: #633399; /* Tailwind's green-700 */
+  color: #ffffff; /* Tailwind's text-green-100 */
+}
+
+html.teal {
+  background-color: #3498db; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+
+html.pink {
+  background-color: #e831b9; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+
+html.gray {
+  background-color: #818181; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+
+html.blue-gray {
+  background-color: #34495e; /* Tailwind's green-700 */
+  color: #f0fff4; /* Tailwind's text-green-100 */
+}
+
+html.brown {
+  background-color: #563d7c; /* Tailwind's green-700 */
   color: #f0fff4; /* Tailwind's text-green-100 */
 }
 

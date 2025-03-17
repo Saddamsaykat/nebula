@@ -4,15 +4,25 @@ import { baseUrl } from '../../api/baseUrl';
 export const loginSlice = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl }),
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     verifyJwt: builder.mutation({
       query: (user) => ({
-        url: 'jwtAuth',
+        url: '/jwtAuth',
         method: 'POST',
         body: user,
       }),
+      invalidatesTags: ['User'],
+      transformResponse: (response) => {
+        return response;
+      }
+    }),
+    // Get Data from jwt token
+    getUserData: builder.query({
+      query: () => '/users',
+      providesTags: ['User'],
     }),
   }),
 });
 
-export const { useVerifyJwtMutation } = loginSlice;
+export const { useVerifyJwtMutation , useGetUserDataQuery } = loginSlice;

@@ -6,6 +6,7 @@ import Register from "../../pages/register/Register";
 import Login from "../../pages/login/Login";
 import RootPage from "../../pages/rootPage/RootPage";
 import ForgetPassword from "../../pages/forgatPassword/ForgetPassword";
+import PrivateRoute from "../privateRoutes/PrivateRoutes";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "/forgetPassword",
-        element: <ForgetPassword/>,
+        element: <ForgetPassword />,
       },
       {
         path: "*",
@@ -58,7 +59,11 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
         children: [
           {
             path: "/dashboard/profile",

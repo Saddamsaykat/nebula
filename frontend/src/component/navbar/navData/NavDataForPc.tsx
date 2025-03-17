@@ -1,8 +1,8 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import NavLinkPath from "../../../json/NavLinkPath.json";
 import { useDispatch, useSelector } from "react-redux";
-import { checkAuthState, logoutUser } from "../../../authActions/authActions";
-import { useEffect, useState } from "react";
+import { checkAuthState, } from "../../../authActions/authActions";
+import { useEffect } from "react";
 import { RootState } from "@reduxjs/toolkit/query";
 import { MdDashboard } from "react-icons/md";
 
@@ -45,6 +45,25 @@ const NavDataForPc: React.FC<NavDataPcProps> = ({
               </NavLink>
             </li>
           ))}
+          <li>
+            <div className="relative">
+              <select
+                value={theme}
+                onChange={handleThemeChange}
+                className="border border-violet-500 rounded-full px-4 py-2 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
+              >
+                {themes.map((t) => (
+                  <option
+                    key={t}
+                    value={t}
+                    className="text-black cursor-pointer"
+                  >
+                    {t.charAt(0).toUpperCase() + t.slice(1)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </li>
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
@@ -72,20 +91,6 @@ const NavDataForPc: React.FC<NavDataPcProps> = ({
               Login
             </NavLink>
           )}
-
-          <div className="relative">
-            <select
-              value={theme}
-              onChange={handleThemeChange}
-              className="border border-violet-500 rounded-full px-4 py-2 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
-            >
-              {themes.map((t) => (
-                <option key={t} value={t} className="text-black cursor-pointer">
-                  {t.charAt(0).toUpperCase() + t.slice(1)}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
       </div>
     </>
