@@ -20,9 +20,9 @@ const InputField: React.FC<inputFieldProps> = ({
       <input
         id={id}
         type={type}
-        className="w-full rounded-md text-white focus:ring focus:ring-opacity-75 dark:text-gray-50 focus:dark:ring-violet-600 dark:border-gray-300 border-2 border-amber-300 p-1 text-xl  appearance-none [&::-webkit-inner-spin-button]:appearance-none 
+        className="w-full px-3 py-2 border border-amber-400 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400 appearance-none [&::-webkit-inner-spin-button]:appearance-none 
              [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-moz-number-spin-box]:appearance-none"
+             [&::-moz-number-spin-box]:appearance-none text-white"
         {...props}
       />
     </div>

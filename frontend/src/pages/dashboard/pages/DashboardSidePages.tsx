@@ -53,7 +53,7 @@ const DashboardSidePages = () => {
                 to="/dashboard/profile"
                 className="flex items-center p-2 space-x-3 rounded-md dark:bg-gray-100 dark:text-gray-900"
               >
-                <MdDashbo0a0rd />
+                {/* <MdDashbo0a /> */}
                 <span>Dashboard</span>
               </NavLink>
             </li>

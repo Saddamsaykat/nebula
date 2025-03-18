@@ -14,7 +14,6 @@ export const loginSlice = createApi({
       }),
       invalidatesTags: ['User'],
       transformResponse: (response) => {
-        console.log(response)
         return response;
       }
     }),

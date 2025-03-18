@@ -3,6 +3,7 @@ import zhsustIcon from "../../assets/ZHSUST.jpg";
 import { BatchData, Student } from "../../pages/register/propsType/propsTypeRegister";
 import { useAddPostMutation } from "../../redux/slice/postDataSlice";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const IMAGE_HOSTING_KEY = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const IMAGE_HOSTING_API = `https://api.imgbb.com/1/upload?key=${IMAGE_HOSTING_KEY}`;
@@ -17,6 +18,8 @@ export const useAlumniStudentSubmit = (
   selectedBatch: string,
   selectedDepartment: string
 ) => {
+  const [inputValue, setInputValue] = useState("");
+
   const dispatch = useDispatch();
   const [addPost, { isLoading }] = useAddPostMutation();
 
@@ -87,8 +90,7 @@ export const useAlumniStudentSubmit = (
       const userRegister = await dispatch(
         registerWithEmail(studentData.email, studentData.password)
       );
-      console.log(userRegister);
-      console.log("✅ Student added successfully!", response);
+      setInputValue(userRegister)
     } catch (error: any) {
       console.error("Error submitting data:", error);
       alert(error?.data?.message || "Failed to submit data. Please try again.");
@@ -97,5 +99,5 @@ export const useAlumniStudentSubmit = (
     }
   };
 
-  return { handleSubmit, isLoading };
+  return { handleSubmit, isLoading, inputValue };
 };

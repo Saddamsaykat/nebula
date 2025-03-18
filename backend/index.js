@@ -45,22 +45,6 @@ async function run() {
       res.send({ token });
     });
 
-    // const verifyToken = async (req, res, next) => {
-    //   console.log(req.headers.authorization);
-
-    //   if (!req?.headers?.authorization) {
-    //     return res.status(401).send({ message: "Unauthorized Access Host" });
-    //   }
-    //   const token = req?.headers?.authorization.split(" ")[1];
-    //   jwt.verify(token, process.env.JWT_SECRET, (err, decoder) => {
-    //     if (err) {
-    //       return res.status(401).send({ message: "Unauthorized Access" });
-    //     }
-    //     req.user = decoder;
-    //     next();
-    //   });
-    // };
-
     const verifyToken = async (req, res, next) => {
       console.log("Received Authorization Header:", req.headers.authorization);
 
@@ -166,7 +150,7 @@ async function run() {
     //   res.json(result);
     // });
 
-    app.get("/getPosts", verifyToken, async (req, res) => {
+    app.get("/getPosts",  async (req, res) => {
       try {
         const result = await postsCollection.find().toArray();
         console.log("Fetched Posts:", result);

@@ -26,7 +26,6 @@ export const registerWithEmail = (email, password) => async (dispatch) => {
     );
     const user = userCredential.user;
     await sendEmailVerification(user);
-    console.log("Verification email sent!");
     dispatch(loginSuccess(user));
   } catch (error) {
     dispatch(loginFailure(error.message));
@@ -36,9 +35,8 @@ export const registerWithEmail = (email, password) => async (dispatch) => {
 export const forgotPassword = (email) => async () => {
   try {
     await sendPasswordResetEmail(auth, email);
-    console.log("Password reset email sent!");
   } catch (error) {
-    console.error("Password Reset Error: ", error.message);
+    console.error("Password reset email failed:");
   }
 };
 
@@ -46,9 +44,7 @@ export const logoutUser = () => async (dispatch) => {
   try {
     await signOut(auth);
     dispatch(logout());
-  } catch (error) {
-    console.error("Logout Error: ", error);
-  }
+  } catch (error) {}
 };
 
 export const signInWithEmail = (email, password) => async (dispatch) => {
@@ -80,9 +76,7 @@ export const checkAuthState = () => async (dispatch) => {
         }
 
         dispatch(setUser(user));
-      } catch (error) {
-        console.error("JWT Authentication Error:", error);
-      }
+      } catch (error) {}
     } else {
       localStorage.removeItem("Token");
       dispatch(logout());
