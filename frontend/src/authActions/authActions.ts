@@ -24,9 +24,9 @@ export const registerWithEmail = (email, password) => async (dispatch) => {
       email,
       password
     );
-    const user = userCredential.user;
-    await sendEmailVerification(user);
-    dispatch(loginSuccess(user));
+    // const user = userCredential.user;
+    // await sendEmailVerification(user);
+    // dispatch(loginSuccess(user));
   } catch (error) {
     dispatch(loginFailure(error.message));
   }

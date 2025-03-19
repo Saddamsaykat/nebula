@@ -43,3 +43,8 @@ firebase deploy
 
 
        // Function to generate a random ID
+
+
+<!-- Token Generator -->
+
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"

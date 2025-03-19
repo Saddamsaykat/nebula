@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AiOutlineCloseCircle } from "react-icons/ai";
 
 const ImageUpload = () => {
   const [image, setImage] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string>("No file chosen");
   const [error, setError] = useState<string | null>(null);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -11,9 +11,10 @@ const ImageUpload = () => {
     if (!file) return;
 
     // Validate file size (max 1MB)
-    if (file.size > 1024 * 1024) { // 1MB = 1024 * 1024 bytes
+    if (file.size > 1024 * 1024) {
       setError("File size must be less than 1MB.");
       setImage(null);
+      setFileName("No file chosen");
       return;
     }
 
@@ -22,6 +23,7 @@ const ImageUpload = () => {
     if (!validFormats.includes(file.type)) {
       setError("Invalid file format. Allowed: JPG, JPEG, PNG, JFIF.");
       setImage(null);
+      setFileName("No file chosen");
       return;
     }
 
@@ -29,28 +31,21 @@ const ImageUpload = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result as string);
+      setFileName(file.name);
       setError(null);
     };
     reader.readAsDataURL(file);
   };
 
-  const handleRemoveImage = () => {
-    setImage(null);
-    setError(null);
-  };
-
   return (
     <div className="flex flex-col items-center gap-4 p-4 border rounded-lg w-80">
-      <label
-        htmlFor="files"
-        className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-lg"
-      >
-        Upload Image
+      <label className="flex items-center border rounded-lg overflow-hidden w-full cursor-pointer">
+        <span className="bg-blue-500 text-white px-4 py-2">Choose file</span>
+        <span className="flex-1 px-2 truncate">{fileName}</span>
         <input
           name="image"
           type="file"
           className="hidden"
-          id="files"
           accept="image/jpeg, image/png, image/jpg, image/jfif"
           onChange={handleImageUpload}
         />
@@ -58,21 +53,6 @@ const ImageUpload = () => {
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
-      {image && (
-        <div className="relative border rounded-lg overflow-hidden max-w-[200px] max-h-[200px]">
-          <img
-            src={image}
-            alt="Preview"
-            className="w-full h-full object-cover"
-          />
-          <button
-            onClick={handleRemoveImage}
-            className="absolute top-2 right-2 bg-white rounded-full p-1 text-red-500 hover:text-red-700"
-          >
-            <AiOutlineCloseCircle size={24} />
-          </button>
-        </div>
-      )}
     </div>
   );
 };
