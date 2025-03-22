@@ -1,0 +1,51 @@
+[
+    {
+      "_id": "string",
+      "batch": "string",
+      "departments": [
+        {
+          "name": "EEE",
+          "students": [
+            {
+              "_id": "string",
+              "name": "string",
+              "email": "string",
+              "number": "string",
+              "presentAddress": "string",
+              "permanentAddress": "string"
+            },
+            {
+              "_id": "string",
+              "name": "string",
+              "email": "string",
+              "number": "string",
+              "presentAddress": "string",
+              "permanentAddress": "string"
+            }
+          ]
+        },
+        {
+          "name": "CSE",
+          "students": [
+            {
+              "_id": "string",
+              "name": "string",
+              "email": "string",
+              "number": "string",
+              "presentAddress": "string",
+              "permanentAddress": "string"
+            },
+            {
+              "_id": "string",
+              "name": "string",
+              "email": "string",
+              "number": "string",
+              "presentAddress": "string",
+              "permanentAddress": "string"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  
