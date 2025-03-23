@@ -1,72 +1,105 @@
-// const express = require("express");
-// const fs = require("fs");
-// const cors = require("cors");
-// const jwt = require("jsonwebtoken");
-// const bodyParser = require("body-parser");
+const express = require("express");
+const { ObjectId } = require("mongodb");
 
-// const app = express();
-// const PORT = 5000;
-// const SECRET_KEY = "your_secret_key"; // Change this to a strong secret
+const router = express.Router();
 
-// app.use(cors());
-// app.use(bodyParser.json());
-
-
-const verifyToken = (req, res, next) => {
-  const token = req.headers["authorization"];
-  if (!token) return res.status(403).json({ message: "Token required" });
-
-  jwt.verify(token, SECRET_KEY, (err, decoded) => {
-    if (err) return res.status(401).json({ message: "Invalid token" });
-    req.user = decoded;
-    next();
-  });
+// MongoDB collection setup (Passed from main server file)
+let studentsCollection;
+const setDatabase = (db) => {
+  studentsCollection = db.collection("students");
 };
 
-const dataFile = "students.json";
-
-const loadStudents = () => {
-  if (!fs.existsSync(dataFile)) return [];
-  return JSON.parse(fs.readFileSync(dataFile));
-};
-
-// Save students to file
-const saveStudents = (students) => {
-  fs.writeFileSync(dataFile, JSON.stringify(students, null, 2));
-};
-
-
-// Add Student API (Checks Email & Saves Data)
-app.post("/students", (req, res) => {
-  const students = loadStudents();
-  const { batch, department, name, email, number, presentAddress, permanentAddress } = req.body;
-
-  // Check if email exists across all departments
-  const emailExists = students.some((student) =>
-    Object.values(student.department).flat().some((s) => s.email === email)
-  );
-
-  if (emailExists) {
-    return res.status(400).json({ message: "Email already exists!" });
+// Get all students
+router.get("/", async (req, res) => {
+  try {
+    const students = await studentsCollection.find().toArray();
+    res.json(students);
+  } catch (error) {
+    console.error("Error fetching students:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-
-  let studentIndex = students.findIndex((s) => s.batch === batch);
-  if (studentIndex === -1) {
-    // Create a new batch if not found
-    students.push({
-      _id: Date.now().toString(),
-      batch,
-      department: { [department]: [{ name, email, number, presentAddress, permanentAddress }] },
-    });
-  } else {
-    // Add to existing batch
-    if (!students[studentIndex].department[department]) {
-      students[studentIndex].department[department] = [];
-    }
-    students[studentIndex].department[department].push({ name, email, number, presentAddress, permanentAddress });
-  }
-
-  saveStudents(students);
-  res.status(201).json({ message: "Student added successfully!" });
 });
 
+// Add Student API (Checks Email & Saves Data)
+router.post("/", async (req, res) => {
+  try {
+    const {
+      batch,
+      department,
+      name,
+      email,
+      number,
+      presentAddress,
+      permanentAddress,
+      whatsUp,
+      facebook,
+      linkedin,
+      github,
+      aboutYour,
+    } = req.body;
+
+    // Validate required fields
+    if (!batch || !department || !name || !email || !number) {
+      return res.status(400).json({ message: "Missing required fields!" });
+    }
+
+    // Check if email already exists in any department
+    const emailExists = await studentsCollection.findOne({
+      $expr: {
+        $gt: [
+          {
+            $size: {
+              $filter: {
+                input: { $objectToArray: "$department" },
+                as: "dept",
+                cond: { $in: [email, "$$dept.v.email"] },
+              },
+            },
+          },
+          0,
+        ],
+      },
+    });
+
+    if (emailExists) {
+      return res.status(400).json({ message: "Email already exists!" });
+    }
+
+    // Check if batch exists
+    const batchData = await studentsCollection.findOne({ batch });
+
+    const studentData = {
+      name,
+      email,
+      number,
+      presentAddress,
+      permanentAddress,
+      whatsUp,
+      facebook,
+      linkedin,
+      github,
+      aboutYour,
+    };
+
+    if (!batchData) {
+      // Create a new batch entry
+      await studentsCollection.insertOne({
+        batch,
+        department: { [department]: [studentData] },
+      });
+    } else {
+      // Update existing batch with new student
+      await studentsCollection.updateOne(
+        { batch },
+        { $push: { [`department.${department}`]: studentData } }
+      );
+    }
+
+    res.status(201).json({ message: "Student added successfully!" });
+  } catch (error) {
+    console.error("Error adding student:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+module.exports = { router, setDatabase };

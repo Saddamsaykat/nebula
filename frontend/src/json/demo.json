@@ -10,14 +10,8 @@
           "number": "string",
           "presentAddress": "string",
           "permanentAddress": "string"
-        },
-        {
-          "name": "string",
-          "email": "string",
-          "number": "string",
-          "presentAddress": "string",
-          "permanentAddress": "string"
         }
+      
       ],
       "CSE": [
         {
