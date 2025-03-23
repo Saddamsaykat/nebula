@@ -1,4 +1,4 @@
-import bgImageRegistry from "../../assets/backViewZhsust.jpg";
+import bgImageRegistry from "../../assets/public/ZHSUSTFullView.png";
 import InputField from "../../utils/inputField/InputField";
 import PasswordField from "../../utils/passwordField/PasswordField";
 import logo from "../../assets/FavIcon.jpg";
@@ -44,19 +44,21 @@ const Register: React.FC<registerProps> = () => {
         alignItems: "center",
         backgroundColor: "#000000",
         color: "#ffffff",
-        height: "100vh",
+
         // overflow: "hidden",
       }}
-      className="flex justify-center items-center h-full"
+      className="flex justify-center items-center h-full p-8"
     >
       <form onSubmit={handleSubmit}>
         <div className="bg-white p-5 rounded-lg m-auto max-w-[1080px]">
           <div>
-            <img
-              src={logo}
-              alt={"ZHSUST"}
-              className="w-12 h-12 rounded border-black"
-            />
+            <Link to="/">
+              <img
+                src={logo}
+                alt={"ZHSUST"}
+                className="w-12 h-12 rounded border-black"
+              />
+            </Link>
             <h1 className="text-4xl font-semibold text-black">
               Welcome to ZHSUST Alumni!
             </h1>
@@ -64,7 +66,16 @@ const Register: React.FC<registerProps> = () => {
             <hr className="border border-black mb-2 mt-2" />
           </div>
           {/* Info */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="">
+            <div className="flex justify-center items-center">
+              <h1 className="text-xl text-black">
+                Personal Information
+                <span>
+                  {" "}
+                  <hr className="border border-black w-46 mt-2 mb-2" />
+                </span>
+              </h1>
+            </div>
             {/* Personal Info */}
             <div className="relative">
               {/* Name */}
@@ -147,6 +158,11 @@ const Register: React.FC<registerProps> = () => {
             </div>
             {/* Additional Info */}
             <div className="">
+              <div className="flex justify-center items-center gap-2 mt-2 mb-2">
+                <hr className="border border-black w-48 mt-2 mb-2" />
+                <h1 className="text-xl text-black">Additional Information</h1>
+                <hr className="border border-black w-48 mt-2 mb-2" />
+              </div>
               {/* Social Media */}
               <div className="grid grid-cols-2 gap-2">
                 <InputField
@@ -162,8 +178,22 @@ const Register: React.FC<registerProps> = () => {
                   type="text"
                 />
               </div>
+              {/* Image Upload */}
+              <div>
+                <label htmlFor={"image"} className="text-sm text-black">
+                  Image
+                </label>
+                <input
+                  id={"image"}
+                  type="file"
+                  className={` w-full px-3 py-2 border border-amber-400 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400 appearance-none [&::-webkit-inner-spin-button]:appearance-none 
+             [&::-webkit-outer-spin-button]:appearance-none 
+             [&::-moz-number-spin-box]:appearance-none text-black`}
+                  accept="image/jpeg, image/png, image/jpg, image/jfif"
+                />
+              </div>
               {/* Agreement */}
-              <div className="flex justify-center">
+              <div className=" mt-2">
                 <input
                   type="checkbox"
                   id="agree"
@@ -174,14 +204,6 @@ const Register: React.FC<registerProps> = () => {
                   I agree with the terms and conditions
                 </label>
               </div>
-              <div className="flex justify-center mt-4">
-                <Link
-                  to={"/forgetPassword"}
-                  className="text-amber-500 hover:text-amber-400"
-                >
-                  Forgot Password?
-                </Link>
-              </div>
             </div>
             <button
               type="submit"
@@ -189,6 +211,14 @@ const Register: React.FC<registerProps> = () => {
             >
               Submit
             </button>
+          </div>
+          <div className="flex justify-center mt-4">
+            <Link
+              to={"/forgetPassword"}
+              className="text-amber-500 hover:text-amber-400"
+            >
+              Forgot Password?
+            </Link>
           </div>
         </div>
       </form>
