@@ -3,6 +3,7 @@ import InputField from "../../utils/inputField/InputField";
 import PasswordField from "../../utils/passwordField/PasswordField";
 import logo from "../../assets/FavIcon.jpg";
 import { Link } from "react-router-dom";
+import PersonalInformation from "../../component/registerComponent/PersonalInformation";
 
 interface registerProps {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -122,83 +123,48 @@ const Register: React.FC<registerProps> = () => {
               </h1>
             </div>
             {/* Personal Info */}
-            <div className="relative">
-              {/* Name */}
-              <div className="grid grid-cols-2 gap-2">
-                <InputField
-                  id="firstName"
-                  name="firstName"
-                  label="First Name"
-                  type="text"
-                  dynamicClassName="text-black"
-                />
-                <InputField
-                  id="lastName"
-                  name="lastName"
-                  label="Last Name"
-                  type="text"
-                />
-              </div>
-              {/* Email */}
+            <PersonalInformation />
+            {/* Dropdown Batch and Department */}
+            <div className="grid grid-cols-2 gap-2">
               <div>
-                <InputField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  type="email"
-                />
+                <label htmlFor="batch" className="text-black">
+                  Batch
+                </label>
+                <select
+                  id="batch"
+                  name="batch"
+                  className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
+                >
+                  {batchOptions.map((batch, index) => (
+                    <option
+                      key={index}
+                      value={batch}
+                      className="bg-black text-white"
+                    >
+                      {batch}
+                    </option>
+                  ))}
+                </select>
               </div>
-              {/* Password */}
-              <div className="grid grid-cols-2 gap-2">
-                <PasswordField id="password" name="password" label="Password" />
-                <PasswordField
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  label="Confirm Password"
-                />
-              </div>
-              {/* Dropdown Batch and Department */}
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label htmlFor="batch" className="text-black">
-                    Batch
-                  </label>
-                  <select
-                    id="batch"
-                    name="batch"
-                    className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
-                  >
-                    {batchOptions.map((batch, index) => (
-                      <option
-                        key={index}
-                        value={batch}
-                        className="bg-black text-white"
-                      >
-                        {batch}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="department" className="text-black">
-                    Department
-                  </label>
-                  <select
-                    id="department"
-                    name="department"
-                    className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
-                  >
-                    {department.map((department, index) => (
-                      <option
-                        key={index}
-                        value={department}
-                        className="bg-black text-white"
-                      >
-                        {department}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div>
+                <label htmlFor="department" className="text-black">
+                  Department
+                </label>
+                <select
+                  id="department"
+                  name="department"
+                  className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
+                >
+                  {department.map((department, index) => (
+                    <option
+                      key={index}
+                      value={department}
+                      className="bg-black text-white"
+                    >
+                      {department}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             {/* Additional Info */}
