@@ -19,12 +19,9 @@ const NavDataForPc: React.FC<NavDataPcProps> = ({
 }) => {
   const dispatch = useDispatch();
 
-  // Dispatch checkAuthState on component mount
   useEffect(() => {
     dispatch(checkAuthState());
   }, [dispatch]);
-
-  // Get user data from Redux state
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (

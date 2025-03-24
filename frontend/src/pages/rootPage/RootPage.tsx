@@ -3,7 +3,7 @@ import SwiperSlider from "../../component/main/swiperSlider/SwiperSlider";
 
 const RootPage = () => {
   return (
-    <div>
+    <div  className="container mx-auto">
       <SwiperSlider />
       <Gallery />
     </div>

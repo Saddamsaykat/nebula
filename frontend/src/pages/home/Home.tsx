@@ -10,13 +10,11 @@ const Home = () => {
   const hideNavbarFooter =
     location.pathname === "/login" || location.pathname === "/register";
 
-    const theme = useSelector((state: any) => state.theme.theme);
-    const styles = getThemeStyles(theme);
+  const theme = useSelector((state: any) => state.theme.theme);
+  const styles = getThemeStyles(theme);
 
   return (
-    <div        
-   style={styles}
->
+    <div style={styles}>
       {!hideNavbarFooter && (
         <p className="text-center text-3xl">
           Welcome to the Alumni Association of ZHSUST University!{" "}

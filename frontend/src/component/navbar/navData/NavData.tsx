@@ -26,6 +26,7 @@ const NavData = () => {
       dispatch(setTheme(selectedTheme));
     }
   };
+  
 
   return (
     <nav className="bg-white shadow-md">

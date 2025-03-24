@@ -5,25 +5,16 @@ import { setTheme } from "../../redux/slice/themeSlice";
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import NavLinkPath from "../../json/NavLinkPath.json";
-import zhlogo from "../../assets/FavIcon.jpg";
-import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
+import zhLogo from "../../assets/FavIcon.jpg";
+import { getThemeStyles, themes } from "../../utils/themeStyles/themeStyles";
+import { checkAuthState } from "../../authActions/authActions";
+import NavDataOtherDevice from "./navData/NavDataOtherDevice";
+
 const Navbar: React.FC = () => {
-  const [user, setUser] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const theme = useSelector((state: any) => state.theme.theme);
-  const themes = [
-    "light",
-    "dark",
-    "blue",
-    "green",
-    "magenta",
-    "orange",
-    "purple",
-    "red",
-    "teal",
-    "yellow",
-  ];
+  const user = useSelector((state: any) => state.auth.user);
 
   useEffect(() => {
     document.documentElement.classList.remove(...themes);
@@ -39,51 +30,53 @@ const Navbar: React.FC = () => {
 
   const styles = getThemeStyles(theme);
 
+  useEffect(() => {
+    dispatch(checkAuthState());
+  }, [dispatch]);
+
   return (
-    <header className="p-4 dark:bg-gray-100 dark:text-gray-800 border border-black container mx-auto" >
+    <header className="p-4 dark:bg-gray-100 dark:text-gray-800 border border-black container mx-auto">
       <div className="container flex justify-between items-center h-16 mx-auto">
         <div className="flex justify-center items-center">
-          <img className="w-10 h-10" src={zhlogo} alt="" />
-          <div className="flex justify-center items-center gap-14">
-            <ul style={styles}
-           className="hidden md:flex md:justify-center md:items-center lg:flex lg:justify-center lg:items-center ml-2 gap-6 text-gray-700">
-              {NavLinkPath.map(({ to, label }) => (
-                <li key={to}>
-                  <NavLink
-                    to={to}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-blue-500 font-medium"
-                        : "hover:text-blue-500"
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                </li>
-              ))}
-              <li>
-                <div className="relative">
-                  <select
-                    value={theme}
-                    onChange={handleThemeChange}
-                    className="border border-violet-500 rounded-full px-2 py-2.5 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
-                  >
-                    {themes.map((t) => (
-                      <option
-                        key={t}
-                        value={t}
-                        className="text-black cursor-pointer"
-                      >
-                        {t.charAt(0).toUpperCase() + t.slice(1)}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <img className="w-10 h-10" src={zhLogo} alt="Logo" />
         </div>
-        <div className="items-center flex-shrink-0 hidden md:flex lg:flex">
+
+        {/* Desktop Navigation */}
+        <ul
+          style={styles}
+          className="hidden md:flex md:items-center lg:flex lg:items-center ml-2 gap-6 text-xl text-gray-700"
+        >
+          {NavLinkPath.map(({ to, label }) => (
+            <li key={to}>
+              <NavLink
+                to={to}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-blue-500 font-medium text-xl"
+                    : "hover:text-blue-500"
+                }
+              >
+                {label}
+              </NavLink>
+            </li>
+          ))}
+          <li>
+            <select
+              value={theme}
+              onChange={handleThemeChange}
+              className="border border-violet-500 rounded p-1 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
+            >
+              {themes.map((t) => (
+                <option key={t} value={t} className="text-black cursor-pointer max-w-2.5">
+                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                </option>
+              ))}
+            </select>
+          </li>
+        </ul>
+
+        {/* User Login / Dashboard */}
+        <div className="hidden md:flex lg:flex items-center">
           {user?.email ? (
             <NavLink
               to="/dashboard"
@@ -109,10 +102,33 @@ const Navbar: React.FC = () => {
             </NavLink>
           )}
         </div>
-        <button className="p-4 lg:hidden md:hidden">
-          <VscThreeBars />
+
+        {/* Mobile Menu Button */}
+        <button
+          className="p-4 lg:hidden md:hidden"
+          onClick={() => setMenuOpen(true)}
+        >
+          <VscThreeBars className="text-2xl" />
         </button>
       </div>
+
+      {/* Mobile Drawer */}
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
+          menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setMenuOpen(false)}
+      ></div>
+      <NavDataOtherDevice
+        NavLinkPath={NavLinkPath}
+        handleThemeChange={handleThemeChange}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        styles={styles}
+        theme={theme}
+        themes={themes}
+        user={user}
+      />
     </header>
   );
 };
