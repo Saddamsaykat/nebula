@@ -49,7 +49,7 @@ const NavDataOtherDevice: React.FC<NavDataOtherDeviceProps> = ({
               className={({ isActive }) =>
                 isActive
                   ? "text-blue-500 font-medium text-xl"
-                  : "hover:text-blue-500 block p-2"
+                  : "hover:text-blue-500 block text-xl"
               }
               onClick={() => setMenuOpen(false)}
             >
@@ -71,7 +71,7 @@ const NavDataOtherDevice: React.FC<NavDataOtherDeviceProps> = ({
           </select>
         </div>
       </ul>
-      <div className="p-4 space-y-4">
+      <div className="px-4 space-y-2">
         {user?.email ? (
           <NavLink
             to="/dashboard"
@@ -90,7 +90,7 @@ const NavDataOtherDevice: React.FC<NavDataOtherDeviceProps> = ({
             className={({ isActive }) =>
               isActive
                 ? "text-blue-500 font-medium text-2xl"
-                : "hover:text-blue-500"
+                : "hover:text-blue-500 text-2xl"
             }
           >
             Login
