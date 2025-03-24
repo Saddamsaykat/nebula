@@ -12,7 +12,7 @@ html.light {
 
 html.dark {
   background-color: #1a202c; /* Tailwind's bg-gray-800 */
-  color: #f7fafc; /* Tailwind's text-gray-100 */
+  color: #ffffff; /* Tailwind's text-gray-100 */
 }
 
 html.blue {
