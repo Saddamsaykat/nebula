@@ -45,28 +45,6 @@ async function run() {
       res.send({ token });
     });
 
-    app.get("/jwtAuth", async (req, res) => {
-      const user = req.body;
-      const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, {
-        expiresIn: "10h",
-      });
-      res.send({ token });
-    });
-
-    const verifyToken = async (req, res, next) => {
-      if (!req?.headers?.authorization) {
-        return res.status(401).json({ message: "Unauthorized - No Token" });
-      }
-
-      const token = req.headers.authorization.split(" ")[1];
-      jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, decoded) => {
-        if (err) {
-          return res.status(401).json({ message: "Unauthorized - Invalid Token" });
-        }
-        req.user = decoded;
-        next();
-      });
-    };
 
     // Fetch Posts
     app.get("/getPosts", async (req, res) => {

@@ -1,22 +1,15 @@
 import bgImageRegistry from "../../assets/public/ZHSUSTFullView.png";
-import InputField from "../../utils/inputField/InputField";
-import PasswordField from "../../utils/passwordField/PasswordField";
 import logo from "../../assets/FavIcon.jpg";
 import { Link } from "react-router-dom";
 import PersonalInformation from "../../component/registerComponent/PersonalInformation";
+import AdditionalInformation from "../../component/registerComponent/AdditionalInformation";
+import { propsTypeRegister } from "./propsType/propsTypeRegister";
 
-interface registerProps {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  batchOptions: string[];
-  id: string;
-  name: string;
-  label: string;
-  type: string;
-}
 
-const Register: React.FC<registerProps> = () => {
-  const batchOptions = ["None", "Batch 1", "Batch 2", "Batch 3"];
-  const department = ["None", "CSE", "EEE", "CE"];
+
+const Register: React.FC<propsTypeRegister> = () => {
+  const batchOptions = ["", " 1", " 2", " 3", " 4 ", "5", "6"];
+  const department = ["Department", "CSE", "EEE", "CE"];
 
   const iamge_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
   const image_hosting_api = `https://api.imgbb.com/1/upload?key=${iamge_hosting_key}`;
@@ -73,10 +66,8 @@ const Register: React.FC<registerProps> = () => {
     }
 
     console.log(imageUrl || "");
-
     const data = { email, firstName, lastName, batch, department };
     console.log(data);
-
     form.reset();
   };
 
@@ -90,7 +81,6 @@ const Register: React.FC<registerProps> = () => {
         alignItems: "center",
         backgroundColor: "#000000",
         color: "#ffffff",
-
         // overflow: "hidden",
       }}
       className="flex justify-center items-center h-full p-8"
@@ -124,103 +114,11 @@ const Register: React.FC<registerProps> = () => {
             </div>
             {/* Personal Info */}
             <PersonalInformation />
-            {/* Dropdown Batch and Department */}
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label htmlFor="batch" className="text-black">
-                  Batch
-                </label>
-                <select
-                  id="batch"
-                  name="batch"
-                  className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
-                >
-                  {batchOptions.map((batch, index) => (
-                    <option
-                      key={index}
-                      value={batch}
-                      className="bg-black text-white"
-                    >
-                      {batch}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="department" className="text-black">
-                  Department
-                </label>
-                <select
-                  id="department"
-                  name="department"
-                  className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
-                >
-                  {department.map((department, index) => (
-                    <option
-                      key={index}
-                      value={department}
-                      className="bg-black text-white"
-                    >
-                      {department}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
             {/* Additional Info */}
-            <div className="">
-              <div className="flex justify-center items-center gap-2 mt-2 mb-2">
-                <hr className="border border-black w-48 mt-2 mb-2" />
-                <h1 className="text-xl text-black">Additional Information</h1>
-                <hr className="border border-black w-48 mt-2 mb-2" />
-              </div>
-              {/* Social Media */}
-              <div className="grid grid-cols-2 gap-2">
-                <InputField
-                  id="facebook"
-                  name="facebook"
-                  label="Facebook"
-                  type="text"
-                />
-                <InputField
-                  id="github"
-                  name="github"
-                  label="Github"
-                  type="text"
-                />
-              </div>
-              {/* Image Upload & Linkedin*/}
-              <div>
-                <div>
-                  <label htmlFor={"image"} className="text-sm text-black">
-                    Image
-                  </label>
-                  <input
-                    id={"image"}
-                    type="file"
-                    className={` w-full px-3 py-2 border border-amber-400 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400 appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-moz-number-spin-box]:appearance-none text-black`}
-                    accept="image/jpeg, image/png, image/jpg, image/jfif"
-                  />
-                </div>
-                <div>
-                  <InputField />
-                </div>
-              </div>
-              {/* Agreement */}
-              <div className=" mt-2">
-                <input
-                  type="checkbox"
-                  id="agree"
-                  name="agree"
-                  className="mr-2 text-black"
-                />
-                <label htmlFor="agree" className="text-black">
-                  I agree with the terms and conditions
-                </label>
-              </div>
-            </div>
+            <AdditionalInformation
+              batchOptions={batchOptions}
+              department={department}
+            />
             <button
               type="submit"
               className="mt-4 px-4 py-2 bg-amber-500 text-white rounded-md w-full"

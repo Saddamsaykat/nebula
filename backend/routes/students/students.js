@@ -1,5 +1,7 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const router = express.Router();
 
@@ -7,6 +9,22 @@ const router = express.Router();
 let studentsCollection;
 const setDatabase = (db) => {
   studentsCollection = db.collection("students");
+};
+
+
+const verifyToken = async (req, res, next) => {
+  if (!req?.headers?.authorization) {
+    return res.status(401).json({ message: "Unauthorized - No Token" });
+  }
+
+  const token = req.headers.authorization.split(" ")[1];
+  jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Unauthorized - Invalid Token" });
+    }
+    req.user = decoded;
+    next();
+  });
 };
 
 // Get all students

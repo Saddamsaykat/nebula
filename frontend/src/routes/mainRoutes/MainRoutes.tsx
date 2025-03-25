@@ -8,6 +8,7 @@ import RootPage from "../../pages/rootPage/RootPage";
 import ForgetPassword from "../../pages/forgatPassword/ForgetPassword";
 import PrivateRoute from "../privateRoutes/PrivateRoutes";
 import Weather from "../../pages/weather/Weather";
+import Alumni from "../../pages/alumni/Alumni";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -27,8 +28,8 @@ const MainRoutes = createBrowserRouter([
         element: <div>Contact</div>,
       },
       {
-        path: "news",
-        element: <div>News</div>,
+        path: "alumni",
+        element: <Alumni/>,
       },
       {
         path: "/login",

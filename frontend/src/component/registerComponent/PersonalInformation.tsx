@@ -1,8 +1,10 @@
+import React from "react";
 import InputField from "../../utils/inputField/InputField";
 import PasswordField from "../../utils/passwordField/PasswordField";
 import TextAreaField from "../../utils/textAreaField/TextAreaField";
+import { propsTypeRegister } from "../../pages/register/propsType/propsTypeRegister";
 
-const PersonalInformation = () => {
+const PersonalInformation: React.FC<propsTypeRegister> = () => {
 
   return (
     <div className="p-4 max-w-[720px] rounded-md shadow-sm dark:bg-gray-50">

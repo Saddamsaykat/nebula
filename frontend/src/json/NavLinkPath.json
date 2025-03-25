@@ -2,7 +2,7 @@
     { "to": "/home", "label": "Home" },
     { "to": "/about", "label": "About" },
     { "to": "/contact", "label": "Contact" },
-    { "to": "/news", "label": "News" },
+    { "to": "/alumni", "label": "Alumni" },
     { "to": "/events", "label": "Events" },
     { "to": "/donate", "label": "Donate" },
     { "to": "/weather", "label": "Weather" }

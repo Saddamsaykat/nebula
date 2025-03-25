@@ -9,7 +9,7 @@ interface inputPasswordProps {
 const PasswordField:React.FC<inputPasswordProps> = ({ id, label, name }) => {
     const [showPassword, setShowPassword] = useState(false);
     return (
-      <div className="relative">
+      <div className="relative mt-2">
         <label htmlFor={id} className="text-sm text-black">
           {label}
         </label>

@@ -15,7 +15,7 @@ const InputField: React.FC<inputFieldProps> = ({
   ...props
 }) => {
   return (
-    <div>
+    <div className="mt-2">
       <label htmlFor={id} className="text-sm text-black">
         {label}
       </label>
