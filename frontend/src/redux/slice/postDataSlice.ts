@@ -42,7 +42,7 @@ export const postDataSlice = createApi({
 
     addPost: builder.mutation<Post, Partial<Post>>({
       query: (postData) => ({
-        url: "createPost",
+        url: "students",
         method: "POST",
         body: postData,
         headers: { "Content-Type": "application/json" },

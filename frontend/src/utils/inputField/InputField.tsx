@@ -1,13 +1,14 @@
 import React from "react";
 
-interface inputFieldProps {
+interface inputFieldPropstypes {
   id: string;
   label: string;
   type?: string;
   dynamicClassName?: string;
 }
 
-const InputField: React.FC<inputFieldProps> = ({
+
+const InputField: React.FC<inputFieldPropstypes> = ({
   id,
   label,
   type = "text",

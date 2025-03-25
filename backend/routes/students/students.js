@@ -45,6 +45,7 @@ router.post("/", async (req, res) => {
       batch,
       department,
       name,
+      lastName,
       email,
       number,
       presentAddress,
@@ -54,6 +55,9 @@ router.post("/", async (req, res) => {
       linkedin,
       github,
       aboutYour,
+      image,
+      role,
+      studentId
     } = req.body;
 
     // Validate required fields
@@ -88,6 +92,7 @@ router.post("/", async (req, res) => {
 
     const studentData = {
       name,
+      lastName,
       email,
       number,
       presentAddress,
@@ -97,6 +102,9 @@ router.post("/", async (req, res) => {
       linkedin,
       github,
       aboutYour,
+      image,
+      role,
+      studentId
     };
 
     if (!batchData) {
