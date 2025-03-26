@@ -29,7 +29,11 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "alumni",
-        element: <Alumni/>,
+        element: (
+          <PrivateRoute>
+            <Alumni />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",

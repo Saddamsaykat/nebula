@@ -24,11 +24,16 @@ export const registerWithEmail = (email, password) => async (dispatch) => {
       email,
       password
     );
-    // const user = userCredential.user;
-    // await sendEmailVerification(user);
-    // dispatch(loginSuccess(user));
+    const user = userCredential.user;
+    if (user) {
+      await sendEmailVerification(user); // Send email verification
+      dispatch(loginSuccess(user)); // Update Redux state
+    }
+
+    return user;
   } catch (error) {
-    dispatch(loginFailure(error.message));
+    dispatch(loginFailure(error.message)); // Notify Redux state of failure
+    throw error; // Rethrow error to handle it in caller function
   }
 };
 
@@ -71,12 +76,16 @@ export const checkAuthState = () => async (dispatch) => {
         const result = await dispatch(
           loginSlice.endpoints.verifyJwt.initiate(loggedUser)
         );
+        console.log(result)
         if (result?.data?.token) {
           localStorage.setItem("Token", result.data.token);
         }
 
         dispatch(setUser(user));
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error checking auth state:", error);
+        dispatch(logout());
+      }
     } else {
       localStorage.removeItem("Token");
       dispatch(logout());

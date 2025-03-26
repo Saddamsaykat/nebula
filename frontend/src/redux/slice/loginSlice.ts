@@ -1,14 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// import { baseUrl } from '../../api/baseUrl';
+import { baseUrl } from '../../api/baseUrl';
+console.log(baseUrl)
 
 export const loginSlice = createApi({
   reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000' }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ['User'],
   endpoints: (builder) => ({
     verifyJwt: builder.mutation({
       query: (user) => ({
-        url: 'jwtAuth',
+        url: '/jwtAuth',
         method: 'POST',
         body: user,
       }),

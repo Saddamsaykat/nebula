@@ -7,10 +7,13 @@ import { propsTypeRegister } from "./propsType/propsTypeRegister";
 import useImageUpload from "../../hook/uploadImage";
 import { generateRandomId } from "../../hook/generateRandomId";
 import RegisterHeader from "../../component/registerComponent/RegisterHeader";
-import  { useAddPostMutation } from "../../redux/slice/postDataSlice";
+import { useAddPostMutation } from "../../redux/slice/postDataSlice";
+import { registerWithEmail } from "../../authActions/authActions";
+import { useDispatch } from "react-redux";
 
 const Register: React.FC<propsTypeRegister> = () => {
-  const [addStudent] = useAddPostMutation()
+  const dispatch = useDispatch();
+  const [addStudent] = useAddPostMutation();
   const batchOptions = ["", " 1", " 2", " 3", " 4 ", "5", "6"];
   const department = ["Department", "CSE", "EEE", "CE"];
   const iamge_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -45,7 +48,6 @@ const Register: React.FC<propsTypeRegister> = () => {
       alert("You must agree to the terms and conditions");
       return;
     }
-    console.log("Uploaded Image URL:", uploadedImageUrl);
 
     if (password !== confirmPassword) {
       alert("Passwords do not match");
@@ -67,14 +69,17 @@ const Register: React.FC<propsTypeRegister> = () => {
       github,
       aboutYour,
       image: uploadedImageUrl,
-      role: 'student',
+      role: "student",
       studentId,
+      agree,
     };
     try {
-      await addStudent(studentInfo).unwrap();
-      // Optionally, reset the form or show success message
+      const studentDataSet = await addStudent(studentInfo).unwrap();
+      const studentRegister = await dispatch(
+        registerWithEmail(email, password)
+      );
     } catch (error) {
-      console.error('Failed to add student: ', error);
+      console.error("Failed to add student: ", error);
     }
     form.reset();
   };

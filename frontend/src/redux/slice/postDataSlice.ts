@@ -17,23 +17,24 @@ export interface Post {
 }
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-// import { baseUrl } from "../../api/baseUrl";
+import { baseUrl } from "../../api/baseUrl";
+console.log(baseUrl);
 
 export const postDataSlice = createApi({
   reducerPath: "postApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/students" }),
+  baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
       query: () => {
-        // const token = localStorage.getItem("Token");
-        // console.log("Chase Token", token)
+        const token = localStorage.getItem("Token");
+        console.log("Chase Token", token)
         return {
-          url: "",
+          url: "students",
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            // Authorization: token ? `Bearer ${token}` : "",
+            Authorization: token ? `Bearer ${token}` : "",
           },
         };
       },

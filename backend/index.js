@@ -4,17 +4,13 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-
 const studentRoutes = require("./routes/students/students.js");
-
 const app = express();
 const port = process.env.PORT || 5000;
-
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
-
 // MongoDB Connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jceqwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const client = new MongoClient(uri, {
@@ -43,18 +39,6 @@ async function run() {
         expiresIn: "10h",
       });
       res.send({ token });
-    });
-
-
-    // Fetch Posts
-    app.get("/getPosts", async (req, res) => {
-      try {
-        const result = await postsCollection.find().toArray();
-        res.json(result);
-      } catch (error) {
-        console.error("Database Query Error:", error);
-        res.status(500).json({ message: "Internal Server Error" });
-      }
     });
 
     console.log("Connected to MongoDB");

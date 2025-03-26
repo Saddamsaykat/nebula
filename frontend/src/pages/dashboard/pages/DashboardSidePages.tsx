@@ -1,14 +1,16 @@
 import { FiSearch } from "react-icons/fi";
 import { IoIosChatbubbles, IoMdSettings } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
 import { GiExitDoor } from "react-icons/gi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../authActions/authActions";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 
-const DashboardSidePages = () => {
+const DashboardSidePages = ({ user, userInfo }) => {
+
+
+
   const [logoutMessage, setLogoutMessage] = useState<string>("");
 
   const dispatch = useDispatch();
@@ -32,14 +34,17 @@ const DashboardSidePages = () => {
       <div className="h-screen p-3 space-y-2 w-60 dark:bg-gray-50 dark:text-gray-800">
         <div className="flex items-center p-2 space-x-4">
           <img
-            src="https://source.unsplash.com/100x100/?portrait"
+            src={userInfo?.student?.image}
             alt="User"
             className="w-12 h-12 rounded-full dark:bg-gray-500"
           />
           <div>
-            <h2 className="text-lg font-semibold">Leroy Jenkins</h2>
+            <h2 className="text-xl font-semibold">{userInfo?.student?.name}</h2>
             <span className="flex items-center space-x-1">
-              <a href="#" className="text-xs hover:underline dark:text-gray-600">
+              <a
+                href="#"
+                className="text-xs hover:underline dark:text-gray-600"
+              >
                 View profile
               </a>
             </span>
@@ -58,19 +63,28 @@ const DashboardSidePages = () => {
               </NavLink>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+              <a
+                href="#"
+                className="flex items-center p-2 space-x-3 rounded-md"
+              >
                 <FiSearch />
                 <span>Search</span>
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+              <a
+                href="#"
+                className="flex items-center p-2 space-x-3 rounded-md"
+              >
                 <IoIosChatbubbles />
                 <span>Chat</span>
               </a>
             </li>
             <li>
-              <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+              <a
+                href="#"
+                className="flex items-center p-2 space-x-3 rounded-md"
+              >
                 <FaHeart />
                 <span>Wishlist</span>
               </a>
@@ -79,7 +93,10 @@ const DashboardSidePages = () => {
 
           <ul className="pt-4 pb-2 space-y-1 text-sm">
             <li>
-              <a href="#" className="flex items-center p-2 space-x-3 rounded-md">
+              <a
+                href="#"
+                className="flex items-center p-2 space-x-3 rounded-md"
+              >
                 <IoMdSettings />
                 <span>Settings</span>
               </a>
