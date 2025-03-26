@@ -27,8 +27,8 @@ export const registerWithEmail = (email, password) => async (dispatch) => {
     );
     const user = userCredential.user;
     if (user) {
-      await sendEmailVerification(user); // Send email verification
-      dispatch(loginSuccess(user)); // Update Redux state
+      await sendEmailVerification(user);
+      dispatch(loginSuccess(user));
     }
 
     return user;
@@ -61,7 +61,14 @@ export const signInWithEmail = (email, password) => async (dispatch) => {
       email,
       password
     );
-    dispatch(loginSuccess(userCredential.user));
+    const user = userCredential.user;
+
+    if (!user.emailVerified) {
+      await signOut(auth);
+      throw new Error("Please verify your email before logging in.");
+    }
+
+    dispatch(loginSuccess(user));
   } catch (error) {
     dispatch(loginFailure(error.message));
   }
