@@ -128,4 +128,30 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Delated
+router.delete('/', async (req, res) => {
+  try {
+    const { batch, department, studentId } = req.body;
+    if (!batch || !department || !studentId) {
+      return res.status(400).json({ message: "Missing required fields!" });
+    }
+
+    const updatedStudent = await studentsCollection.findOneAndUpdate(
+      { batch },
+      { $pull: { [`department.${department}`]: { studentId } } },
+      { returnOriginal: false }
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ message: "Student not found!" });
+    }
+
+    res.json({ message: "Student deleted successfully!" });
+  } catch (error) {
+    console.error("Error deleting student:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 module.exports = { router, setDatabase };

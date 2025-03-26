@@ -2,19 +2,20 @@ import { Outlet } from "react-router-dom";
 import DashboardSidePages from "./pages/DashboardSidePages";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
 import { useGetPostsQuery } from "../../redux/slice/postDataSlice";
+import { deleteAccount } from "../../authActions/authActions";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch()
   const theme = useSelector((state: any) => state.theme.theme);
-  const styles = getThemeStyles(theme);
   const user = useSelector((state: any) => state.auth.user);
-
+  const styles = getThemeStyles(theme);
   const { data } = useGetPostsQuery();
-  // Firebase email address come here
   const userEmail = user?.email;
+
   const getUserDetails = (data: any[], userEmail: string) => {
     if (!data || !userEmail) return null;
 
@@ -56,7 +57,7 @@ const Dashboard = () => {
           ✖
         </button>
         <ul className="menu text-base-content h-full">
-          <DashboardSidePages userInfo={userInfo} />
+          <DashboardSidePages userInfo={userInfo} userEmail={userEmail}/>
         </ul>
       </div>
 

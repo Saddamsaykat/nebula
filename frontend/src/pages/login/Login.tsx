@@ -29,7 +29,7 @@ const Login: React.FC<loginProps> = () => {
     } catch (error) {
       console.error("Login failed:", error);
     } finally {
-      setLoading(false); // Set loading to false when login completes
+      setLoading(false);
     }
   };
 

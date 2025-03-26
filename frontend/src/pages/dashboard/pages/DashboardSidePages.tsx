@@ -3,18 +3,19 @@ import { IoIosChatbubbles, IoMdSettings } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logoutUser } from "../../../authActions/authActions";
+import { deleteAccount, logoutUser } from "../../../authActions/authActions";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import { useDeletePostMutation } from "../../../redux/slice/postDataSlice";
 
-const DashboardSidePages = ({ user, userInfo }) => {
-
-
-
+const DashboardSidePages = ({ userInfo, userEmail }) => {
+  console.log(userInfo);
   const [logoutMessage, setLogoutMessage] = useState<string>("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // ✅ Call the mutation at the top level
+  const [deletePost] = useDeletePostMutation();
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -22,6 +23,24 @@ const DashboardSidePages = ({ user, userInfo }) => {
     setTimeout(() => {
       navigate("/login");
     }, 1500);
+  };
+
+  const handleDeleteAccount = async (userInfo, userEmail) => {
+    try {
+      const payload = {
+        batch: userInfo?.batch,
+        department: userInfo?.department,
+        studentId: userInfo?.student?.studentId,
+      };
+
+      await deletePost(payload); // ✅ Corrected Hook Usage
+      await dispatch(deleteAccount(userEmail));
+
+      alert("Your account has been successfully deleted.");
+    } catch (error) {
+      alert("Failed to delete account. Please try again.");
+      console.error(error);
+    }
   };
 
   return (
@@ -58,7 +77,6 @@ const DashboardSidePages = ({ user, userInfo }) => {
                 to="/dashboard/profile"
                 className="flex items-center p-2 space-x-3 rounded-md dark:bg-gray-100 dark:text-gray-900"
               >
-                {/* <MdDashbo0a /> */}
                 <span>Dashboard</span>
               </NavLink>
             </li>
@@ -102,7 +120,6 @@ const DashboardSidePages = ({ user, userInfo }) => {
               </a>
             </li>
             <li>
-              {/* Logout button */}
               <button
                 onClick={handleLogout}
                 className="flex items-center w-full p-2 space-x-3 rounded-md text-red-500 hover:text-red-700"
@@ -112,6 +129,14 @@ const DashboardSidePages = ({ user, userInfo }) => {
               </button>
             </li>
           </ul>
+          <div>
+            <button
+              onClick={() => handleDeleteAccount(userInfo, userEmail)}
+              className="p-2 bg-red-500 text-white rounded-md"
+            >
+              Delete Account
+            </button>
+          </div>
         </div>
       </div>
     </>

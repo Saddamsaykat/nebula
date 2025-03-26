@@ -50,10 +50,11 @@ export const postDataSlice = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    deletePost: builder.mutation<{ success: boolean }, string>({
-      query: (postId) => ({
-        url: `deletePost/${postId}`,
+    deletePost: builder.mutation<{ success: boolean }, { batch: string; department: string; studentId: string }>({
+      query: ({ batch, department, studentId }) => ({
+        url: `students`, // No studentId in the URL
         method: "DELETE",
+        body: { batch, department, studentId }, // Send data in the request body
       }),
       invalidatesTags: ["Post"],
     }),

@@ -5,6 +5,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   onAuthStateChanged,
+  deleteUser,
 } from "firebase/auth";
 import {
   loginFailure,
@@ -76,14 +77,11 @@ export const checkAuthState = () => async (dispatch) => {
         const result = await dispatch(
           loginSlice.endpoints.verifyJwt.initiate(loggedUser)
         );
-        console.log(result)
         if (result?.data?.token) {
           localStorage.setItem("Token", result.data.token);
         }
-
         dispatch(setUser(user));
       } catch (error) {
-        console.error("Error checking auth state:", error);
         dispatch(logout());
       }
     } else {
@@ -91,4 +89,19 @@ export const checkAuthState = () => async (dispatch) => {
       dispatch(logout());
     }
   });
+};
+
+export const deleteAccount = () => async (dispatch) => {
+  const user = auth.currentUser;
+  if (user) {
+    try {
+      await deleteUser(user);
+      console.log("User account deleted successfully.");
+      dispatch(logout());
+    } catch (error) {
+      console.error("Error deleting user account:", error.message);
+    }
+  } else {
+    console.error("No user is currently signed in.");
+  }
 };
