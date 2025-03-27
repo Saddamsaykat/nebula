@@ -1,5 +1,5 @@
+/* Global styles */
 body {
-  /* background: #eee; */
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #000;
@@ -7,20 +7,60 @@ body {
   padding: 0;
 }
 
+/* Swiper container */
 .swiper {
   width: 100%;
   padding-top: 50px;
   padding-bottom: 50px;
 }
 
+/* Swiper slides */
 .swiper-slide {
-  /* background-position: center;
-  background-size: cover; */
-  width: 300px;
-  height: 150px;
+  width: 100%;
+  height: auto; /* Adjusts based on the content inside */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+/* Image inside swiper-slide */
 .swiper-slide img {
   display: block;
   width: 100%;
+  height: auto; /* Adjusts to the image's aspect ratio */
+  object-fit: cover; /* Ensures the image covers the entire space without distortion */
+}
+
+/* Media Queries for responsiveness */
+
+/* For screens larger than 1200px */
+@media (min-width: 1200px) {
+  .swiper-slide {
+    width: 300px; /* Slide width for large screens */
+    height: 150px; /* Adjust slide height */
+  }
+}
+
+/* For screens between 992px and 1199px (tablets and small desktop) */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .swiper-slide {
+    width: 250px; /* Adjust slide width for medium screens */
+    height: 120px; /* Adjust slide height */
+  }
+}
+
+/* For screens between 768px and 991px (tablets) */
+@media (max-width: 991px) and (min-width: 576px) {
+  .swiper-slide {
+    width: 200px; /* Adjust slide width for tablets */
+    height: 100px; /* Adjust slide height */
+  }
+}
+
+/* For screens smaller than 576px (mobile devices) */
+@media (max-width: 575px) {
+  .swiper-slide {
+    width: 150px; /* Adjust slide width for small screens */
+    height: 80px; /* Adjust slide height */
+  }
 }

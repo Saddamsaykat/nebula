@@ -3,6 +3,7 @@ import { postDataSlice } from "./slice/postDataSlice";
 import themeSlice from "./slice/themeSlice";
 import authReducer from "./slice/authSlice";
 import { loginSlice } from "./slice/loginSlice";
+import { chatApi } from "./slice/chatApi/chatApi";
 
 export const store = configureStore({
   reducer: {
@@ -10,11 +11,13 @@ export const store = configureStore({
     [loginSlice.reducerPath]: loginSlice.reducer,
     theme: themeSlice,
     auth: authReducer,
+    [chatApi.reducerPath]: chatApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       postDataSlice.middleware,
-      loginSlice.middleware // Add your other middlewares here
+      loginSlice.middleware,
+      chatApi.middleware,
     ),
 });
 

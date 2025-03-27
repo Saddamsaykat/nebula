@@ -1,35 +1,72 @@
- 
-  body {
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .swiper {
-    /* width: 70%; */
-    padding-top: 50px;
+/* Swiper container */
+.swiper {
+  padding-top: 50px;
   padding-bottom: 50px;
   height: 480px;
   margin-top: 10px;
-  }
-  
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
+  width: 100%; /* Ensures it takes the full width of the container */
+}
+
+/* Swiper slides */
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
   height: 1080px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Image inside the swiper-slide */
+.swiper-slide img {
+  display: block;
+  width: 100%; /* Ensures images are responsive */
+  height: fit-content; /* Keeps aspect ratio */
+  object-fit: cover; /* Maintains the image's aspect ratio */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+  .swiper {
+    height: 400px; /* Adjust height for medium screens */
   }
-  
+
+  .swiper-slide {
+    height: 800px; /* Adjust slide height for medium screens */
+  }
+}
+
+@media (max-width: 992px) {
+  .swiper {
+    height: 350px; /* Adjust height for smaller screens */
+  }
+
+  .swiper-slide {
+    height: 600px; /* Adjust slide height for smaller screens */
+  }
+
   .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: fit-content;
-    object-fit: cover;
+    object-fit: contain; /* Prevents image clipping on smaller screens */
   }
-  
+}
+
+@media (max-width: 768px) {
+  .swiper {
+    height: 300px; /* Further adjustment for small screens */
+  }
+
+  .swiper-slide {
+    height: 500px; /* Further adjustment for small screens */
+  }
+}
+
+@media (max-width: 576px) {
+  .swiper {
+    height: 250px; /* Very small screens */
+  }
+
+  .swiper-slide {
+    height: 400px; /* Very small screens */
+  }
+}

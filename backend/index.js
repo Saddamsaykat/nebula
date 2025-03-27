@@ -5,12 +5,15 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const studentRoutes = require("./routes/students/students.js");
+const chatbot = require("./routes/chatbot/chatBot.js");
 const app = express();
 const port = process.env.PORT || 5000;
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+
 // MongoDB Connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.jceqwtr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 const client = new MongoClient(uri, {
@@ -31,6 +34,8 @@ async function run() {
     // Set the database for student routes
     studentRoutes.setDatabase(db);
     app.use("/students", studentRoutes.router);
+    // chatbot.setDatabase(db);
+    // app.use('/chatMassage', chatbot.router);
 
     // JWT Authentication
     app.post("/jwtAuth", async (req, res) => {

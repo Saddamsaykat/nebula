@@ -9,6 +9,9 @@ import ForgetPassword from "../../pages/forgatPassword/ForgetPassword";
 import PrivateRoute from "../privateRoutes/PrivateRoutes";
 import Weather from "../../pages/weather/Weather";
 import Alumni from "../../pages/alumni/Alumni";
+import Gallery from "../../component/main/galary/Gallery";
+import Event from "../../pages/event/Event";
+import Chatbot from "../../component/main/chatbot/Chatbot";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -40,20 +43,20 @@ const MainRoutes = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/events",
-        element: <>sdjjdsfl</>,
-      },
-      {
         path: "/register",
         element: <Register />,
       },
       {
         path: "events",
-        element: <div>Events</div>,
+        element: <Chatbot/>,
       },
       {
-        path: "donate",
-        element: <div>Donate</div>,
+        path: "gallery",
+        element: (
+          <PrivateRoute>
+            <Gallery />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/forgetPassword",
@@ -77,7 +80,11 @@ const MainRoutes = createBrowserRouter([
         children: [
           {
             path: "/dashboard/profile",
-            element: <Profile />,
+            element: (
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            ),
           },
         ],
       },

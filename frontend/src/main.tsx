@@ -5,8 +5,6 @@ import "./index.css";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import MainRoutes from "./routes/mainRoutes/MainRoutes";
-// import Lottie from "lottie-react";
-// import spin from './json/loading.json';
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
