@@ -1,5 +1,6 @@
 import { MdClose, MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+import ImageDropdown from "../../../utils/imageDropdown/ImageDropdown";
 
 interface NavLinkItem {
   to: string;
@@ -73,18 +74,11 @@ const NavDataOtherDevice: React.FC<NavDataOtherDeviceProps> = ({
       </ul>
       <div className="px-4 space-y-2">
         {user?.email ? (
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive
-                ? "text-blue-600 font-semibold text-lg bg-gray-100 px-4 py-2 rounded-lg"
-                : "text-gray-700 hover:text-blue-500 hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300"
-            }
-          >
-            <MdDashboard className="mr-2" />
-            <span>{user?.email.slice(0, 5)}</span>
-          </NavLink>
-        ) : (
+        <div>
+           <ImageDropdown user={user}/>
+        </div>
+        ) 
+        : (
           <NavLink
             to="/login"
             className={({ isActive }) =>

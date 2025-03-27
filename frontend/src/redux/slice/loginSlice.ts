@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl } from '../../api/baseUrl';
-console.log(baseUrl)
 
 export const loginSlice = createApi({
   reducerPath: 'authApi',
@@ -18,12 +17,7 @@ export const loginSlice = createApi({
         return response;
       }
     }),
-    // Get Data from jwt token
-    getUserData: builder.query({
-      query: () => '/users',
-      providesTags: ['User'],
-    }),
   }),
 });
 
-export const { useVerifyJwtMutation , useGetUserDataQuery } = loginSlice;
+export const { useVerifyJwtMutation } = loginSlice;

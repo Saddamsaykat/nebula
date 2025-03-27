@@ -7,9 +7,9 @@ import { deleteAccount, logoutUser } from "../../../authActions/authActions";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useDeletePostMutation } from "../../../redux/slice/postDataSlice";
+import Swal from "sweetalert2";
 
 const DashboardSidePages = ({ userInfo, userEmail }) => {
-  console.log(userInfo);
   const [logoutMessage, setLogoutMessage] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,22 +26,48 @@ const DashboardSidePages = ({ userInfo, userEmail }) => {
   };
 
   const handleDeleteAccount = async (userInfo, userEmail) => {
+    console.log(userEmail)
     try {
+      const confirmation = await Swal.fire({
+        title: "Are you sure?",
+        text: "This action cannot be undone. Your account will be permanently deleted.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      });
+  
+      if (!confirmation.isConfirmed) return;
+  
       const payload = {
         batch: userInfo?.batch,
         department: userInfo?.department,
         studentId: userInfo?.student?.studentId,
       };
-
-      await deletePost(payload); // ✅ Corrected Hook Usage
+  
+      await deletePost(payload); 
       await dispatch(deleteAccount(userEmail));
-
-      alert("Your account has been successfully deleted.");
+  
+      await Swal.fire({
+        title: "Deleted!",
+        text: "Your account has been successfully deleted.",
+        icon: "success",
+        confirmButtonColor: "#3085d6",
+      });
+  
+      navigate("/login"); // Redirect after deletion
     } catch (error) {
-      alert("Failed to delete account. Please try again.");
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to delete account. Please try again.",
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
       console.error(error);
     }
   };
+  
 
   return (
     <>

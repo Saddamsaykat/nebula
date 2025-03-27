@@ -12,11 +12,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Provider store={store}>
     <React.StrictMode>
       <RouterProvider
-        // fallbackElement={
-        //   <div className="flex justify-center items-center">
-        //     <Lottie loop={true} animationData={spin} className="w-96"></Lottie>
-        //   </div>
-        // }
         router={MainRoutes}
       />
     </React.StrictMode>

@@ -1,9 +1,5 @@
-import { useGetPostsQuery } from "../../../redux/slice/postDataSlice";
-
 const Gallery = () => {
-  const { data: data } = useGetPostsQuery();
-  console.log(data);
-  
+
   return (
     <div>
       <section className="py-6 dark:bg-gray-100 dark:text-gray-900">

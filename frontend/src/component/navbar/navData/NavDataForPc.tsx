@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import NavLinkPath from "../../../json/NavLinkPath.json";
+import NavLinkPath from "../../../hook/NavLinkPath";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuthState, } from "../../../authActions/authActions";
 import { useEffect } from "react";

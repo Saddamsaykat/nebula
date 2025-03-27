@@ -1,18 +1,13 @@
 import React, { useState } from "react";
 import bgImage from "../../assets/ZHSUST.jpg";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import logoZhsust from "../../assets/FavIcon.jpg";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { signInWithEmail } from "../../authActions/authActions";
+import Swal from "sweetalert2";
 
-interface loginProps {
-  handleLogin: () => void;
-  showPassword: boolean;
-  handleShowPassword: () => void;
-}
-
-const Login: React.FC<loginProps> = () => {
+const Login: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -23,16 +18,30 @@ const Login: React.FC<loginProps> = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+  
     try {
       await dispatch(signInWithEmail(email, password));
-      navigate("/home");
+  
+      Swal.fire({
+        title: "Success!",
+        text: "Login successful!",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/home");
+      });
     } catch (error) {
-      console.error("Login failed:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "Invalid email or password. Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
     } finally {
       setLoading(false);
     }
   };
-
+  
   return (
     <div
       className="relative h-screen flex items-center justify-center bg-cover bg-center"
@@ -55,12 +64,11 @@ const Login: React.FC<loginProps> = () => {
             <div className="relative w-full">
               <input
                 type="email"
-                value={email} // Bind email state
-                onChange={(e) => setEmail(e.target.value)} // Update email state
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full bg-transparent text-white py-2 focus:outline-none"
                 placeholder="E-Mail"
-                name="email"
               />
             </div>
           </div>
@@ -70,12 +78,11 @@ const Login: React.FC<loginProps> = () => {
             <div className="relative w-full">
               <input
                 type={showPassword ? "text" : "password"}
-                value={password} // Bind password state
-                onChange={(e) => setPassword(e.target.value)} // Update password state
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full bg-transparent text-white py-2 focus:outline-none"
                 placeholder="Password"
-                name="password"
               />
               <div
                 className="absolute right-3 top-3 cursor-pointer text-white"
@@ -99,16 +106,12 @@ const Login: React.FC<loginProps> = () => {
 
         <button
           type="submit"
-          disabled={!email || !password || loading} // Disable button while loading
+          disabled={!email || !password || loading}
           className={`w-full py-3 font-medium rounded-lg mt-6 ${
             loading ? "bg-gray-400" : "bg-white text-black"
           }`}
         >
-          {loading ? (
-            <span>Loading...</span> // Show loading text or spinner
-          ) : (
-            "Login"
-          )}
+          {loading ? <span>Loading...</span> : "Login"}
         </button>
 
         <p className="text-center text-white text-sm mt-4">

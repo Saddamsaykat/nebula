@@ -74,8 +74,8 @@ const Register: React.FC<propsTypeRegister> = () => {
       agree,
     };
     try {
-      const studentDataSet = await addStudent(studentInfo).unwrap();
-      const studentRegister = await dispatch(
+      await addStudent(studentInfo).unwrap();
+      await dispatch(
         registerWithEmail(email, password)
       );
     } catch (error) {

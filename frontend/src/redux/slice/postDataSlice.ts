@@ -18,7 +18,6 @@ export interface Post {
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../api/baseUrl";
-console.log(baseUrl);
 
 export const postDataSlice = createApi({
   reducerPath: "postApi",
@@ -28,7 +27,6 @@ export const postDataSlice = createApi({
     getPosts: builder.query<Post[], void>({
       query: () => {
         const token = localStorage.getItem("Token");
-        console.log("Chase Token", token)
         return {
           url: "students",
           method: "GET",
@@ -52,9 +50,9 @@ export const postDataSlice = createApi({
     }),
     deletePost: builder.mutation<{ success: boolean }, { batch: string; department: string; studentId: string }>({
       query: ({ batch, department, studentId }) => ({
-        url: `students`, // No studentId in the URL
+        url: `students`,
         method: "DELETE",
-        body: { batch, department, studentId }, // Send data in the request body
+        body: { batch, department, studentId },
       }),
       invalidatesTags: ["Post"],
     }),

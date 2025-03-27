@@ -3,17 +3,24 @@ import { VscThreeBars } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "../../redux/slice/themeSlice";
 import { NavLink } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
-import NavLinkPath from "../../json/NavLinkPath.json";
 import zhLogo from "../../assets/FavIcon.jpg";
 import { getThemeStyles, themes } from "../../utils/themeStyles/themeStyles";
 import { checkAuthState } from "../../authActions/authActions";
 import NavDataOtherDevice from "./navData/NavDataOtherDevice";
+import ImageDropdown from "../../utils/imageDropdown/ImageDropdown";
+import { useMenuItems } from "../../hook/NavLinkPath";
 
 const Navbar: React.FC = () => {
+
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const theme = useSelector((state: any) => state.theme.theme);
+  const NavLinkPath = useMenuItems()
+
+  useEffect(() => {
+    dispatch(checkAuthState());
+  }, [dispatch]);
+
   const user = useSelector((state: any) => state.auth.user);
 
   useEffect(() => {
@@ -29,10 +36,6 @@ const Navbar: React.FC = () => {
   };
 
   const styles = getThemeStyles(theme);
-
-  useEffect(() => {
-    dispatch(checkAuthState());
-  }, [dispatch]);
 
   return (
     <header className="p-4 dark:bg-gray-100 dark:text-gray-800 border border-black container mx-auto">
@@ -67,7 +70,11 @@ const Navbar: React.FC = () => {
               className="border border-violet-500 rounded p-1 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
             >
               {themes.map((t) => (
-                <option key={t} value={t} className="text-black cursor-pointer max-w-2.5">
+                <option
+                  key={t}
+                  value={t}
+                  className="text-black cursor-pointer max-w-2.5"
+                >
                   {t.charAt(0).toUpperCase() + t.slice(1)}
                 </option>
               ))}
@@ -78,17 +85,9 @@ const Navbar: React.FC = () => {
         {/* User Login / Dashboard */}
         <div className="hidden md:flex lg:flex items-center">
           {user?.email ? (
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-600 font-semibold text-lg bg-gray-100 px-4 py-2 rounded-lg"
-                  : "text-gray-700 hover:text-blue-500 hover:bg-gray-50 px-4 py-2 rounded-lg transition-all duration-300"
-              }
-            >
-              <MdDashboard className="mr-2" />
-              <span>{user?.email.slice(0, 5)}</span>
-            </NavLink>
+            <div>
+              <ImageDropdown user={user}/>
+            </div>
           ) : (
             <NavLink
               to="/login"

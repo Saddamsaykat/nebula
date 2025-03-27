@@ -28,7 +28,7 @@ const verifyToken = async (req, res, next) => {
 };
 
 // Get all students
-router.get("/", verifyToken ,async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const students = await studentsCollection.find().toArray();
     res.json(students);

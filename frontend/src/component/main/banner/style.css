@@ -1,0 +1,35 @@
+ 
+  body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .swiper {
+    /* width: 70%; */
+    padding-top: 50px;
+  padding-bottom: 50px;
+  height: 480px;
+  margin-top: 10px;
+  }
+  
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+  height: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: fit-content;
+    object-fit: cover;
+  }
+  

@@ -20,29 +20,27 @@ import { loginSlice } from "../redux/slice/loginSlice";
 export const registerWithEmail = (email, password) => async (dispatch) => {
   dispatch(loginStart());
   try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     if (user) {
       await sendEmailVerification(user);
       dispatch(loginSuccess(user));
+      alert("Registration successful. Please check your email for verification.");
     }
-
     return user;
   } catch (error) {
-    dispatch(loginFailure(error.message)); // Notify Redux state of failure
-    throw error; // Rethrow error to handle it in caller function
+    dispatch(loginFailure(error.message));
+    alert("Registration failed: " + error.message);
+    throw error;
   }
 };
 
 export const forgotPassword = (email) => async () => {
   try {
     await sendPasswordResetEmail(auth, email);
+    alert("Password reset email sent successfully.");
   } catch (error) {
-    console.error("Password reset email failed:");
+    alert("Password reset failed: " + error.message);
   }
 };
 
@@ -50,17 +48,15 @@ export const logoutUser = () => async (dispatch) => {
   try {
     await signOut(auth);
     dispatch(logout());
-  } catch (error) {}
+  } catch (error) {
+    alert("Logout failed: " + error.message);
+  }
 };
 
 export const signInWithEmail = (email, password) => async (dispatch) => {
   dispatch(loginStart());
   try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
     if (!user.emailVerified) {
@@ -69,8 +65,10 @@ export const signInWithEmail = (email, password) => async (dispatch) => {
     }
 
     dispatch(loginSuccess(user));
+    return user; // Ensure a valid user is returned on success
   } catch (error) {
     dispatch(loginFailure(error.message));
+    throw error; // Throw the error so it can be caught in handleLogin
   }
 };
 
@@ -78,12 +76,8 @@ export const checkAuthState = () => async (dispatch) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
       const loggedUser = { user: user };
-
       try {
-        // Call RTK Query mutation correctly
-        const result = await dispatch(
-          loginSlice.endpoints.verifyJwt.initiate(loggedUser)
-        );
+        const result = await dispatch(loginSlice.endpoints.verifyJwt.initiate(loggedUser));
         if (result?.data?.token) {
           localStorage.setItem("Token", result.data.token);
         }
@@ -103,12 +97,12 @@ export const deleteAccount = () => async (dispatch) => {
   if (user) {
     try {
       await deleteUser(user);
-      console.log("User account deleted successfully.");
       dispatch(logout());
+      alert("User account deleted successfully.");
     } catch (error) {
-      console.error("Error deleting user account:", error.message);
+      alert("Error deleting user account: " + error.message);
     }
   } else {
-    console.error("No user is currently signed in.");
+    alert("No user is currently signed in.");
   }
 };

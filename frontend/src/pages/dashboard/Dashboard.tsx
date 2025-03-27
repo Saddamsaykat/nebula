@@ -2,17 +2,15 @@ import { Outlet } from "react-router-dom";
 import DashboardSidePages from "./pages/DashboardSidePages";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
 import { useGetPostsQuery } from "../../redux/slice/postDataSlice";
-import { deleteAccount } from "../../authActions/authActions";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch()
   const theme = useSelector((state: any) => state.theme.theme);
-  const user = useSelector((state: any) => state.auth.user);
   const styles = getThemeStyles(theme);
+  const user = useSelector((state: any) => state.auth.user);
   const { data } = useGetPostsQuery();
   const userEmail = user?.email;
 
