@@ -3,6 +3,7 @@ import Navbar from "../../component/navbar/Navbar";
 import Footer from "../../component/footer/Footer";
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
+import Chatbot from "../../component/main/chatbot/Chatbot";
 
 const Home = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const Home = () => {
       {!hideNavbarFooter && <Navbar />}
       <Outlet />
       {!hideNavbarFooter && <Footer />}
+      {!hideNavbarFooter && <Chatbot />}
     </div>
   );
 };

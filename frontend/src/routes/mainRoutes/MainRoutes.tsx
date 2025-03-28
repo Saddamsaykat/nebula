@@ -48,7 +48,7 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "events",
-        element: <Chatbot/>,
+        element: <div>jfdsal</div>,
       },
       {
         path: "gallery",
