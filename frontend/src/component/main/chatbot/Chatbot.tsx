@@ -1,30 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { useGenerateChatResponseMutation } from "../../../redux/slice/chatApi/chatApi";
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../../utils/themeStyles/themeStyles";
-import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-import { IoClose } from "react-icons/io5";
+import { IoChatbubbleEllipsesSharp, IoClose } from "react-icons/io5";
 import { RiRobot3Fill } from "react-icons/ri";
 
-const Chatbot = () => {
-  const [chatHistory, setChatHistory] = useState([]);
-  const [question, setQuestion] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+const Chatbot: React.FC = () => {
+  const [chatHistory, setChatHistory] = useState<
+    { type: "question" | "answer"; content: string }[]
+  >([]);
+  const [question, setQuestion] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [generateChatResponse, { isLoading }] =
     useGenerateChatResponseMutation();
 
-  const chatContainerRef = useRef(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [chatHistory, isLoading]);
+  }, [chatHistory]);
 
-  async function handleGenerateAnswer(e) {
+  const handleGenerateAnswer = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!question.trim()) return;
 
     const currentQuestion = question;
@@ -39,7 +41,7 @@ const Chatbot = () => {
       const aiResponse =
         response?.candidates?.[0]?.content?.parts?.[0]?.text ||
         "Sorry - Something went wrong. Please try again!";
-
+      
       setChatHistory((prev) => [
         ...prev,
         { type: "answer", content: aiResponse },
@@ -48,15 +50,12 @@ const Chatbot = () => {
       console.error(error);
       setChatHistory((prev) => [
         ...prev,
-        {
-          type: "answer",
-          content: "Sorry - Something went wrong. Please try again!",
-        },
+        { type: "answer", content: "Sorry - Something went wrong. Please try again!" },
       ]);
     }
-  }
+  };
 
-  const theme = useSelector((state) => state.theme.theme);
+  const theme = useSelector((state: { theme: { theme: string } }) => state.theme.theme);
   const styles = getThemeStyles(theme);
 
   return (
@@ -64,7 +63,7 @@ const Chatbot = () => {
       {/* Floating Chat Icon */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed z-50 bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition"
+        className="fixed z-50 bottom-5 right-6 bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-600 transition"
       >
         <IoChatbubbleEllipsesSharp size={24} />
       </button>
@@ -73,7 +72,7 @@ const Chatbot = () => {
       {isOpen && (
         <div
           style={styles}
-          className="fixed z-50 bottom-16 right-6 w-80 bg-white shadow-xl rounded-lg overflow-hidden flex flex-col"
+          className="fixed z-50 bottom-20 right-6 w-80 bg-white shadow-xl rounded-lg overflow-hidden flex flex-col min-h-[480px] max-h-[480px] overflow-x-auto"
         >
           <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
             <h1 className="text-lg font-bold">ZHSUST AI</h1>
@@ -130,7 +129,7 @@ const Chatbot = () => {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="Ask anything..."
-                rows="2"
+                rows={2}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();

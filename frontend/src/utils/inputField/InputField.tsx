@@ -5,6 +5,8 @@ interface inputFieldPropstypes {
   label: string;
   type?: string;
   dynamicClassName?: string;
+  name: string;
+  placeholder?: string;
 }
 
 

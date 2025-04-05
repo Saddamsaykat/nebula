@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Outlet } from "react-router-dom";
 import DashboardSidePages from "./pages/DashboardSidePages";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
-import { useGetPostsQuery } from "../../redux/slice/postDataSlice";
+import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,7 @@ const Dashboard = () => {
     return null; // Return null if no match is found
   };
 
-  const userInfo = getUserDetails(data, userEmail);
+  const userInfo = data ? getUserDetails(data, userEmail) : null;
   console.log(userInfo);
 
   return (
@@ -55,7 +56,7 @@ const Dashboard = () => {
           ✖
         </button>
         <ul className="menu text-base-content h-full">
-          <DashboardSidePages userInfo={userInfo} userEmail={userEmail}/>
+          <DashboardSidePages userInfo={userInfo} userEmail={userEmail} />
         </ul>
       </div>
 

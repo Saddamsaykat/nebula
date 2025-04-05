@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import bgImage from "../../assets/ZHSUST.jpg";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,7 +22,7 @@ const Login: React.FC = () => {
     setLoading(true);
   
     try {
-      await dispatch(signInWithEmail(email, password));
+      await dispatch(signInWithEmail(email, password) as any);
   
       Swal.fire({
         title: "Success!",

@@ -1,8 +1,5 @@
 export interface propsTypeRegister {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  batchOptions: string[];
-  id: string;
-  name: string;
-  label: string;
-  type: string;
+  handleSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+  batchOptions?: string[]; // Correctly passed to AdditionalInformation
+  department?: string[];   // Correctly passed to AdditionalInformation
 }

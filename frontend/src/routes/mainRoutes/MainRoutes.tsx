@@ -10,8 +10,6 @@ import PrivateRoute from "../privateRoutes/PrivateRoutes";
 import Weather from "../../pages/weather/Weather";
 import Alumni from "../../pages/alumni/Alumni";
 import Gallery from "../../component/main/galary/Gallery";
-import Event from "../../pages/event/Event";
-import Chatbot from "../../component/main/chatbot/Chatbot";
 
 const MainRoutes = createBrowserRouter([
   {

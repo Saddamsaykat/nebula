@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useGetPostsQuery } from "../../redux/slice/postDataSlice";
+import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
 
@@ -27,7 +28,9 @@ const Alumni = () => {
 
     const matchesSearch = searchTerm
       ? Object.values(batchData.department).some((students) =>
-          students.some((student) =>
+        // students?.some((student) =>
+          Array.isArray(students) && students.some((student) =>
+
             [
               batchData.batch,
               ...Object.keys(batchData.department),
@@ -105,19 +108,20 @@ const Alumni = () => {
                 </h3>
 
                 <div className="mt-2 grid grid-cols-3 gap-4">
-                  {students
-                    .filter((student) =>
-                      searchTerm
-                        ? [student.name, student.number, student.email].some(
-                            (field) =>
-                              field
-                                .toString()
-                                .toLowerCase()
-                                .includes(searchTerm.toLowerCase())
-                          )
-                        : true
-                    )
-                    .map((student, index) => (
+                  {Array.isArray(students) &&
+                    students
+                      .filter((student) =>
+                        searchTerm
+                          ? [student.name, student.number, student.email].some(
+                              (field) =>
+                                field
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(searchTerm.toLowerCase())
+                            )
+                          : true
+                      )
+                      .map((student) => (
                       <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-50 dark:text-gray-800">
                         <div className="flex space-x-4">
                           {student.image ? (

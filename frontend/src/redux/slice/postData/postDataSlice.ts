@@ -1,23 +1,6 @@
-export interface Department {
-  CSE: Student[];
-}
-
-export interface Student {
-  name: string;
-  email: string;
-  number: string;
-  presentAddress: string;
-  permanentAddress: string;
-}
-
-export interface Post {
-  _id: string;
-  batch: string;
-  department: Department;
-}
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "../../api/baseUrl";
+import { baseUrl } from "../../../api/baseUrl";
+import { Post } from "./postDataProps";
 
 export const postDataSlice = createApi({
   reducerPath: "postApi",

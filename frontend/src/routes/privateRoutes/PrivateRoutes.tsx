@@ -1,10 +1,13 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 import spin from "../../json/loading.json";
 import Lottie from "lottie-react";
 import { checkAuthState } from "../../authActions/authActions";
 import { useEffect } from "react";
-const PrivateRoute = ({ children }) => {
+import { ReactNode } from "react";
+import { RootState } from "../../redux/store";
+
+const PrivateRoute = ({ children }: { children: ReactNode }) => {
 
     const dispatch = useDispatch();
 
@@ -12,8 +15,8 @@ const PrivateRoute = ({ children }) => {
     useEffect(() => {
       dispatch(checkAuthState());
     }, [dispatch]);
-
-    const { user, loading } = useSelector((state) => state?.auth);
+    const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+    const { user, loading } = useTypedSelector((state) => state.auth);
     const location = useLocation();
 
     if (loading) {

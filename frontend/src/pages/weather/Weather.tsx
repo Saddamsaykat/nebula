@@ -1,12 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import bgImageWeather from "../../assets/public/bg-image.jpg";
 import { weatherApi } from "../../api/baseUrl";
 
 const Weather = () => {
   const [city, setCity] = useState("Dhaka");
-  const [weather, setWeather] = useState(null);
+  interface WeatherData {
+    name: string;
+    main: {
+      temp: number;
+    };
+    weather: {
+      main: string;
+      icon: string;
+    }[];
+  }
 
-  const loadData = async (inputData) => {
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+
+  const loadData = async (inputData : any) => {
     try {
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${inputData}&appid=${weatherApi}&units=metric`;
       const res = await fetch(url);
@@ -27,7 +39,7 @@ const Weather = () => {
     }
   };
 
-  const handleKeyPress = (event) => {
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       handleSearch();
     }

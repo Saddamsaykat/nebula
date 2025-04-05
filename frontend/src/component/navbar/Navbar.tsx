@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { VscThreeBars } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,16 +7,14 @@ import { NavLink } from "react-router-dom";
 import zhLogo from "../../assets/FavIcon.jpg";
 import { getThemeStyles, themes } from "../../utils/themeStyles/themeStyles";
 import { checkAuthState } from "../../authActions/authActions";
-import NavDataOtherDevice from "./navData/NavDataOtherDevice";
+import { useMenuItems } from "../../hook/useMenuItems";
 import ImageDropdown from "../../utils/imageDropdown/ImageDropdown";
-import { useMenuItems } from "../../hook/NavLinkPath";
 
 const Navbar: React.FC = () => {
-
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const theme = useSelector((state: any) => state.theme.theme);
-  const NavLinkPath = useMenuItems()
+  const NavLinkPath = useMenuItems();
 
   useEffect(() => {
     dispatch(checkAuthState());
@@ -38,97 +37,96 @@ const Navbar: React.FC = () => {
   const styles = getThemeStyles(theme);
 
   return (
-    <header className="p-4 dark:bg-gray-100 dark:text-gray-800 border border-black container mx-auto">
-      <div className="container flex justify-between items-center h-16 mx-auto">
-        <div className="flex justify-center items-center">
-          <img className="w-10 h-10" src={zhLogo} alt="Logo" />
-        </div>
-
-        {/* Desktop Navigation */}
-        <ul
-          style={styles}
-          className="hidden md:flex md:items-center lg:flex lg:items-center ml-2 gap-6 text-xl text-gray-700"
-        >
-          {NavLinkPath.map(({ to, label }) => (
-            <li key={to}>
-              <NavLink
-                to={to}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-blue-500 font-medium text-xl"
-                    : "hover:text-blue-500"
-                }
+    <div>
+      {/* <header className="fixed top-0 left-0 w-full z-50 bg-gray-900/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none"> */}
+      <div className={`md:top-4 md:left-1/2 w-full flex justify-center ${styles}`}>
+        <div className="p-[2px] md:rounded-full bg-gradient-to-r from-emerald-600 via-cyan-600 to-indigo-800 animate-gradient-x  md:min-w-[550px] mx-auto md:mx-0">
+          <nav className=" backdrop-blur-md md:rounded-full px-4 md:px-6 py-2.5">
+            {/* Mobile Menu Button */}
+            <div className="flex justify-between items-center md:hidden px-2">
+              <img className="w-10 h-10" src={zhLogo} alt="Logo" />
+              <button
+                className="text-white p-2"
+                onClick={() => setMenuOpen(true)}
               >
-                {label}
-              </NavLink>
-            </li>
-          ))}
-          <li>
-            <select
-              value={theme}
-              onChange={handleThemeChange}
-              className="border border-violet-500 rounded p-1 text-xl bg-white text-gray-700 cursor-pointer focus:outline-none"
-            >
-              {themes.map((t) => (
-                <option
-                  key={t}
-                  value={t}
-                  className="text-black cursor-pointer max-w-2.5"
-                >
-                  {t.charAt(0).toUpperCase() + t.slice(1)}
-                </option>
-              ))}
-            </select>
-          </li>
-        </ul>
-
-        {/* User Login / Dashboard */}
-        <div className="hidden md:flex lg:flex items-center">
-          {user?.email ? (
-            <div>
-              <ImageDropdown user={user}/>
+                <VscThreeBars className="text-2xl" />
+              </button>
             </div>
-          ) : (
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-blue-500 font-medium text-2xl"
-                  : "hover:text-blue-500"
-              }
-            >
-              Login
-            </NavLink>
-          )}
-        </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="p-4 lg:hidden md:hidden"
-          onClick={() => setMenuOpen(true)}
-        >
-          <VscThreeBars className="text-2xl" />
-        </button>
+            {/* Navigation Links */}
+            <div className={`${menuOpen ? "block" : "hidden"} md:block`}>
+              <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-1 lg:gap-2 py-4 md:py-0">
+                {NavLinkPath.map(({ to, label }) => (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    className={({ isActive }) =>
+                      `px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 hover:bg-white/10 ${
+                        isActive
+                          ? "bg-white/15 text-white"
+                          : "text-gray-300 hover:text-white"
+                      }`
+                    }
+                  >
+                    {label}
+                  </NavLink>
+                ))}
+                <select
+                  value={theme}
+                  onChange={handleThemeChange}
+                  className="px-3 py-2 md:py-1.5 rounded-lg md:rounded-full text-sm font-medium transition-all duration-300 flex items-center text-gray-300  cursor-pointer focus:outline-none"
+                >
+                  {themes.map((t) => (
+                    <option
+                      key={t}
+                      value={t}
+                      className="text-black cursor-pointer max-w-2.5"
+                    >
+                      {t.charAt(0).toUpperCase() + t.slice(1)}
+                    </option>
+                  ))}
+                </select>
+                {/* User Login / Dashboard */}
+                <div className="hidden md:flex lg:flex items-center">
+                  {user?.email ? (
+                    <div>
+                      <ImageDropdown user={user} />
+                    </div>
+                  ) : (
+                    <NavLink
+                      to="/login"
+                      className={({ isActive }) =>
+                        isActive
+                          ? "font-medium text-2xl"
+                          : "hover:text-blue-500"
+                      }
+                    >
+                      Login
+                    </NavLink>
+                  )}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
       </div>
 
-      {/* Mobile Drawer */}
-      <div
-        className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity ${
-          menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-        onClick={() => setMenuOpen(false)}
-      ></div>
-      <NavDataOtherDevice
-        NavLinkPath={NavLinkPath}
-        handleThemeChange={handleThemeChange}
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        styles={styles}
-        theme={theme}
-        themes={themes}
-        user={user}
-      />
-    </header>
+      <style>{`
+        @keyframes gradient-x {
+          0%, 100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+        .animate-gradient-x {
+          animation: gradient-x 6s linear infinite;
+          background-size: 200% 200%;
+        }
+      `}</style>
+      {/* </header> */}
+    </div>
   );
 };
 

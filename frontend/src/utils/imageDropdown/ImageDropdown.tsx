@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useGetPostsQuery } from "../../redux/slice/postDataSlice";
+import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../authActions/authActions";
 import Swal from "sweetalert2";
 
-const ImageDropdown = ({ user }) => {
+const ImageDropdown = ({ user }: any) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const ImageDropdown = ({ user }) => {
       confirmButtonText: "Yes, logout!",  
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(logoutUser());
+        dispatch(logoutUser() as any) ;
         Swal.fire({
           title: "Logged Out!",
           text: "You have been successfully logged out.",
@@ -58,7 +60,7 @@ const ImageDropdown = ({ user }) => {
     return null;
   };
 
-  const userInfo = getUserDetails(data, userEmail);
+  const userInfo = getUserDetails(data as any, userEmail);
 
   const [isOpen, setIsOpen] = useState(false);
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { forgotPassword } from "../../authActions/authActions";
@@ -13,7 +14,7 @@ const ForgetPassword = () => {
       return;
     }
 
-    dispatch(forgotPassword(email));
+    dispatch(forgotPassword(email) as any);
     setMessage("Password reset email sent. Check your inbox.");
   };
 

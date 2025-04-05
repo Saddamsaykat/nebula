@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../../component/navbar/Navbar";
 import Footer from "../../component/footer/Footer";
@@ -9,7 +10,7 @@ const Home = () => {
   const location = useLocation();
 
   const hideNavbarFooter =
-    location.pathname === "/login" || location.pathname === "/register";
+    location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/dashboard";
 
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);

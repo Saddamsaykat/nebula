@@ -3,25 +3,26 @@ import InputField from "../../utils/inputField/InputField";
 import TextAreaField from "../../utils/textAreaField/TextAreaField";
 
 interface registerAdditionalProps{
-  batchOptions: string[];
-  department: string[];
-  handleBatchChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  handleDepartmentChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  id: string;
-  name: string;
-  label: string;
-  type: string;
-  value: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error: string;
-  errorMessage: string;
-  success: boolean;
-  successMessage: string;
-  handleSuccess: () => void;
-  placeholder: string;
+  batchOptions?: string[];
+  department?: string[];
+  handleBatchChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleDepartmentChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  id?: string;
+  name?: string;
+  label?: string;
+  type?: string;
+  value?: string;
+  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  errorMessage?: string;
+  success?: boolean;
+  successMessage?: string;
+  handleSuccess?: () => void;
+  placeholder?: string;
 } 
 
 const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions, department }) => {
+  console.log(batchOptions)
   return (
     <div className="p-4 max-w-[720px] rounded-md shadow-sm dark:bg-gray-50 mt-3">
       <div className="flex justify-center items-center gap-2 mt-2 mb-2">
@@ -39,7 +40,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions
             name="batch"
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
           >
-            {batchOptions.map((batch, index) => (
+            {batchOptions?.map((batch, index) => (
               <option key={index} value={batch} className="bg-black text-white">
                 Batch {batch}
               </option>
@@ -55,7 +56,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions
             name="department"
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
           >
-            {department.map((department, index) => (
+            {department?.map((department, index) => (
               <option
                 key={index}
                 value={department}
@@ -80,10 +81,10 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions
       {/* Whatsapp & Linkedin*/}
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <InputField id="linkedin" label="Linkedin" type="text" />
+          <InputField id="linkedin" label="Linkedin" type="text" name="linkedin"/>
         </div>
         <div>
-          <InputField id="whatsapp" label="Whatsapp" type="text" />
+          <InputField id="whatsapp" label="Whatsapp" type="text" name="whatsapp"/>
         </div>
       </div>
       {/* Image */}

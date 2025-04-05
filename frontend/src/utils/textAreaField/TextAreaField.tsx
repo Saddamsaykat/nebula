@@ -3,6 +3,8 @@ interface inputFieldProps {
   id: string;
   label: string;
   type?: string;
+  name?: string;
+  placeholder?: string;
 }
 
 const TextAreaField: React.FC<inputFieldProps> = ({ id, label, ...props }) => {

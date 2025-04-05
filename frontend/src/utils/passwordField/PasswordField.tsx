@@ -10,7 +10,7 @@ const PasswordField:React.FC<inputPasswordProps> = ({ id, label, name }) => {
     const [showPassword, setShowPassword] = useState(false);
     return (
       <div className="relative mt-2">
-        <label htmlFor={id} className="text-sm text-black">
+        <label htmlFor={id} className="text-sm">
           {label}
         </label>
         <input
