@@ -11,7 +11,6 @@ const Alumni = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
-  console.log(data);
   const uniqueBatches = [...new Set(data?.map((batch) => batch.batch))];
   const uniqueDepartments = [
     ...new Set(data?.flatMap((batch) => Object.keys(batch.department))),
