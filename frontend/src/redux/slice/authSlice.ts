@@ -11,7 +11,7 @@ export interface AuthState {
 // Set the initial state with the correct types
 const initialState: AuthState = {
   user: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -38,6 +38,7 @@ const authSlice = createSlice({
     },
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
+      state.loading = false;
     },
   },
 });
