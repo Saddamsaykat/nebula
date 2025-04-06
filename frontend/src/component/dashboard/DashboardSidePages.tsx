@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FiSearch } from "react-icons/fi";
 import { IoIosChatbubbles, IoMdSettings } from "react-icons/io";
-import { FaHeart } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
-import { NavLink, useNavigate } from "react-router-dom";
-import { deleteAccount, logoutUser } from "../../../authActions/authActions";
-import { useDispatch } from "react-redux";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { deleteAccount, logoutUser } from "../../authActions/authActions";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useDeletePostMutation } from "../../../redux/slice/postData/postDataSlice";
+import { useDeletePostMutation } from "../../redux/slice/postData/postDataSlice";
 import Swal from "sweetalert2";
+import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
 
 interface DashboardSidePagesProps {
   userInfo: {
@@ -27,7 +27,8 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
   const [logoutMessage, setLogoutMessage] = useState<string>("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const theme = useSelector((state: any) => state.theme.theme);
+  const styles = getThemeStyles(theme);
   const [deletePost] = useDeletePostMutation();
 
   const handleLogout = () => {
@@ -88,7 +89,7 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
           {logoutMessage}
         </div>
       )}
-      <div className="h-screen p-3 space-y-2 w-60 dark:bg-gray-50 dark:text-gray-800">
+      <div className={`h-screen p-3 space-y-2 w-72 ${styles}`}>
         <div className="flex items-center p-2 space-x-4">
           <img
             src={userInfo?.student?.image}
@@ -97,14 +98,14 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
           />
           <div>
             <h2 className="text-xl font-semibold">{userInfo?.student?.name}</h2>
-            <span className="flex items-center space-x-1">
+            <Link to={'/dashboard/profile'}  className="flex items-center space-x-1">
               <a
                 href="#"
                 className="text-xs hover:underline dark:text-gray-600"
               >
                 View profile
               </a>
-            </span>
+            </Link>
           </div>
         </div>
 
@@ -124,7 +125,7 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <FiSearch />
-                <span>Search</span>
+                <span>Update Profile</span>
               </a>
             </li>
             <li>
@@ -133,16 +134,7 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
                 className="flex items-center p-2 space-x-3 rounded-md"
               >
                 <IoIosChatbubbles />
-                <span>Chat</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 space-x-3 rounded-md"
-              >
-                <FaHeart />
-                <span>Wishlist</span>
+                <span>Chat History</span>
               </a>
             </li>
           </ul>
@@ -170,7 +162,7 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
           <div>
             <button
               onClick={() => handleDeleteAccount(userInfo, userEmail as string)}
-              className="p-2 bg-red-500 text-white rounded-md"
+              className="p-2 bg-red-500 text-white rounded-md mt-4"
             >
               Delete Account
             </button>

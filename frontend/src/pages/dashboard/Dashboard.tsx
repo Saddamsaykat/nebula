@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Outlet } from "react-router-dom";
-import DashboardSidePages from "./pages/DashboardSidePages";
+import DashboardSidePages from "../../component/dashboard/DashboardSidePages";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { useSelector } from "react-redux";
@@ -69,6 +69,9 @@ const Dashboard = () => {
           </button>
         </div>
         <div className="p-6">
+          <div className="flex justify-center items-center h-16 bg-gray-800 text-white">
+            <span>Welcome Back {userInfo?.student?.name}</span>
+          </div>
           <Outlet />
         </div>
       </div>

@@ -10,7 +10,7 @@ const Home = () => {
   const location = useLocation();
 
   const hideNavbarFooter =
-    location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/dashboard";
+    location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/dashboard" || location.pathname === "/dashboard/profile";
 
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
