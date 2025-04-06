@@ -69,7 +69,7 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
         confirmButtonColor: "#3085d6",
       });
   
-      navigate("/login"); // Redirect after deletion
+      navigate("/login");
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -80,7 +80,6 @@ const DashboardSidePages = ({ userInfo, userEmail }: DashboardSidePagesProps) =>
       console.error(error);
     }
   };
-  
 
   return (
     <>
