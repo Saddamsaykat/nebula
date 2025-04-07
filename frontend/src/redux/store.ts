@@ -11,6 +11,7 @@ import themeSlice from "./slice/themeSlice";
 import authReducer from "./slice/authSlice";
 import { loginSlice } from "./slice/loginSlice";
 import { chatApi } from "./slice/chatApi/chatApi";
+import { imageApi } from './slice/imageAPi/imageApi';
 
 // Combine the reducers
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   theme: themeSlice,
   auth: authReducer,
   [chatApi.reducerPath]: chatApi.reducer,
+  [imageApi.reducerPath]: imageApi.reducer,
 });
 
 // Configure the store
@@ -28,7 +30,8 @@ const store = configureStore({
     getDefaultMiddleware().concat(
       postDataSlice.middleware,
       loginSlice.middleware,
-      chatApi.middleware
+      chatApi.middleware,
+      imageApi.middleware,
     ),
 });
 

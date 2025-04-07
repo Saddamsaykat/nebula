@@ -5,6 +5,7 @@ require("dotenv").config();
 const bodyParser = require("body-parser");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const studentRoutes = require("./routes/students/students.js");
+const uploadImage = require("./routes/uploadImage/uplaodImage.js");
 const chatbot = require("./routes/chatbot/chatBot.js");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -34,8 +35,9 @@ async function run() {
     // Set the database for student routes
     studentRoutes.setDatabase(db);
     app.use("/students", studentRoutes.router);
-    // chatbot.setDatabase(db);
-    // app.use('/chatMassage', chatbot.router);
+    // Set the database for image upload routes
+    uploadImage.setDatabase(db);
+    app.use("/upload-image", uploadImage.router);
 
     // JWT Authentication
     app.post("/jwtAuth", async (req, res) => {

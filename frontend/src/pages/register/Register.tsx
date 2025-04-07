@@ -20,9 +20,7 @@ const Register: React.FC<propsTypeRegister> = () => {
   const [addStudent] = useAddPostMutation();
   const batchOptions = ["", " 1", " 2", " 3", " 4 ", "5", "6"];
   const department = ["Department", "CSE", "EEE", "CE"];
-  const iamge_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-  const IMAGE_HOSTING_API_DATA = `https://api.imgbb.com/1/upload?key=${iamge_hosting_key}`;
-  const { uploadImage } = useImageUpload(logo, IMAGE_HOSTING_API_DATA);
+  const { uploadImage } = useImageUpload(logo);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -66,7 +64,7 @@ const Register: React.FC<propsTypeRegister> = () => {
     }
 
     try {
-      const uploadedImageUrl = await uploadImage(imageFile);
+      const uploadedImageId = await uploadImage(imageFile);
 
       const studentInfo = {
         batch,
@@ -82,7 +80,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         linkedin,
         github,
         aboutYour,
-        image: uploadedImageUrl,
+        image: uploadedImageId ,
         role: "student",
         studentId,
         agree,

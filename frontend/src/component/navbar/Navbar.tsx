@@ -87,9 +87,9 @@ const Navbar: React.FC = () => {
                   ))}
                 </select>
                 {/* User Login / Dashboard */}
-                <div className="hidden md:flex lg:flex items-center">
+                <div className="">
                   {user?.email ? (
-                    <div>
+                    <div className=''>
                       <ImageDropdown user={user} />
                     </div>
                   ) : (

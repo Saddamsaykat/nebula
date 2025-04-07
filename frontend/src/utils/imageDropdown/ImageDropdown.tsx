@@ -6,6 +6,8 @@ import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../authActions/authActions";
 import Swal from "sweetalert2";
+import { useProjectImage } from "../../hook/getImageUrl";
+import defaultProjectImage from "../../assets/public/bg-image.jpg";
 
 const ImageDropdown = ({ user }: any) => {
   const navigate = useNavigate();
@@ -20,10 +22,10 @@ const ImageDropdown = ({ user }: any) => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, logout!",  
+      confirmButtonText: "Yes, logout!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(logoutUser() as any) ;
+        dispatch(logoutUser() as any);
         Swal.fire({
           title: "Logged Out!",
           text: "You have been successfully logged out.",
@@ -61,6 +63,8 @@ const ImageDropdown = ({ user }: any) => {
   };
 
   const userInfo = getUserDetails(data as any, userEmail);
+  const projectId = userInfo?.student?.projectId;
+  const { imageUrl, isLoading } = useProjectImage(projectId);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,11 +75,19 @@ const ImageDropdown = ({ user }: any) => {
         className="cursor-pointer flex items-center gap-2"
         onClick={() => setIsOpen(!isOpen)}
       >
+          
+     {isLoading ? (
+        <div className="relative w-[260px] h-[150px] bg-gray-100 overflow-hidden mx-auto">
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-[shimmer_1s_infinite]"></div>
+        </div>
+      ) : (
         <img
-          src={userInfo?.student?.image}
-          alt="Profile"
-          className="w-10 h-10 rounded-full border border-gray-300"
+          className="object-cover object-center w-10 h-10 rounded"
+          src={imageUrl ? imageUrl : defaultProjectImage}
+          alt={'User Profile'}
         />
+      )}
+       
       </div>
 
       {/* Dropdown menu */}

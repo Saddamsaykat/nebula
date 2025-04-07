@@ -15,7 +15,7 @@ const TextAreaField: React.FC<inputFieldProps> = ({ id, label, ...props }) => {
       </label>
       <textarea
         id={id}
-        className="w-full px-3 py-2 border border-amber-400 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400 appearance-none text-xl resize-none text-black"
+        className="w-full px-3 py-2 border border-amber-400 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400 appearance-none resize-none text-black"
         {...props}
       />
     </div>

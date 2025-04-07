@@ -93,27 +93,6 @@ export const signInWithEmail =
     }
   };
 
-// export const checkAuthState = (): AuthAction => async (dispatch) => {
-//   onAuthStateChanged(auth, async (user) => {
-//     if (user) {
-//       const loggedUser = { user: user };
-//       try {
-//         const result = await dispatch(loginSlice.endpoints.verifyJwt.initiate(loggedUser));
-//         if (result?.data?.token) {
-//           localStorage.setItem("Token", result.data.token);
-//         }
-//         dispatch(setUser(user));
-//       } catch (error) {
-//         dispatch(logout());
-//       }
-//     } else {
-//       localStorage.removeItem("Token");
-//       dispatch(logout());
-//     }
-//   });
-// };
-
-
 export const checkAuthState = (): any => async (dispatch: AppDispatch) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {

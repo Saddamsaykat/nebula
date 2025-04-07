@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.6.0",
     "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.0.9",
+    "browser-image-compression": "^2.0.2",
     "firebase": "^11.4.0",
     "framer-motion": "^12.4.10",
     "localforage": "^1.10.0",
