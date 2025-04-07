@@ -36,22 +36,36 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 
+
+
 router.get("/:id", async (req, res) => {
-    try {
-      const imageId = req.params.id;
-      const image = await studentsCollection.findOne({ _id: new ObjectId(imageId) });
-  
-      if (!image) {
-        return res.status(404).json({ success: false, message: "Image not found" });
-      }
-  
-      res.set("Content-Type", image.contentType);
-      res.send(image.data);
-    } catch (error) {
-      console.error("Error fetching image:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
+  try {
+    const imageId = req.params.id;
+    const image = await studentsCollection.findOne({ _id: new ObjectId(imageId) });
+
+    if (!image || !image.data || !image.contentType) {
+      return res.status(404).json({ success: false, message: "Image not found" });
     }
-  });
+
+    res.set("Content-Type", image.contentType);
+    res.send(image.data.buffer ? Buffer.from(image.data.buffer) : image.data);
+  } catch (error) {
+    console.error("Error fetching image:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
+
+// router.get("/", async (req, res) => {
+//   try {
+//     const images = await studentsCollection.find({}).toArray();
+//     res.status(200).json({ success: true, images });
+//   } catch (error) {
+//     console.error("Error fetching images:", error);
+//     res.status(500).json({ success: false, message: "Internal Server Error" });
+//   }
+// }
+// );
 
   // Delated Image
 router.delete("/:id", async (req, res) => {

@@ -1,40 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
-import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 import defaultProjectImage from "../../assets/public/bg-image.jpg";
+import useUserDetails from "../../hook/useUserDetails";
 import { useProjectImage } from "../../hook/getImageUrl";
 
 const Profile = () => {
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
-  const user = useSelector((state: any) => state.auth.user);
-  const { data } = useGetPostsQuery();
-  const userEmail = user?.email;
-
-  const getUserDetails = (data: any[], userEmail: string) => {
-    if (!data || !userEmail) return null;
-
-    for (const batchData of data) {
-      for (const department in batchData.department) {
-        const users = batchData.department[department];
-
-        const matchedUser = users.find((user: any) => user.email === userEmail);
-        if (matchedUser) {
-          return {
-            batch: batchData.batch,
-            department,
-            student: matchedUser,
-          };
-        }
-      }
-    }
-    return null;
-  };
-
-  const userInfo = data ? getUserDetails(data, userEmail) : null;
-  const projectId = userInfo?.student?.projectId;
-  const { imageUrl, isLoading, downloadImage } = useProjectImage(projectId);
+  const { userInfo, userEmail } = useUserDetails();
+  const projectId = userInfo?.student?.image;
+  const { imageUrl, isLoading} = useProjectImage(projectId);
   
   return (
     <div className="h-screen flex justify-center items-center">
@@ -47,7 +23,7 @@ const Profile = () => {
           ) : (
             <img
               className="object-cover object-center w-full h-full rounded"
-              src={imageUrl ? imageUrl : defaultProjectImage}
+              src={imageUrl || defaultProjectImage}
               alt={"User Profile"}
             />
           )}
@@ -63,18 +39,18 @@ const Profile = () => {
           </div>
           <div className="space-y-1">
             <span className="flex items-center space-x-2">
-              <span>{userInfo?.student?.email}</span>
+              <span>{userEmail}</span>
             </span>
             <span className="flex items-center space-x-2">
               <span>{userInfo?.student?.number}</span>
             </span>
           </div>
-          <button
+          {/* <button
             onClick={downloadImage}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md disabled:bg-gray-400 cursor-pointer"
           >
             Download Image
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

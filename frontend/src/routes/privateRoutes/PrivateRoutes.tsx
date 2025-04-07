@@ -18,7 +18,6 @@ const PrivateRoute = ({ children }: { children: ReactNode }) => {
     const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
     const { user, loading } = useTypedSelector((state) => state.auth);
     const location = useLocation();
-console.log(user, loading)
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">

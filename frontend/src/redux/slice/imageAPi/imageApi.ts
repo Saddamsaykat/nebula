@@ -16,24 +16,31 @@ export const imageApi = createApi({
     }),
 
     getProjectImage: builder.query<string | null, string>({
-      query: (projectId: string) => {
-        if (!projectId) {
+      query: (image: string) => {
+        if (!image) {
           throw new Error('Id is required');
         }
         return {
-          url: `/upload-image/${projectId}`,
+          url: `/upload-image/${image}`,
           method: "GET",
           responseHandler: (response: Response) => response.blob(),
         };
       },
-      transformResponse: (response: Blob | MediaSource) => {
-        if (!response || (response instanceof Blob && response.size <= 90)) {
-          return null;
-        }
-        return URL.createObjectURL(response as Blob);
+      transformResponse: (response: Blob) => {
+        if (!response || response.size <= 90) return null;
+        return URL.createObjectURL(response);
       },
+      
       providesTags: ["Image"],
     }),
+
+    // getAllImage: builder.query({
+    //   query: () => ({
+    //     url: "/upload-image",
+    //     method: "GET",
+    //   }),
+    //   providesTags: ["Image"],
+    // }),
 
     deleteImage: builder.mutation({
       query: (imageId: string) => ({
@@ -42,7 +49,6 @@ export const imageApi = createApi({
       }),
       invalidatesTags: ["Image"],
     }),
-
   }),
 });
 
@@ -50,4 +56,5 @@ export const {
   useUploadImageMutation,
   useGetProjectImageQuery,
   useDeleteImageMutation,
+  // useGetAllImageQuery,
 } = imageApi;

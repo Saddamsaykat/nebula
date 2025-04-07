@@ -7,7 +7,8 @@ import { useDispatch } from "react-redux";
 import { logoutUser } from "../../authActions/authActions";
 import Swal from "sweetalert2";
 import { useProjectImage } from "../../hook/getImageUrl";
-import defaultProjectImage from "../../assets/public/bg-image.jpg";
+// import { useFindImageById } from "../../hook/getImageUrl";
+import defaultProjectImage from "../../assets/public/upload.png";
 
 const ImageDropdown = ({ user }: any) => {
   const navigate = useNavigate();
@@ -63,9 +64,8 @@ const ImageDropdown = ({ user }: any) => {
   };
 
   const userInfo = getUserDetails(data as any, userEmail);
-  const projectId = userInfo?.student?.projectId;
+  const projectId = userInfo?.student?.image;
   const { imageUrl, isLoading } = useProjectImage(projectId);
-
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -75,19 +75,17 @@ const ImageDropdown = ({ user }: any) => {
         className="cursor-pointer flex items-center gap-2"
         onClick={() => setIsOpen(!isOpen)}
       >
-          
-     {isLoading ? (
-        <div className="relative w-[260px] h-[150px] bg-gray-100 overflow-hidden mx-auto">
-          <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-[shimmer_1s_infinite]"></div>
-        </div>
-      ) : (
-        <img
-          className="object-cover object-center w-10 h-10 rounded"
-          src={imageUrl ? imageUrl : defaultProjectImage}
-          alt={'User Profile'}
-        />
-      )}
-       
+        {isLoading ? (
+          <div className="relative w-[260px] h-[150px] bg-gray-100 overflow-hidden mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-[shimmer_1s_infinite]"></div>
+          </div>
+        ) : (
+          <img
+            className="object-cover object-center w-10 h-10 rounded"
+            src={imageUrl || defaultProjectImage}
+            alt="User Profile"
+          />
+        )}
       </div>
 
       {/* Dropdown menu */}

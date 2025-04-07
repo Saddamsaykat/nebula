@@ -8,16 +8,18 @@ import { RootState } from "../../redux/store";
 import { DashboardSidePagesProps } from "./dashboardPropsTypes";
 import { useLogout } from "../../hook/logout";
 import { useDeleteAccount } from "../../hook/deleteAccount";
+import useUserDetails from "../../hook/useUserDetails";
+import { useProjectImage } from "../../hook/getImageUrl";
+import defaultProjectImage from "../../assets/public/upload.png";
 
-const DashboardSidePages: React.FC<DashboardSidePagesProps> = ({
-  userInfo,
-  userEmail,
-}) => {
+const DashboardSidePages: React.FC<DashboardSidePagesProps> = () => {
   const { handleLogout, logoutMessage } = useLogout();
   const theme = useSelector((state: RootState) => state.theme.theme);
   const themeStyles = getThemeStyles(theme);
   const { deleteAccountHandler } = useDeleteAccount();
-
+  const { userInfo, userEmail } = useUserDetails();
+  const image = userInfo?.student?.image;
+  const { imageUrl, isLoading } = useProjectImage(image);
   return (
     <>
       {logoutMessage && (
@@ -28,11 +30,17 @@ const DashboardSidePages: React.FC<DashboardSidePagesProps> = ({
 
       <div className={`h-screen p-3 w-72 ${themeStyles}`}>
         <div className="flex items-center p-2 space-x-4">
-          <img
-            src={userInfo?.student?.image || ""}
-            alt="User"
-            className="w-12 h-12 rounded-full"
-          />
+          {isLoading ? (
+            <div className="relative w-[260px] h-[150px] bg-gray-100 overflow-hidden mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-[shimmer_1s_infinite]"></div>
+            </div>
+          ) : (
+            <img
+              className="object-cover object-center w-10 h-10 rounded"
+              src={imageUrl || defaultProjectImage}
+              alt="User Profile"
+            />
+          )}
           <div>
             <h2 className="text-xl font-semibold">
               {userInfo?.student?.name || "User"}
