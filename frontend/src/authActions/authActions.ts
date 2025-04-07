@@ -5,7 +5,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  sendEmailVerification,
+  // sendEmailVerification,
   sendPasswordResetEmail,
   onAuthStateChanged,
   deleteUser,
@@ -38,11 +38,11 @@ export const registerWithEmail =
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      if (user) {
-        await sendEmailVerification(user);
-        dispatch(loginSuccess(user));
-        alert("Registration successful. Please check your email for verification.");
-      }
+      // if (user) {
+      //   await sendEmailVerification(user);
+      //   dispatch(loginSuccess(user));
+      //   alert("Registration successful. Please check your email for verification.");
+      // }
       return user;
     } catch (error: any) {
       dispatch(loginFailure(error.message));

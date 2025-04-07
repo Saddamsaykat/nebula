@@ -28,7 +28,7 @@ const Dashboard = () => {
           return {
             batch: batchData.batch,
             department,
-            student: matchedUser, // Return the entire student object
+            student: matchedUser,
           };
         }
       }
