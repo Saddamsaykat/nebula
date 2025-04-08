@@ -76,7 +76,7 @@ const ImageDropdown = ({ user }: any) => {
         onClick={() => setIsOpen(!isOpen)}
       >
         {isLoading ? (
-          <div className="relative w-[260px] h-[150px] bg-gray-100 overflow-hidden mx-auto">
+          <div className="relative w-[260px] h-[150px] bg-gray-100 mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-[shimmer_1s_infinite]"></div>
           </div>
         ) : (
