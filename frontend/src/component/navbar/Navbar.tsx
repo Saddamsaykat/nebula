@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
                 <div className="">
                   {user?.email ? (
                     <div className=''>
-                      <ImageDropdown user={user} />
+                      <ImageDropdown/>
                     </div>
                   ) : (
                     <NavLink

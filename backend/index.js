@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -7,6 +8,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const studentRoutes = require("./routes/students/students.js");
 const uploadImage = require("./routes/uploadImage/uplaodImage.js");
 const chatbot = require("./routes/chatbot/chatBot.js");
+app.use(cookieParser());
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -40,13 +42,30 @@ async function run() {
     app.use("/upload-image", uploadImage.router);
 
     // JWT Authentication
+    // app.post("/jwtAuth", async (req, res) => {
+    //   const user = req.body;
+    //   const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, {
+    //     expiresIn: "10h",
+    //   });
+    //   res.send({ token });
+    // });
+
     app.post("/jwtAuth", async (req, res) => {
       const user = req.body;
       const token = jwt.sign(user, process.env.TOKEN_SECRET_KEY, {
         expiresIn: "10h",
       });
-      res.send({ token });
+    
+      res.cookie("Token", token, {
+        httpOnly: true,        // 🛡 Prevents JavaScript access
+        secure: true,          // 🔒 Sends only over HTTPS
+        sameSite: "Strict",    // 🚫 Helps protect against CSRF
+        maxAge: 10 * 60 * 60 * 1000, // 10 hours
+      });
+    
+      res.send({ success: true });
     });
+    
 
     console.log("Connected to MongoDB");
   } catch (error) {
