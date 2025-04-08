@@ -93,31 +93,6 @@ export const signInWithEmail =
     }
   };
 
-// export const checkAuthState = (): any => async (dispatch: AppDispatch) => {
-//   onAuthStateChanged(auth, async (user) => {
-//     if (user) {
-//       const loggedUser = { user: user };
-//       try {
-//         const result = await dispatch(
-//           loginSlice.endpoints.verifyJwt.initiate(loggedUser)
-//         ).unwrap(); // <-- this solves the type issue
-//         if (result?.token) {
-//           localStorage.setItem('Token', result.token);
-//         }
-//         dispatch(setUser(user));
-//       } catch (error) {
-//         console.error("JWT verification failed", error);
-//         dispatch(logout());
-//       }
-//     } else {
-//       localStorage.removeItem('Token');
-//       dispatch(logout());
-//     }
-//   });
-// };
-
-
-
 export const checkAuthState = (): any => async (dispatch: AppDispatch) => {
   onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -125,32 +100,21 @@ export const checkAuthState = (): any => async (dispatch: AppDispatch) => {
       try {
         const result = await dispatch(
           loginSlice.endpoints.verifyJwt.initiate(loggedUser)
-        ).unwrap();
-
+        ).unwrap(); // <-- this solves the type issue
         if (result?.token) {
-          // Set token in localStorage
           localStorage.setItem('Token', result.token);
-
-          // Set token in cookies (expires in 7 days)
-          document.cookie = `Token=${result.token}; path=/; max-age=${60 * 60 * 24 * 7}`;
         }
-
         dispatch(setUser(user));
       } catch (error) {
         console.error("JWT verification failed", error);
-        localStorage.removeItem('Token');
-        document.cookie = `Token=; path=/; max-age=0`; // clear cookie
         dispatch(logout());
       }
     } else {
       localStorage.removeItem('Token');
-      document.cookie = `Token=; path=/; max-age=0`; // clear cookie
       dispatch(logout());
     }
   });
 };
-
-
 
 
 export const deleteAccount = (_userEmail: string): AuthAction => async (dispatch: any) => {
