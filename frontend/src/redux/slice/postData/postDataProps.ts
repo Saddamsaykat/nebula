@@ -10,8 +10,8 @@ export interface postDataProps {
   linkedin?: string;
   github?: string;
   aboutYour?: string;
-  city?: string;
   country?: string;
+  city?: string;
   studentId?: string;
   image?: string;
   agree?: boolean;

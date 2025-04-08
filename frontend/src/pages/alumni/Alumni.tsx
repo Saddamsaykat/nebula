@@ -13,7 +13,7 @@ const Alumni = () => {
   const styles = getThemeStyles(theme);
   const uniqueBatches = [...new Set(data?.map((batch) => batch.batch))];
   const uniqueDepartments = [
-    ...new Set(data?.flatMap((batch) => Object.keys(batch.department))),
+    ...new Set(data?.flatMap((batch) => batch.department ? Object.keys(batch.department) : [])),
   ];
 
   // Filtering Logic
@@ -22,17 +22,17 @@ const Alumni = () => {
       ? batchData.batch === selectedBatch
       : true;
     const matchesDepartment = selectedDepartment
-      ? Object.keys(batchData.department).includes(selectedDepartment)
+      ? batchData.department && Object.keys(batchData.department).includes(selectedDepartment)
       : true;
 
     const matchesSearch = searchTerm
-      ? Object.values(batchData.department).some((students) =>
+      ? batchData.department && Object.values(batchData.department).some((students) =>
         // students?.some((student) =>
           Array.isArray(students) && students.some((student) =>
 
             [
               batchData.batch,
-              ...Object.keys(batchData.department),
+              ...(batchData.department ? Object.keys(batchData.department) : []),
               student.name,
               student.number,
               student.email,
@@ -96,7 +96,7 @@ const Alumni = () => {
             Batch: {batchData.batch}
           </h2>
 
-          {Object.entries(batchData.department)
+          {batchData.department && Object.entries(batchData.department)
             .filter(([deptName]) =>
               selectedDepartment ? deptName === selectedDepartment : true
             )
