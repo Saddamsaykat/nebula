@@ -4,6 +4,7 @@ import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
 import defaultProjectImage from "../../assets/public/bg-image.jpg";
 import useUserDetails from "../../hook/useUserDetails";
 import { useProjectImage } from "../../hook/getImageUrl";
+import { downloadFile } from "../../hook/downloadImage";
 
 const Profile = () => {
   const theme = useSelector((state: any) => state.theme.theme);
@@ -11,6 +12,27 @@ const Profile = () => {
   const { userInfo, userEmail } = useUserDetails();
   const projectId = userInfo?.student?.image;
   const { imageUrl, isLoading} = useProjectImage(projectId);
+
+  const handleExport = async () => {
+    try {
+      if (!imageUrl) {
+        alert("No image URL available.");
+        return;
+      }
+  
+      const response = await fetch(imageUrl);
+      if (!response.ok) {
+        throw new Error("Failed to fetch image.");
+      }
+  
+      const blob = await response.blob();
+      const fileName = `project-image-${userInfo?.student?.name || "user"}.jpg`;
+      downloadFile(blob, fileName);
+    } catch (error: any) {
+      alert("Error downloading image: " + error.message);
+    }
+  };
+  
   
   return (
     <div className="h-screen flex justify-center items-center">
@@ -26,7 +48,7 @@ const Profile = () => {
               src={imageUrl || defaultProjectImage}
               alt={"User Profile"}
             />
-          )}
+         )} 
         </div>
         <div className="flex flex-col space-y-4">
           <div>
@@ -45,12 +67,12 @@ const Profile = () => {
               <span>{userInfo?.student?.number}</span>
             </span>
           </div>
-          {/* <button
-            onClick={downloadImage}
+          <button
+            onClick={handleExport}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md disabled:bg-gray-400 cursor-pointer"
           >
             Download Image
-          </button> */}
+          </button>
         </div>
       </div>
     </div>

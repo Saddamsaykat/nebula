@@ -10,7 +10,8 @@ import { useLogout } from "../../hook/logout";
 import { useDeleteAccount } from "../../hook/deleteAccount";
 import useUserDetails from "../../hook/useUserDetails";
 import { useProjectImage } from "../../hook/getImageUrl";
-import defaultProjectImage from "../../assets/public/upload.png";
+import defaultProjectImage from "../../assets/FavIcon.jpg";
+import zhsustLogo from "../../assets/FavIcon.jpg";
 
 const DashboardSidePages: React.FC<DashboardSidePagesProps> = () => {
   const { handleLogout, logoutMessage } = useLogout();
@@ -29,6 +30,9 @@ const DashboardSidePages: React.FC<DashboardSidePagesProps> = () => {
       )}
 
       <div className={`h-screen p-3 w-72 ${themeStyles}`}>
+        <Link to={'/'} className="flex items-center mb-4 justify-center">
+          <img src={zhsustLogo} className="w-16 h-16 rounded" alt="" />
+        </Link>
         <div className="flex items-center p-2 space-x-4">
           {isLoading ? (
             <div className="relative w-[260px] h-[150px] bg-gray-100 overflow-hidden mx-auto">

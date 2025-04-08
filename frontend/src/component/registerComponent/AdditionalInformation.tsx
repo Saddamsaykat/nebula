@@ -2,7 +2,7 @@ import React from "react";
 import InputField from "../../utils/inputField/InputField";
 import TextAreaField from "../../utils/textAreaField/TextAreaField";
 
-interface registerAdditionalProps{
+interface registerAdditionalProps {
   batchOptions?: string[];
   department?: string[];
   handleBatchChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -19,18 +19,23 @@ interface registerAdditionalProps{
   successMessage?: string;
   handleSuccess?: () => void;
   placeholder?: string;
-} 
+}
 
-const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions, department }) => {
-  console.log(batchOptions)
+const AdditionalInformation: React.FC<registerAdditionalProps> = ({
+  batchOptions,
+  department,
+}) => {
   return (
-    <div className="p-4 max-w-[720px] rounded-md shadow-sm dark:bg-gray-50 mt-3">
-      <div className="flex justify-center items-center gap-2 mt-2 mb-2">
-        <hr className="border border-black w-48 mt-2 mb-2" />
-        <h1 className="text-xl text-black">Additional Information</h1>
-        <hr className="border border-black w-48 mt-2 mb-2" />
+    <div className="p-4 rounded-md shadow-sm dark:bg-gray-50 mt-3">
+      <div className="flex flex-col items-center mt-4 mb-4 sm:flex-row sm:justify-center sm:gap-4">
+        <hr className="border border-black w-2/3 sm:w-40 lg:w-60 mb-2 sm:mb-0" />
+        <h1 className="text-lg sm:text-xl text-black whitespace-nowrap px-2 text-center">
+          Additional Information
+        </h1>
+        <hr className="border border-black w-2/3 sm:w-40 lg:w-60 mt-2 sm:mt-0" />
       </div>
-      <div className="grid grid-cols-2 gap-2">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
         <div>
           <label htmlFor="batch" className="text-black">
             Batch
@@ -68,27 +73,9 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions
           </select>
         </div>
       </div>
-      {/* Social Media */}
-      <div className="grid grid-cols-2 gap-2">
-        <InputField
-          id="facebook"
-          name="facebook"
-          label="Facebook"
-          type="text"
-        />
-        <InputField id="github" name="github" label="Github" type="text" />
-      </div>
-      {/* Whatsapp & Linkedin*/}
-      <div className="grid grid-cols-2 gap-2">
-        <div>
-          <InputField id="linkedin" label="Linkedin" type="text" name="linkedin"/>
-        </div>
-        <div>
-          <InputField id="whatsapp" label="Whatsapp" type="text" name="whatsapp"/>
-        </div>
-      </div>
-      {/* Image */}
-      <div>
+
+       {/* Image */}
+       <div>
         <div>
           <label htmlFor={"image"} className="text-sm text-black">
             Image
@@ -105,21 +92,45 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({ batchOptions
         </div>
       </div>
 
+      {/* Social Media */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
+        <InputField
+          id="facebook"
+          name="facebook"
+          label="Facebook"
+          type="text"
+        />
+        <InputField id="github" name="github" label="Github" type="text" />
+      </div>
+      {/* Whatsapp & Linkedin*/}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
+        <div>
+          <InputField
+            id="linkedin"
+            label="Linkedin"
+            type="text"
+            name="linkedin"
+          />
+        </div>
+        <div>
+          <InputField
+            id="whatsapp"
+            label="Whatsapp"
+            type="text"
+            name="whatsapp"
+          />
+        </div>
+      </div>
+     
       {/* About Yourself */}
 
-      <TextAreaField id="about" label="About Yourself" type="text" placeholder=' Software Engineer passionate about AI and Web Development.'/>
-      {/* Agreement */}
-      <div className=" mt-2">
-        <input
-          type="checkbox"
-          id="agree"
-          name="agree"
-          className="mr-2 text-black"
-        />
-        <label htmlFor="agree" className="text-black">
-          I agree with the terms and conditions
-        </label>
-      </div>
+      <TextAreaField
+        id="about"
+        label="About Yourself"
+        type="text"
+        placeholder=" Software Engineer passionate about AI and Web Development."
+      />
+     
     </div>
   );
 };

@@ -12,6 +12,7 @@ import authReducer from "./slice/authSlice";
 import { loginSlice } from "./slice/loginSlice";
 import { chatApi } from "./slice/chatApi/chatApi";
 import { imageApi } from './slice/imageAPi/imageApi';
+import { restApiSlice } from './slice/restApi/restApiSlice';
 
 // Combine the reducers
 const rootReducer = combineReducers({
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   [chatApi.reducerPath]: chatApi.reducer,
   [imageApi.reducerPath]: imageApi.reducer,
+  [restApiSlice.reducerPath]: restApiSlice.reducer,
 });
 
 // Configure the store
@@ -32,6 +34,7 @@ const store = configureStore({
       loginSlice.middleware,
       chatApi.middleware,
       imageApi.middleware,
+      restApiSlice.middleware,
     ),
 });
 

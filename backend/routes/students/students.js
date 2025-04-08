@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
     const {
       batch,
       department,
-      name,
+      firstName,
       lastName,
       email,
       number,
@@ -57,11 +57,14 @@ router.post("/", async (req, res) => {
       aboutYour,
       image,
       role,
-      studentId
+      studentId,
+      country,
+      city,
+      agree
     } = req.body;
 
     // Validate required fields
-    if (!batch || !department || !name || !email || !number) {
+    if (!batch || !department || !firstName || !email || !number) {
       return res.status(400).json({ message: "Missing required fields!" });
     }
 
@@ -86,11 +89,9 @@ router.post("/", async (req, res) => {
     if (emailExists) {
       return res.status(400).json({ message: "Email already exists!" });
     }
-
     const batchData = await studentsCollection.findOne({ batch });
-
     const studentData = {
-      name,
+      firstName,
       lastName,
       email,
       number,
@@ -103,9 +104,15 @@ router.post("/", async (req, res) => {
       aboutYour,
       image,
       role,
-      studentId
+      studentId,
+      country,
+      city, 
+      agree,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      _id: new ObjectId(),
     };
-
+    console.log(studentData);
     if (!batchData) {
       // Create a new batch entry
       await studentsCollection.insertOne({

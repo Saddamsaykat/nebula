@@ -79,10 +79,10 @@ export const signInWithEmail =
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      if (!user.emailVerified) {
-        await signOut(auth);
-        throw new Error("Please verify your email before logging in.");
-      }
+      // if (!user.emailVerified) {
+      //   await signOut(auth);
+      //   throw new Error("Please verify your email before logging in.");
+      // }
 
       dispatch(loginSuccess(user));
       return user;
@@ -116,7 +116,6 @@ export const checkAuthState = (): any => async (dispatch: AppDispatch) => {
   });
 };
 
-// export const deleteAccount = (userEmail: string) => async (dispatch: any) => {
 export const deleteAccount = (_userEmail: string): AuthAction => async (dispatch: any) => {
   const user = auth.currentUser;
   if (user) {

@@ -23,10 +23,14 @@ const Register: React.FC<propsTypeRegister> = () => {
   const { uploadImage } = useImageUpload(logo);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<any | null>(null);
+  const [selectedCity, setSelectedCity] = useState<{
+    name: { common: string };
+  } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true); // ✅ Set loading to true before anything starts
+    setLoading(true);
 
     const form = e.currentTarget as HTMLFormElement;
     const formData = new FormData(form);
@@ -49,8 +53,10 @@ const Register: React.FC<propsTypeRegister> = () => {
     const github = formData.get("github") as string;
     const aboutYour = formData.get("aboutYour") as string;
     const studentId = generateRandomId();
-    const agree = formData.get("agree") as string;
-
+    const agree = formData.get("agree");
+    const country = selectedCountry?.name?.common as string;
+    const city = selectedCity?.name?.common || "";
+    console.log(city);
     if (!agree) {
       alert("You must agree to the terms and conditions");
       setLoading(false);
@@ -69,8 +75,8 @@ const Register: React.FC<propsTypeRegister> = () => {
       const studentInfo = {
         batch,
         department,
-        name: firstName,
-        lastName: lastName,
+        firstName,
+        lastName,
         email,
         number,
         presentAddress,
@@ -80,12 +86,13 @@ const Register: React.FC<propsTypeRegister> = () => {
         linkedin,
         github,
         aboutYour,
-        image: uploadedImageId ,
+        image: uploadedImageId,
         role: "student",
         studentId,
-        agree,
+        country,
+        city,
+        agree: agree,
       };
-
       await addStudent(studentInfo).unwrap();
       // @ts-expect-error - reason: whatever the issue is (e.g. "Type mismatch workaround")
       await dispatch(registerWithEmail(email, password));
@@ -108,7 +115,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         confirmButtonText: "OK",
       });
     } finally {
-      setLoading(false); // ✅ Always reset loading state
+      setLoading(false);
     }
   };
 
@@ -129,11 +136,28 @@ const Register: React.FC<propsTypeRegister> = () => {
         <div className="bg-white p-5 rounded-lg m-auto max-w-[1080px]">
           <RegisterHeader />
           <div className="">
-            <PersonalInformation />
+            <PersonalInformation
+              setSelectedCountry={setSelectedCountry}
+              selectedCountry={selectedCountry}
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
+            />
             <AdditionalInformation
               batchOptions={batchOptions}
               department={department}
             />
+            {/* Agreement */}
+            <div className=" mt-2">
+              <input
+                type="checkbox"
+                id="agree"
+                name="agree"
+                className="mr-2 text-black"
+              />
+              <label htmlFor="agree" className="text-black">
+                I agree with the terms and conditions
+              </label>
+            </div>
             <button
               type="submit"
               disabled={loading}
