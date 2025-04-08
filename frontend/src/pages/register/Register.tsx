@@ -53,7 +53,7 @@ const Register: React.FC<propsTypeRegister> = () => {
     const github = formData.get("github") as string;
     const aboutYour = formData.get("aboutYour") as string;
     const studentId = generateRandomId();
-    const agree = formData.get("agree");
+    const agree = formData.get("agree") as string;
     const country = selectedCountry?.name?.common as string;
     const city = selectedCity?.name?.common || "";
     console.log(city);
@@ -91,7 +91,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         studentId,
         country,
         city,
-        agree: agree,
+        agree,
       };
       await addStudent(studentInfo).unwrap();
       // @ts-expect-error - reason: whatever the issue is (e.g. "Type mismatch workaround")
