@@ -36,9 +36,7 @@ const Dashboard = () => {
 
     return null;
   };
-
   const userInfo = data ? getUserDetails(data, userEmail) : null;
-
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
@@ -69,7 +67,7 @@ const Dashboard = () => {
         </div>
         <div className="p-6">
           <div className="flex justify-center items-center h-16 bg-gray-800 text-white">
-            <span>Welcome Back {userInfo?.student?.name}</span>
+            <span>Welcome Back {userInfo?.student?.firstName} { userInfo?.student?.lastName}</span>
           </div>
           <Outlet />
         </div>

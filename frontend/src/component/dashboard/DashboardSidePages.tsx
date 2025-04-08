@@ -47,7 +47,9 @@ const DashboardSidePages: React.FC<DashboardSidePagesProps> = () => {
           )}
           <div>
             <h2 className="text-xl font-semibold">
-              {userInfo?.student?.name || "User"}
+              {userInfo?.student?.firstName && userInfo?.student?.lastName
+                ? `${userInfo.student.firstName} ${userInfo.student.lastName}`
+                : "User"}
             </h2>
             <Link to="/dashboard/profile" className="text-xs hover:underline">
               View profile

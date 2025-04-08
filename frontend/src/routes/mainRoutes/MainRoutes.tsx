@@ -42,7 +42,14 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <Register
+            setSelectedCountry={() => {}}
+            selectedCountry={""}
+            selectedCity={""}
+            setSelectedCity={() => {}}
+          />
+        ),
       },
       {
         path: "events",
