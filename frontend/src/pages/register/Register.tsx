@@ -93,7 +93,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         city,
         agree,
       };
-      await addStudent(studentInfo).unwrap();
+      await addStudent(studentInfo as any).unwrap();
       // @ts-expect-error - reason: whatever the issue is (e.g. "Type mismatch workaround")
       await dispatch(registerWithEmail(email, password));
 

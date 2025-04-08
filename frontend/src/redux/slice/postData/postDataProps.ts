@@ -1,21 +1,22 @@
-export interface Post {
-    _id?: string;
-    batch: string;
-    department: string;
-    name: string;
-    lastName: string;
-    email: string;
-    number: string;
-    presentAddress: string;
-    permanentAddress: string;
-    whatsUp?: string;
-    facebook?: string;
-    linkedin?: string;
-    github?: string;
-    aboutYour?: string;
-    image: string;
-    role: string;
-    studentId: string;
-    agree: string;
-  }
-  
+export interface postDataProps {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  number?: string;
+  presentAddress?: string;
+  permanentAddress?: string;
+  whatsUp?: string;
+  facebook?: string;
+  linkedin?: string;
+  github?: string;
+  aboutYour?: string;
+  country?: string;
+  city?: string;
+  studentId?: string;
+  image?: string;
+  agree?: boolean;
+  role?: string;
+  _id?: string;
+  batch?: string;
+  department?: string;
+}

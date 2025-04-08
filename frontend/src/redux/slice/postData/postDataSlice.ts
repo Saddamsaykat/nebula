@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../../../api/baseUrl";
-import { Post } from "./postDataProps";
+import { postDataProps } from "./postDataProps";
 
 export const postDataSlice = createApi({
   reducerPath: "postApi",
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    getPosts: builder.query<Post[], void>({
+    getPosts: builder.query<postDataProps[], void>({
       query: () => {
         const token = localStorage.getItem("Token");
         return {
@@ -22,7 +22,7 @@ export const postDataSlice = createApi({
       providesTags: ["Post"],
     }),
 
-    addPost: builder.mutation<Post, Partial<Post>>({
+    addPost: builder.mutation<postDataProps, Partial<postDataProps>>({
       query: (postData) => ({
         url: "students",
         method: "POST",
@@ -31,7 +31,11 @@ export const postDataSlice = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    deletePost: builder.mutation<{ success: boolean }, { batch: string; department: string; studentId: string }>({
+
+    deletePost: builder.mutation<
+      { success: boolean },
+      { batch: string; department: string; studentId: string }
+    >({
       query: ({ batch, department, studentId }) => ({
         url: `students`,
         method: "DELETE",
@@ -39,24 +43,35 @@ export const postDataSlice = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    patchPost: builder.mutation<Post, Partial<Post>>({
-      query: (postData) => ({
-        url: `updatePost/${postData._id}`,
+    updatePost: builder.mutation<
+    { message: string },
+    {
+      updateFields: Partial<postDataProps>;
+    }
+  >({
+    query: (updateFields) => {
+      const token = localStorage.getItem("Token");
+      return {
+        url: `students`,
         method: "PATCH",
-        body: postData,
-        headers: { "Content-Type": "application/json" },
-      }),
-      invalidatesTags: ["Post"],
-    }),
+        body: updateFields,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      };
+    },
+    invalidatesTags: ["Post"], // Automatically refetches relevant data
   }),
-});
+  }),
 
+});
 
 export const {
   useAddPostMutation,
   useGetPostsQuery,
   useDeletePostMutation,
-  usePatchPostMutation,
+  useUpdatePostMutation,
 } = postDataSlice;
 
 export default postDataSlice;

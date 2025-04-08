@@ -1,48 +1,51 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import DashboardSidePages from "../../component/dashboard/DashboardSidePages";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
-import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
+import useUserDetails from "../../hook/useUserDetails";
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
-  const user = useSelector((state: any) => state.auth.user);
-  const { data } = useGetPostsQuery();
-  const userEmail = user?.email;
+  const { userInfo } = useUserDetails();
+  const location = useLocation();
 
-  const getUserDetails = (data: any[], userEmail: string) => {
-    if (!data || !userEmail) return null;
+  useEffect(() => {
+    setIsOpen(false); // Close on route change
+  }, [location.pathname]);
 
-    for (const batchData of data) {
-      for (const department in batchData.department) {
-        const users = batchData.department[department];
-
-        const matchedUser = users.find((user: any) => user.email === userEmail);
-
-        if (matchedUser) {
-          return {
-            batch: batchData.batch,
-            department,
-            student: matchedUser,
-          };
-        }
+  // Close sidebar on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
       }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
-    return null;
-  };
-  const userInfo = data ? getUserDetails(data, userEmail) : null;
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <div
+        ref={sidebarRef}
         style={styles}
-        className={`fixed inset-y-0 left-0 z-50 w-80 border p-4 transition-transform duration-300 lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 z-50 left-0 w-80 border p-4 transition-transform duration-300 lg:relative lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } overflow-x-hidden overflow-y-auto`}
       >
@@ -53,12 +56,12 @@ const Dashboard = () => {
           ✖
         </button>
         <ul className="menu text-base-content h-full">
-          <DashboardSidePages userInfo={userInfo} userEmail={userEmail} />
+          <DashboardSidePages />
         </ul>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col w-full ">
+      <div className="flex-1 flex flex-col w-full">
         {/* Mobile Menu Button */}
         <div className="lg:hidden p-4">
           <button onClick={() => setIsOpen(true)} className="text-2xl">
@@ -67,7 +70,10 @@ const Dashboard = () => {
         </div>
         <div className="p-6">
           <div className="flex justify-center items-center h-16 bg-gray-800 text-white">
-            <span>Welcome Back {userInfo?.student?.firstName} { userInfo?.student?.lastName}</span>
+            <span>
+              Welcome Back {userInfo?.student?.firstName}{" "}
+              {userInfo?.student?.lastName}
+            </span>
           </div>
           <Outlet />
         </div>
