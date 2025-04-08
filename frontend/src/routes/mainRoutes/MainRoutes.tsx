@@ -10,6 +10,7 @@ import PrivateRoute from "../privateRoutes/PrivateRoutes";
 import Weather from "../../pages/weather/Weather";
 import Alumni from "../../pages/alumni/Alumni";
 import Gallery from "../../component/main/galary/Gallery";
+import UpdateProfile from "../../component/dashboard/UpdateProfile";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -91,6 +92,16 @@ const MainRoutes = createBrowserRouter([
               </PrivateRoute>
             ),
           },
+          {
+            path: "/dashboard/update-profile", 
+            element: 
+            (
+              <PrivateRoute>
+            <UpdateProfile/>
+            </PrivateRoute>
+            ),
+          },
+          
         ],
       },
     ],
