@@ -5,12 +5,19 @@ import Footer from "../../component/footer/Footer";
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
 import Chatbot from "../../component/main/chatbot/Chatbot";
+import Weather from "../weather/Weather";
 
 const Home = () => {
   const location = useLocation();
 
   const hideNavbarFooter =
-    location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/dashboard" || location.pathname === "/dashboard/profile" || location.pathname === "/dashboard/update-profile" || location.pathname === "/forget-password" || location.pathname === '/dashboard/settings';
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname === "/dashboard" ||
+    location.pathname === "/dashboard/profile" ||
+    location.pathname === "/dashboard/update-profile" ||
+    location.pathname === "/forget-password" ||
+    location.pathname === "/dashboard/settings";
 
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
@@ -24,9 +31,11 @@ const Home = () => {
         </p>
       )}
       {!hideNavbarFooter && <Navbar />}
+      
       <Outlet />
       {!hideNavbarFooter && <Footer />}
-      {!hideNavbarFooter && <Chatbot />}
+      {<Chatbot />}
+      <Weather />
     </div>
   );
 };

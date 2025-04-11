@@ -7,7 +7,6 @@ import Login from "../../pages/login/Login";
 import RootPage from "../../pages/rootPage/RootPage";
 import ForgetPassword from "../../pages/forgatPassword/ForgetPassword";
 import PrivateRoute from "../privateRoutes/PrivateRoutes";
-import Weather from "../../pages/weather/Weather";
 import Alumni from "../../pages/alumni/Alumni";
 import Gallery from "../../component/main/galary/Gallery";
 import UpdateProfile from "../../component/dashboard/UpdateProfile";
@@ -19,6 +18,10 @@ const MainRoutes = createBrowserRouter([
     path: "/",
     element: <Home />,
     children: [
+      {
+        path: "/",
+        element: <RootPage />,
+      },
       {
         path: "/home",
         element: <RootPage />,
@@ -73,10 +76,6 @@ const MainRoutes = createBrowserRouter([
       {
         path: "*",
         element: <div>Not Found</div>,
-      },
-      {
-        path: "/weather",
-        element: <Weather />,
       },
       {
         path: "/dashboard",

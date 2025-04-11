@@ -1,6 +1,10 @@
+import { useProjectImage } from "../../hook/getImageUrl";
+import varsityLogo from "../../assets/FavIcon.jpg";
+
 interface Student {
   image?: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   number: string;
   presentAddress: string;
@@ -13,6 +17,8 @@ interface Student {
 }
 
 const AlumniStudentsCard = ({ student, index }: { student: Student; index: number }) => {
+    const { imageUrl } = useProjectImage(student?.image);
+
     return (
         <div
         key={index}
@@ -21,8 +27,8 @@ const AlumniStudentsCard = ({ student, index }: { student: Student; index: numbe
         <div className="flex space-x-4">
           {student.image ? (
             <img
-              src={student.image}
-              alt={student.name}
+              src={imageUrl || varsityLogo}
+              alt={'Image'}
               className="object-cover w-12 h-12 rounded-full shadow"
             />
           ) : (
@@ -32,7 +38,7 @@ const AlumniStudentsCard = ({ student, index }: { student: Student; index: numbe
           )}
   
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-semibold">{student.name}</p>
+            <p className="text-sm font-semibold">{student?.firstName} {student?.lastName}</p>
             <span className="text-xs text-gray-600">{student.email}</span>
           </div>
         </div>

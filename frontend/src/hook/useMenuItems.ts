@@ -7,10 +7,7 @@ export const useMenuItems = () => {
   return [
     { to: "/home", label: "Home" },
     ...(user ? [{ to: "/about", label: "About" }] : []),
-    { to: "/contact", label: "Contact" },
     ...(user ? [{ to: "/alumni", label: "Alumni" }] : []),
-    { to: "/events", label: "Events" },
-    ...(user ? [{ to: "/gallery", label: "Gallery" }]: []),
-    { to: "/weather", label: "Weather" },
+    ...(user ? [{ to: "/gallery", label: "Gallery / Event" }] : []),
   ];
 };

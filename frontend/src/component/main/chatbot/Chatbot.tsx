@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getThemeStyles } from "../../../utils/themeStyles/themeStyles";
 import { IoChatbubbleEllipsesSharp, IoClose } from "react-icons/io5";
 import { RiRobot3Fill } from "react-icons/ri";
+import { useOutsideClick } from "../../../hook/useOutsideClick";
 
 const Chatbot: React.FC = () => {
   const [chatHistory, setChatHistory] = useState<
@@ -17,10 +18,12 @@ const Chatbot: React.FC = () => {
     useGenerateChatResponseMutation();
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const ref = useOutsideClick<HTMLDivElement>(() => setIsOpen(false));
 
   useEffect(() => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
     }
   }, [chatHistory]);
 
@@ -41,7 +44,7 @@ const Chatbot: React.FC = () => {
       const aiResponse =
         response?.candidates?.[0]?.content?.parts?.[0]?.text ||
         "Sorry - Something went wrong. Please try again!";
-      
+
       setChatHistory((prev) => [
         ...prev,
         { type: "answer", content: aiResponse },
@@ -50,12 +53,17 @@ const Chatbot: React.FC = () => {
       console.error(error);
       setChatHistory((prev) => [
         ...prev,
-        { type: "answer", content: "Sorry - Something went wrong. Please try again!" },
+        {
+          type: "answer",
+          content: "Sorry - Something went wrong. Please try again!",
+        },
       ]);
     }
   };
 
-  const theme = useSelector((state: { theme: { theme: string } }) => state.theme.theme);
+  const theme = useSelector(
+    (state: { theme: { theme: string } }) => state.theme.theme
+  );
   const styles = getThemeStyles(theme);
 
   return (
@@ -71,6 +79,7 @@ const Chatbot: React.FC = () => {
       {/* Chatbot Popup */}
       {isOpen && (
         <div
+          ref={ref}
           style={styles}
           className="fixed z-50 bottom-20 right-6 w-80 bg-white shadow-xl rounded-lg overflow-hidden flex flex-col min-h-[480px] max-h-[480px] overflow-x-auto"
         >
