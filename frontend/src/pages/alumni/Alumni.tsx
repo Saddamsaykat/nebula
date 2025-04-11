@@ -1,198 +1,117 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 import { useSelector } from "react-redux";
+import { useGetPostsQuery } from "../../redux/slice/postData/postDataSlice";
 import { getThemeStyles } from "../../utils/themeStyles/themeStyles";
+import AlumniStudentsCard from "../../component/alumniStudents/AlumniStudentsCard";
+import AlumniPagination from "../../component/alumniStudents/AlumniPagination";
+import AlumniFilters from "../../component/alumniStudents/AlumniFilters";
+import { filterData } from "../../hook/filterData";
 
 const Alumni = () => {
-  const { data } = useGetPostsQuery();
+  const { data = [] } = useGetPostsQuery();
+  const theme = useSelector((state: any) => state.theme.theme);
+  const styles = getThemeStyles(theme);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBatch, setSelectedBatch] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
-  const theme = useSelector((state: any) => state.theme.theme);
-  const styles = getThemeStyles(theme);
-  const uniqueBatches = [...new Set(data?.map((batch) => batch.batch))];
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const uniqueBatches = [...new Set(data.map((item) => item.batch))].filter(
+    (batch): batch is string => batch !== undefined
+  );
   const uniqueDepartments = [
-    ...new Set(data?.flatMap((batch) => batch.department ? Object.keys(batch.department) : [])),
+    ...new Set(data.flatMap((item) => Object.keys(item.department || {}))),
   ];
 
-  // Filtering Logic
-  const filteredData = data?.filter((batchData) => {
-    const matchesBatch = selectedBatch
-      ? batchData.batch === selectedBatch
-      : true;
-    const matchesDepartment = selectedDepartment
-      ? batchData.department && Object.keys(batchData.department).includes(selectedDepartment)
-      : true;
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    setCurrentPage(0);
+  };
 
-    const matchesSearch = searchTerm
-      ? batchData.department && Object.values(batchData.department).some((students) =>
-        // students?.some((student) =>
-          Array.isArray(students) && students.some((student) =>
+  const handleBatchChange = (value: string) => {
+    setSelectedBatch(value);
+    setCurrentPage(0);
+  };
 
-            [
-              batchData.batch,
-              ...(batchData.department ? Object.keys(batchData.department) : []),
-              student.name,
-              student.number,
-              student.email,
-            ].some((field) =>
-              field.toString().toLowerCase().includes(searchTerm.toLowerCase())
-            )
-          )
-        )
-      : true;
+  const handleDepartmentChange = (value: string) => {
+    setSelectedDepartment(value);
+    setCurrentPage(0);
+  };
 
-    return matchesBatch && matchesDepartment && matchesSearch;
-  });
+  const filteredData = filterData(
+    data.filter((item) => item.batch !== undefined) as any,
+    selectedBatch,
+    selectedDepartment,
+    searchTerm
+  );
+  const totalPages = filteredData.length;
+  const currentBatch = filteredData[currentPage];
+
+  const renderStudentCard = (student: any, index: number) => (
+   <AlumniStudentsCard
+      key={index}
+      student={student}
+      index={index}
+    />
+  );
+
+  const renderDepartment = (dept: string, students: any[]) => {
+    const filteredStudents = students.filter((student) =>
+      !searchTerm ||
+      [student.name, student.number, student.email].some((field) =>
+        field?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+
+    return (
+      <div key={dept} className="mb-4">
+        <h3 className="text-lg font-medium text-blue-600">{dept} Department</h3>
+        <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredStudents.map(renderStudentCard)}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Alumni List</h1>
 
-      {/* Search and Filter Section */}
-      <div className="flex flex-wrap gap-4 mb-4">
-        <input
-          type="text"
-          placeholder="Search by batch, name, number, email..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 rounded-lg w-full md:w-1/3"
-        />
+      {/* Filters */}
+      <AlumniFilters
+        searchTerm={searchTerm}
+        handleSearch={handleSearch}
+        styles={styles}
+        selectedBatch={selectedBatch}
+        handleBatchChange={handleBatchChange}
+        uniqueBatches={uniqueBatches}
+        selectedDepartment={selectedDepartment}
+        handleDepartmentChange={handleDepartmentChange}
+        uniqueDepartments={uniqueDepartments}
+      />
 
-        <select
-          className="border p-2 rounded-lg w-full md:w-1/4"
-          style={styles}
-          value={selectedBatch}
-          onChange={(e) => setSelectedBatch(e.target.value)}
-        >
-          <option value="">All Batches</option>
-          {uniqueBatches.map((batch) => (
-            <option key={batch} value={batch}>
-              {batch}
-            </option>
-          ))}
-        </select>
-
-        <select
-          className="border p-2 rounded-lg w-full md:w-1/4"
-          style={styles}
-          value={selectedDepartment}
-          onChange={(e) => setSelectedDepartment(e.target.value)}
-        >
-          <option value="">All Departments</option>
-          {uniqueDepartments.map((dept) => (
-            <option key={dept} value={dept}>
-              {dept}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Alumni List */}
-      {filteredData?.map((batchData) => (
-        <div key={batchData._id} className="mb-6 p-4 border rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-2">
-            Batch: {batchData.batch}
-          </h2>
-
-          {batchData.department && Object.entries(batchData.department)
-            .filter(([deptName]) =>
-              selectedDepartment ? deptName === selectedDepartment : true
-            )
-            .map(([deptName, students]) => (
-              <div key={deptName} className="mb-4">
-                <h3 className="text-lg font-medium text-blue-600">
-                  {deptName} Department
-                </h3>
-
-                <div className="mt-2 grid grid-cols-3 gap-4">
-                  {Array.isArray(students) &&
-                    students
-                      .filter((student) =>
-                        searchTerm
-                          ? [student.name, student.number, student.email].some(
-                              (field) =>
-                                field
-                                  .toString()
-                                  .toLowerCase()
-                                  .includes(searchTerm.toLowerCase())
-                            )
-                          : true
-                      )
-                      .map((student) => (
-                      <div className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-50 dark:text-gray-800">
-                        <div className="flex space-x-4">
-                          {student.image ? (
-                            <img
-                              src={student?.image}
-                              alt={student?.name}
-                              className="object-cover w-12 h-12 rounded-full shadow dark:bg-gray-500"
-                            />
-                          ) : (
-                            <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
-                              N/A
-                            </div>
-                          )}
-                          <div className="flex flex-col space-y-1">
-                            <p className="text-sm font-semibold">
-                              {student.name}
-                            </p>
-                            <span className="text-xs dark:text-gray-600">
-                              {student.email}
-                            </span>
-                          </div>
-                        </div>
-                        <div>
-                          <p>
-                            <strong>Number:</strong> {student.number}
-                          </p>
-                          <p>
-                            <strong>Present Address:</strong>{" "}
-                            {student.presentAddress}
-                          </p>
-                          <p>
-                            <strong>Permanent Address:</strong>{" "}
-                            {student.permanentAddress}
-                          </p>
-                          <p>
-                            <strong>WhatsApp:</strong> {student.whatsUp}
-                          </p>
-                          <p>
-                            <strong>Facebook:</strong>{" "}
-                            <a
-                              href={student.facebook}
-                              className="text-blue-500"
-                            >
-                              {student.facebook}
-                            </a>
-                          </p>
-                          <p>
-                            <strong>LinkedIn:</strong>{" "}
-                            <a
-                              href={student.linkedin}
-                              className="text-blue-500"
-                            >
-                              {student.linkedin}
-                            </a>
-                          </p>
-                          <p>
-                            <strong>GitHub:</strong>{" "}
-                            <a href={student.github} className="text-blue-500">
-                              {student.github}
-                            </a>
-                          </p>
-                          <p>
-                            <strong>About:</strong> {student.aboutYour}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            ))}
+      {/* Alumni Display */}
+      {currentBatch ? (
+        <div className="mb-6 p-4 border rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-2">Batch: {currentBatch.batch}</h2>
+          {Object.entries(currentBatch.department || {})
+            .filter(([dept]) => !selectedDepartment || dept === selectedDepartment)
+            .map(([dept, students]) => 
+              Array.isArray(students) ? renderDepartment(dept, students) : null
+            )}
         </div>
-      ))}
+      ) : (
+        <p>No data available.</p>
+      )}
+
+      <AlumniPagination
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+        filteredData={filteredData}
+        currentPage={currentPage}
+      />
     </div>
   );
 };

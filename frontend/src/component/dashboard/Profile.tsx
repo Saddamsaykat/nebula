@@ -5,6 +5,7 @@ import defaultProjectImage from "../../assets/public/bg-image.jpg";
 import useUserDetails from "../../hook/useUserDetails";
 import { useProjectImage } from "../../hook/getImageUrl";
 import { downloadFile } from "../../hook/downloadImage";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const theme = useSelector((state: any) => state.theme.theme);
@@ -45,11 +46,13 @@ console.log(userInfo, userEmail)
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 animate-[shimmer_1s_infinite]"></div>
               </div>
             ) : (
-              <img
+             <Link to={'/dashboard'}>
+               <img
                 className="object-cover object-center w-full h-full rounded-full border-amber-300 border-2"
                 src={imageUrl || defaultProjectImage}
                 alt={"User Profile"}
               />
+             </Link>
             )}
           </div>
         </div>

@@ -11,6 +11,8 @@ import Weather from "../../pages/weather/Weather";
 import Alumni from "../../pages/alumni/Alumni";
 import Gallery from "../../component/main/galary/Gallery";
 import UpdateProfile from "../../component/dashboard/UpdateProfile";
+import Settings from "../../component/dashboard/settings/Settings";
+import Welcome from "../../component/dashboard/Welcome";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -85,6 +87,10 @@ const MainRoutes = createBrowserRouter([
         ),
         children: [
           {
+            path: "/dashboard",
+            element: <Welcome/>,
+          },
+          {
             path: "/dashboard/profile",
             element: (
               <PrivateRoute>
@@ -93,15 +99,21 @@ const MainRoutes = createBrowserRouter([
             ),
           },
           {
-            path: "/dashboard/update-profile", 
-            element: 
-            (
+            path: "/dashboard/update-profile",
+            element: (
               <PrivateRoute>
-            <UpdateProfile/>
-            </PrivateRoute>
+                <UpdateProfile />
+              </PrivateRoute>
             ),
           },
-          
+          {
+            path: "/dashboard/settings",
+            element: (
+              <PrivateRoute>
+                <Settings />
+              </PrivateRoute>
+            ),
+          },
         ],
       },
     ],

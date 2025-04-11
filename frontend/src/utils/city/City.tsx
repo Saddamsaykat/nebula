@@ -17,9 +17,6 @@ const City = ({
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading countries.</p>;
-
-  console.log(selectedCity);
-
   return (
     <div className="relative w-full">
       <button
@@ -38,22 +35,32 @@ const City = ({
       {showDropdown && (
         <ul className="absolute z-10 mt-2 w-full max-h-60 overflow-auto border bg-black text-white border-black rounded shadow-md">
           {[...countries]
-            .sort((a, b) => a.name?.common.localeCompare(b.name?.common))
-            .map((country: any, index: number) => (
-              <li
-                key={index}
-                onClick={() => {
-                  const capital = country.capital ? country.capital[0] : "No Capital";
-                  setSelectedCity(capital);
-                  setShowDropdown(false);
-                }}
-                className="p-2 hover:bg-white hover:text-black cursor-pointer flex items-center gap-2"
-              >
-                <img src={country?.flags?.png} alt="flag" className="w-6 h-4" />{" "}
-                {country.name?.common} -{" "}
-                {country.capital ? country.capital[0] : "No Capital"}
-              </li>
-            ))}
+            .sort(
+              (a: any, b: any) =>
+                a.capital?.[0]?.localeCompare(b.capital?.[0]) || 0
+            )
+            .map((country: any, index: number) => {
+              const capital = country.capital
+                ? country.capital[0]
+                : "No Capital";
+              return (
+                <li
+                  key={index}
+                  onClick={() => {
+                    setSelectedCity(capital);
+                    setShowDropdown(false);
+                  }}
+                  className="p-2 hover:bg-white hover:text-black cursor-pointer flex items-center gap-2"
+                >
+                  <img
+                    src={country?.flags?.png}
+                    alt="flag"
+                    className="w-6 h-4"
+                  />{" "}
+                  {capital}
+                </li>
+              );
+            })}
         </ul>
       )}
     </div>

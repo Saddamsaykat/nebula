@@ -21,8 +21,7 @@ export const postDataSlice = createApi({
       },
       providesTags: ["Post"],
     }),
-
-    addPost: builder.mutation<postDataProps, Partial<postDataProps>>({
+        addPost: builder.mutation<postDataProps, Partial<postDataProps>>({
       query: (postData) => ({
         url: "students",
         method: "POST",
@@ -61,7 +60,7 @@ export const postDataSlice = createApi({
         },
       };
     },
-    invalidatesTags: ["Post"], // Automatically refetches relevant data
+    invalidatesTags: ["Post"],
   }),
   }),
 
@@ -72,6 +71,7 @@ export const {
   useGetPostsQuery,
   useDeletePostMutation,
   useUpdatePostMutation,
+  
 } = postDataSlice;
 
 export default postDataSlice;

@@ -19,4 +19,5 @@ export interface postDataProps {
   _id?: string;
   batch?: string;
   department?: string;
+  gender?: string;
 }

@@ -74,8 +74,8 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
         </div>
       </div>
 
-       {/* Image */}
-       <div>
+      {/* Image */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2 mt-4">
         <div>
           <label htmlFor={"image"} className="text-sm text-black">
             Image
@@ -89,6 +89,23 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
             [&::-moz-number-spin-box]:appearance-none text-black`}
             // accept="image/jpeg, image/png, image/jpg, image/jfif"
           />
+        </div>
+        <div>
+          {/* Gender dropdown*/}
+          <label htmlFor="gender" className="text-black">Gender</label>
+          <select
+            name="gender"
+            id="gender"
+            className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
+          >
+            <option className="bg-black text-white" value="">Select your Gender</option>
+            <option className="bg-black text-white" value="male">
+              Male
+            </option>
+            <option className="bg-black text-white" value="female">
+              Female
+            </option>
+          </select>
         </div>
       </div>
 
@@ -121,7 +138,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
           />
         </div>
       </div>
-     
+
       {/* About Yourself */}
 
       <TextAreaField
@@ -130,7 +147,6 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
         type="text"
         placeholder=" Software Engineer passionate about AI and Web Development."
       />
-     
     </div>
   );
 };

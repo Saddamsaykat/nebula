@@ -27,7 +27,7 @@ const Register: React.FC<propsTypeRegister> = () => {
   const [selectedCity, setSelectedCity] = useState<{
     name: { common: string };
   } | null>(null);
-
+console.log(selectedCountry)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -45,6 +45,7 @@ const Register: React.FC<propsTypeRegister> = () => {
     const confirmPassword = formData.get("confirmPassword") as string;
     const imageFile = formData.get("image") as File;
     const number = formData.get("number") as string;
+    const gender = formData.get('gender') as string;
     const presentAddress = formData.get("presentAddress") as string;
     const permanentAddress = formData.get("permanentAddress") as string;
     const whatsUp = formData.get("whatsUp") as string;
@@ -55,7 +56,7 @@ const Register: React.FC<propsTypeRegister> = () => {
     const studentId = generateRandomId();
     const agree = formData.get("agree") as string;
     const country = selectedCountry?.name?.common as string;
-    const city = selectedCity?.name?.common || "";
+    const city = selectedCity || "";
     console.log(city);
     if (!agree) {
       alert("You must agree to the terms and conditions");
@@ -79,6 +80,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         lastName,
         email,
         number,
+        gender,
         presentAddress,
         permanentAddress,
         whatsUp,

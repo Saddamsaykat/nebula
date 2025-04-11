@@ -7,6 +7,7 @@ import { postDataProps } from "../../redux/slice/postData/postDataProps";
 
 const UpdateProfile = () => {
   const { userInfo } = useUserDetails();
+  const userGender = userInfo?.student?.gender
   const foundBatch = userInfo?.batch
   const foundDepartment = userInfo?.department
   console.log(foundDepartment)
@@ -41,6 +42,7 @@ const UpdateProfile = () => {
         _id: userInfo?.student?._id ?? '',
         batch: foundBatch ?? '',
         department: foundDepartment ?? '',
+        gender: userGender ?? '',
       };
     
       try {
@@ -171,11 +173,6 @@ const UpdateProfile = () => {
             </div>
           </div>
         </div>
-        <label className="flex items-center gap-2">
-          <input type="checkbox" name="agree" />
-          Agree to terms
-        </label>
-
         <button
           type="submit"
           disabled={isLoading}

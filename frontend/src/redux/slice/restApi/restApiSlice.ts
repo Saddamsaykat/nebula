@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { restCountry } from "../../../api/baseUrl";
 
 export const restApiSlice = createApi({
   reducerPath: "restApi",
   tagTypes: ["Country"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://restcountries.com/v3.1/",
+    baseUrl: restCountry,
   }),
   endpoints: (builder) => ({
     getCountry: builder.query<any, void>({

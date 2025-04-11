@@ -56,6 +56,7 @@ router.post("/", async (req, res) => {
       lastName,
       email,
       number,
+      gender,
       presentAddress,
       permanentAddress,
       whatsUp,
@@ -68,7 +69,7 @@ router.post("/", async (req, res) => {
       studentId,
       country,
       city,
-      agree
+      agree,
     } = req.body;
 
     // Validate required fields
@@ -104,14 +105,17 @@ router.post("/", async (req, res) => {
         message: "Email already exists!"
       });
     }
+
     const batchData = await studentsCollection.findOne({
       batch
     });
+
     const studentData = {
       firstName,
       lastName,
       email,
       number,
+      gender,
       presentAddress,
       permanentAddress,
       whatsUp,
@@ -125,11 +129,10 @@ router.post("/", async (req, res) => {
       country,
       city,
       agree,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      _id: new ObjectId(),
+      batch,
+      department
     };
-    console.log(studentData);
+
     if (!batchData) {
       // Create a new batch entry
       await studentsCollection.insertOne({
@@ -159,6 +162,7 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
 
 
 router.patch("/", async (req, res) => {
@@ -212,6 +216,8 @@ router.patch("/", async (req, res) => {
     });
   }
 });
+
+
 
 
 // Delated
