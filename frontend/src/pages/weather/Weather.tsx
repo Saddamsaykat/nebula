@@ -9,6 +9,7 @@ const Weather = () => {
   const [city, setCity] = useState("Shariatpur");
   const [showModal, setShowModal] = useState(false);
   const ref = useOutsideClick<HTMLDivElement>(() => setShowModal(false));
+
   interface WeatherData {
     name: string;
     main: {
@@ -51,36 +52,37 @@ const Weather = () => {
 
   return (
     <>
-      {/* Floating Chatbot Button */}
+      {/* Floating Button */}
       <button
         onClick={() => setShowModal(!showModal)}
-        className="fixed bottom-5 left-10 bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg z-50"
+        className="fixed bottom-5 left-5 bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg z-50"
       >
-       <TiWeatherPartlySunny size={24} />
+        <TiWeatherPartlySunny size={24} />
       </button>
 
-      {/* Weather Modal */}
+      {/* Modal */}
       {showModal && (
-        <div ref={ref}
-          className="fixed bottom-20 left-12 w-80 bg-white rounded-xl shadow-lg z-50 overflow-hidden"
+        <div
+          ref={ref}
+          className="fixed bottom-24 left-5 right-5 sm:left-10 sm:right-auto sm:w-80 bg-white rounded-xl shadow-lg z-50 overflow-hidden"
         >
           <div
             className="bg-cover bg-center p-4"
             style={{ backgroundImage: `url(${bgImageWeather})` }}
           >
-            {/* Input Field & Button */}
-            <div className="flex justify-center items-center gap-2">
+            {/* Input */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
               <input
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Enter city"
-                className="border p-2 rounded-md w-full"
+                className="border p-2 rounded-md w-full sm:w-auto flex-grow"
               />
               <button
                 onClick={handleSearch}
-                className="bg-blue-500 text-white px-3 py-2 rounded-md"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md w-full sm:w-auto"
               >
                 Go
               </button>
@@ -93,11 +95,12 @@ const Weather = () => {
                   <img
                     src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
                     alt="Weather Icon"
+                    className="w-16 h-16 sm:w-20 sm:h-20"
                   />
                 </div>
-                <h2 className="text-xl font-semibold">{weather.name}</h2>
-                <p>Temp: {weather.main.temp}°C</p>
-                <p>Condition: {weather.weather[0].main}</p>
+                <h2 className="text-lg sm:text-xl font-semibold">{weather.name}</h2>
+                <p className="text-sm sm:text-base">Temp: {weather.main.temp}°C</p>
+                <p className="text-sm sm:text-base">Condition: {weather.weather[0].main}</p>
               </div>
             )}
           </div>

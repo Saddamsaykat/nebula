@@ -113,6 +113,7 @@ router.post("/", async (req, res) => {
     const studentData = {
       firstName,
       lastName,
+      name: `${firstName} ${lastName}`,
       email,
       number,
       gender,

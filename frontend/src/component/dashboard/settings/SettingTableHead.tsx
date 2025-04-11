@@ -1,6 +1,6 @@
 const SettingTableHead = () => {
     return (
-        <thead className="dark:bg-gray-300 border">
+        <thead className="border">
         <tr className="text-left">
           <th className="p-3 border-r-2">Image</th>
           <th className="p-3 border-r-2">Student ID</th>

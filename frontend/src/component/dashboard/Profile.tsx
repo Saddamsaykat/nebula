@@ -13,7 +13,6 @@ const Profile = () => {
   const { userInfo, userEmail } = useUserDetails();
   const projectId = userInfo?.student?.image;
   const { imageUrl, isLoading } = useProjectImage(projectId);
-console.log(userInfo, userEmail)
   const handleExport = async () => {
     try {
       if (!imageUrl) {

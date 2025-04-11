@@ -1,5 +1,6 @@
 interface Student {
-    name: string;
+  firstName: string;
+  lastName: string;
     number: string;
     email: string;
   }
@@ -25,24 +26,23 @@ interface Student {
         (typeof batch.department === 'object' &&
           selectedDepartment in batch.department);
   
-      const isSearchMatch =
-        !searchTerm ||
-        Object.values(batch.department || {}).some(
-          (students) =>
-            Array.isArray(students) &&
-            students.some((student) =>
-              [
-                batch.batch,
-                ...Object.keys(batch.department || {}),
-                student.name,
-                student.number,
-                student.email,
-              ].some((field) =>
-                field?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+          const isSearchMatch =
+          !searchTerm ||
+          Object.values(batch.department || {}).some(
+            (students) =>
+              Array.isArray(students) &&
+              students.some((student) =>
+                [
+                  `${student.firstName} ${student.lastName}`,
+                  batch.batch,
+                  ...Object.keys(batch.department || {}),
+                  student?.number,
+                  student?.email,
+                ].some((field) =>
+                  field?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                )
               )
-            )
-        );
-  
+          );
       return isBatchMatch && isDeptMatch && isSearchMatch;
     });
   };
