@@ -9,7 +9,7 @@ import { themes } from "../../utils/themeStyles/themeStyles";
 import { useMenuItems } from "../../hook/useMenuItems";
 import ImageDropdown from "../../utils/imageDropdown/ImageDropdown";
 import NavbarItem from "./NavbarItem";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // optional
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -56,7 +56,6 @@ const Navbar: React.FC = () => {
     ));
 
 
-    const [isHovered, setIsHovered] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
     const renderThemeSelector = (customClasses = "") => {
@@ -64,11 +63,9 @@ const Navbar: React.FC = () => {
         <div
           className="relative inline-block group"
           onMouseEnter={() => {
-            setIsHovered(true);
             setIsDropdownOpen(true);
           }}
           onMouseLeave={() => {
-            setIsHovered(false);
             setIsDropdownOpen(false);
           }}
         >
