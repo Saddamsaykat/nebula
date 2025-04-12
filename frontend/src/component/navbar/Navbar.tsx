@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "../../redux/slice/themeSlice";
 import { checkAuthState } from "../../authActions/authActions";
-import {  themes } from "../../utils/themeStyles/themeStyles";
+import { themes } from "../../utils/themeStyles/themeStyles";
 import { useMenuItems } from "../../hook/useMenuItems";
 import ImageDropdown from "../../utils/imageDropdown/ImageDropdown";
 import NavbarItem from "./NavbarItem";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa"; // optional
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -39,30 +41,74 @@ const Navbar: React.FC = () => {
         to={to}
         onClick={onClick}
         className={({ isActive }) =>
-          `px-3 py-1.5 md:py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+          `relative px-3 py-1.5 md:py-1.5 rounded-full text-sm font-medium transition-all duration-300
+          ${
             isActive
-              ? "bg-white/15 text-white"
-              : "text-gray-300 hover:text-white hover:bg-white/10"
-          }`
+              ? "text-white after:scale-x-100"
+              : "text-gray-300 hover:text-white hover:after:scale-x-100"
+          }
+          after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full
+          after:bg-white after:origin-left after:scale-x-0 after:transition-transform after:duration-300`
         }
       >
         {label}
       </NavLink>
     ));
 
-  const renderThemeSelector = (customClasses = "") => (
-    <select
-      value={theme}
-      onChange={handleThemeChange}
-      className={`px-3 py-1.5 rounded-full text-sm font-medium ${customClasses}`}
-    >
-      {themes.map((t) => (
-        <option key={t} value={t} className="text-black">
-          {t.charAt(0).toUpperCase() + t.slice(1)}
-        </option>
-      ))}
-    </select>
-  );
+
+    const [isHovered, setIsHovered] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    
+    const renderThemeSelector = (customClasses = "") => {
+      return (
+        <div
+          className="relative inline-block group"
+          onMouseEnter={() => {
+            setIsHovered(true);
+            setIsDropdownOpen(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            setIsDropdownOpen(false);
+          }}
+        >
+          {/* Trigger button */}
+          <div
+            className={`flex items-center justify-between pr-8 pl-3 py-1.5
+            rounded-full text-sm font-medium bg-transparent text-white cursor-pointer
+            
+            ${customClasses}`}
+          >
+            {theme.charAt(0).toUpperCase() + theme.slice(1)}
+            <span className="ml-2 text-xs">
+              {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
+            </span>
+          </div>
+    
+          {/* Dropdown */}
+          {isDropdownOpen && (
+            <ul className="absolute left-0 mt-0.5 w-full bg-white rounded-md shadow-md z-10 text-sm overflow-hidden">
+              {themes.map((t) => (
+                <li
+                  key={t}
+                  onClick={() => {
+                    handleThemeChange({ target: { value: t } } as React.ChangeEvent<HTMLSelectElement>);
+                    setIsDropdownOpen(false);
+                  }}
+                  className="px-3 py-1.5 text-black hover:bg-gray-200 cursor-pointer"
+                >
+                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                </li>
+              ))}
+            </ul>
+          )}
+    
+          {/* Underline animation */}
+          <span className="absolute bottom-0 left-0 h-[2px] w-full bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+        </div>
+      );
+    };
+    
 
   const renderAuthSection = (onClick?: () => void) =>
     user?.email ? (
@@ -74,7 +120,7 @@ const Navbar: React.FC = () => {
     );
 
   return (
-    <div>
+    <div className="">
       <NavbarItem
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}

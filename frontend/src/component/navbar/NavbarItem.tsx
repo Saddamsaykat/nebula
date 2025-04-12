@@ -27,9 +27,9 @@ const NavbarItem: React.FC<NavbarItemProps> = ({
     <div className="relative z-50">
       {/* Desktop Navbar */}
       <div
-        className={`hidden md:flex justify-center ${styles} md:top-4 md:left-1/2 w-full`}
+        className={`hidden mt-5 mb-5 md:flex justify-center ${styles} md:top-4 md:left-1/2 w-full`}
       >
-        <div className="p-[2px] md:rounded-full bg-gradient-to-r from-emerald-600 via-cyan-600 to-indigo-800 animate-gradient-x md:min-w-[550px] mx-auto">
+        <div className="md:rounded-bl-2xl md:rounded-tr-2xl md:rounded-xl bg-gradient-to-r from-rose-800 via-sky-600 to-pink-600 border-2 animate-gradient-x mx-auto">
           <nav className="backdrop-blur-md md:rounded-full px-6 py-2.5 flex items-center gap-4">
             {renderNavLinks()}
             {renderThemeSelector("text-gray-300 bg-transparent")}
