@@ -83,7 +83,7 @@ const Navbar: React.FC = () => {
     
           {/* Dropdown */}
           {isDropdownOpen && (
-            <ul className="absolute left-0 mt-0.5 w-full bg-white rounded-md shadow-md z-10 text-sm overflow-hidden">
+            <ul className="absolute z-50 left-0 mt-0.5 w-full bg-white rounded-md shadow-md z-10 text-sm overflow-hidden">
               {themes.map((t) => (
                 <li
                   key={t}
