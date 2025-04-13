@@ -68,7 +68,6 @@ const Navbar: React.FC = () => {
             setIsDropdownOpen(false);
           }}
         >
-          {/* Trigger button */}
           <div
             className={`flex items-center justify-between pr-8 pl-3 py-1.5
             rounded-full text-sm font-medium bg-transparent text-white cursor-pointer
@@ -80,10 +79,8 @@ const Navbar: React.FC = () => {
               {isDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
             </span>
           </div>
-    
-          {/* Dropdown */}
-          {isDropdownOpen && (
-            <ul className="absolute z-50 left-0 mt-0.5 w-full bg-white rounded-md shadow-md z-10 text-sm overflow-hidden">
+              {isDropdownOpen && (
+            <ul className="absolute z-50 left-0 mt-0.5 w-full bg-white rounded-md shadow-md text-sm overflow-hidden">
               {themes.map((t) => (
                 <li
                   key={t}
@@ -105,7 +102,6 @@ const Navbar: React.FC = () => {
       );
     };
     
-
   const renderAuthSection = (onClick?: () => void) =>
     user?.email ? (
       <ImageDropdown />
