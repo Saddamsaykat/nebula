@@ -39,13 +39,13 @@ export const filterData = (
               student?.number,
               student?.email,
             ].some((field) =>
-              // field?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-              console.log(
-                field
-                  ?.toString()
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase())
-              )
+              field?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+              // console.log(
+              //   field
+              //     ?.toString()
+              //     .toLowerCase()
+              //     .includes(searchTerm.toLowerCase())
+              // )
             )
           )
       );
