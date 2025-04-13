@@ -145,6 +145,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
         id="about"
         label="About Yourself"
         type="text"
+        name="aboutYour"
         placeholder=" Software Engineer passionate about AI and Web Development."
       />
     </div>

@@ -48,7 +48,7 @@ console.log(selectedCountry)
     const gender = formData.get('gender') as string;
     const presentAddress = formData.get("presentAddress") as string;
     const permanentAddress = formData.get("permanentAddress") as string;
-    const whatsUp = formData.get("whatsUp") as string;
+    const whatsUp = formData.get("whatsapp") as string;
     const facebook = formData.get("facebook") as string;
     const linkedin = formData.get("linkedin") as string;
     const github = formData.get("github") as string;
@@ -57,7 +57,6 @@ console.log(selectedCountry)
     const agree = formData.get("agree") as string;
     const country = selectedCountry?.name?.common as string;
     const city = selectedCity || "";
-    console.log(city);
     if (!agree) {
       alert("You must agree to the terms and conditions");
       setLoading(false);
