@@ -18,7 +18,7 @@ const Home = () => {
     location.pathname === "/dashboard/update-profile" ||
     location.pathname === "/forget-password" ||
     location.pathname === "/dashboard/settings" ||
-    location.pathname === "/register";
+    
 
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
@@ -35,8 +35,8 @@ const Home = () => {
       
       <Outlet />
       {!hideNavbarFooter && <Footer />}
-      {<Chatbot />}
-      <Weather />
+      {!hideNavbarFooter && <Chatbot />}
+      {!hideNavbarFooter && <Weather />}
     </div>
   );
 };
