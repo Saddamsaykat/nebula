@@ -1,5 +1,6 @@
 import { useProjectImage } from "../../hook/getImageUrl";
 import varsityLogo from "../../assets/FavIcon.jpg";
+import { BsArrowRight } from "react-icons/bs";
 
 interface Student {
   image?: string;
@@ -17,44 +18,48 @@ interface Student {
 }
 
 const AlumniStudentsCard = ({ student, index }: { student: Student; index: number }) => {
-    const { imageUrl } = useProjectImage(student?.image);
+  const { imageUrl } = useProjectImage(student?.image);
 
-    return (
-        <div
-        key={index}
-        className="flex flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-50 dark:text-gray-800"
-      >
-        <div className="flex space-x-4">
-          {student.image ? (
-            <img
-              src={imageUrl || varsityLogo}
-              alt={'Image'}
-              className="object-cover w-12 h-12 rounded-full shadow"
-            />
-          ) : (
-            <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600">
-              N/A
-            </div>
-          )}
-  
-          <div className="flex flex-col space-y-1">
-            <p className="text-sm font-semibold">{student?.firstName} {student?.lastName}</p>
-            <span className="text-xs text-gray-600">{student.email}</span>
-          </div>
+  return (
+    <div
+      key={index}
+      className="border border-rose-400 w-full relative bg-white shadow-md rounded-xl"
+    >
+      <img
+        src={imageUrl || varsityLogo}
+        alt="Alumni"
+        className="w-full h-[300px] object-cover rounded-t-xl"
+      />
+
+      <div className="p-5">
+        <h1 className="text-[1.3rem] font-bold leading-[24px]">
+          {student.firstName} {student.lastName}
+        </h1>
+        <span className="text-[0.9rem] text-gray-400">{student.email}</span>
+
+        <p className="text-gray-600 mt-3 text-sm">
+          <strong>Phone:</strong> {student.number} <br />
+          <strong>Present Address:</strong> {student.presentAddress} <br />
+          <strong>Permanent Address:</strong> {student.permanentAddress} <br />
+          <strong>WhatsApp:</strong> {student.whatsUp} <br />
+          <strong>About:</strong> {student.aboutYour.length > 100 ? student.aboutYour.slice(0, 100) + '...' : student.aboutYour}
+        </p>
+
+        <div className="mt-3 flex flex-wrap gap-2 text-sm">
+          <a href={student.facebook} className="text-blue-500 underline">Facebook</a>
+          <a href={student.linkedin} className="text-blue-500 underline">LinkedIn</a>
+          <a href={student.github} className="text-blue-500 underline">GitHub</a>
         </div>
-  
-        <div>
-          <p><strong>Number:</strong> {student.number}</p>
-          <p><strong>Present Address:</strong> {student.presentAddress}</p>
-          <p><strong>Permanent Address:</strong> {student.permanentAddress}</p>
-          <p><strong>WhatsApp:</strong> {student.whatsUp}</p>
-          <p><strong>Facebook:</strong> <a href={student.facebook} className="text-blue-500">{student.facebook}</a></p>
-          <p><strong>LinkedIn:</strong> <a href={student.linkedin} className="text-blue-500">{student.linkedin}</a></p>
-          <p><strong>GitHub:</strong> <a href={student.github} className="text-blue-500">{student.github}</a></p>
-          <p><strong>About:</strong> {student.aboutYour}</p>
-        </div>
+
+        <button
+          className="py-2.5 px-4 bg-gray-300 mt-4 rounded-md w-full flex items-center justify-center gap-[10px] group"
+        >
+          Learn more
+          <BsArrowRight className="text-[1.3rem] text-gray-600 group-hover:ml-2 transition-all duration-200" />
+        </button>
       </div>
-    );
+    </div>
+  );
 };
 
 export default AlumniStudentsCard;

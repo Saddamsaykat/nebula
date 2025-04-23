@@ -27,7 +27,7 @@ const Register: React.FC<propsTypeRegister> = () => {
   const [selectedCity, setSelectedCity] = useState<{
     name: { common: string };
   } | null>(null);
-console.log(selectedCountry)
+  console.log(selectedCountry);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -45,7 +45,7 @@ console.log(selectedCountry)
     const confirmPassword = formData.get("confirmPassword") as string;
     const imageFile = formData.get("image") as File;
     const number = formData.get("number") as string;
-    const gender = formData.get('gender') as string;
+    const gender = formData.get("gender") as string;
     const presentAddress = formData.get("presentAddress") as string;
     const permanentAddress = formData.get("permanentAddress") as string;
     const whatsUp = formData.get("whatsapp") as string;
@@ -137,18 +137,18 @@ console.log(selectedCountry)
         <div className="bg-white p-5 rounded-lg m-auto max-w-[1080px]">
           <RegisterHeader />
           <div className="">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-4">
-           <PersonalInformation
-              setSelectedCountry={setSelectedCountry}
-              selectedCountry={selectedCountry}
-              selectedCity={selectedCity}
-              setSelectedCity={setSelectedCity}
-            />
-            <AdditionalInformation
-              batchOptions={batchOptions}
-              department={department}
-            />
-           </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-4">
+              <PersonalInformation
+                setSelectedCountry={setSelectedCountry}
+                selectedCountry={selectedCountry}
+                selectedCity={selectedCity}
+                setSelectedCity={setSelectedCity}
+              />
+              <AdditionalInformation
+                batchOptions={batchOptions}
+                department={department}
+              />
+            </div>
             {/* Agreement */}
             <div className=" mt-2">
               <input
