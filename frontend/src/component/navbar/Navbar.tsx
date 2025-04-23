@@ -78,53 +78,66 @@ const Navbar: React.FC = () => {
     );
 
   return (
-    <nav className="flex items-center justify-between w-full relative bg-white rounded-full px-[10px] py-[8px]">
-      {/* Logo */}
-      <img src="https://i.ibb.co/0BZfPq6/darklogo.png" alt="logo" className="w-[55px]" />
-
-      {/* Desktop Nav Links */}
-      <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
-        {navItems.map(({ to, label }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px]
-              before:transition-all before:duration-300 before:absolute relative before:rounded-full
-              before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0
-              cursor-pointer capitalize ${isActive ? "text-[#3B9DF8]" : ""}`
-            }
-          >
-            {label}
-          </NavLink>
-        ))}
-      </ul>
-
-      {/* Right Actions */}
-      <div className="items-center gap-[10px] flex">
-        <div className="sm:flex hidden">{renderAuthSection()}</div>
-        <div className="sm:flex hidden">{renderThemeSelector()}</div>
-        <CiMenuFries
-          className="text-[1.8rem] mr-1 text-[#424242] cursor-pointer md:hidden flex"
-          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+    <>
+      {/* Sticky Top Navbar */}
+      <nav className="sticky top-0 z-30 bg-white flex items-center justify-between w-full rounded-full px-[10px] py-[8px] shadow-sm">
+        {/* Logo */}
+        <img
+          src="https://i.ibb.co/0BZfPq6/darklogo.png"
+          alt="logo"
+          className="w-[45px] sm:w-[55px]"
         />
-      </div>
+
+        {/* Desktop Nav Links */}
+        <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
+          {navItems.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px]
+                before:transition-all before:duration-300 before:absolute relative before:rounded-full
+                before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0
+                cursor-pointer capitalize ${isActive ? "text-[#3B9DF8]" : ""}`
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </ul>
+
+        {/* Right Actions */}
+        <div className="items-center gap-[10px] flex">
+          <div className="sm:flex hidden">{renderAuthSection()}</div>
+          <div className="sm:flex hidden">{renderThemeSelector()}</div>
+          <CiMenuFries
+            className="text-[1.8rem] mr-1 text-[#424242] cursor-pointer md:hidden flex"
+            onClick={() => setMobileSidebarOpen(true)}
+          />
+        </div>
+      </nav>
+
+      {/* Mobile Backdrop */}
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-30 z-10 transition-opacity duration-300 ${
+          mobileSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        } md:hidden`}
+        onClick={() => setMobileSidebarOpen(false)}
+      />
 
       {/* Mobile Sidebar */}
       <aside
-        className={`${
-          mobileSidebarOpen
-            ? "translate-x-0 opacity-100 z-20"
-            : "translate-x-[200px] opacity-0 z-[-1]"
-        } md:hidden bg-white p-4 text-center absolute top-[65px] right-0 w-full sm:w-[50%] rounded-md transition-all duration-300`}
+        className={`fixed top-[65px] right-0 bg-white z-20 rounded-l-lg shadow-md transition-transform duration-300 md:hidden
+        ${mobileSidebarOpen ? "translate-x-0" : "translate-x-full"}
+        w-full sm:w-[70%] md:w-[50%] h-[calc(100vh-65px)] overflow-y-auto p-4`}
       >
-        <ul className="items-center gap-[20px] text-[1rem] text-gray-600 flex flex-col">
+        <ul className="flex flex-col gap-4 text-[1rem] text-gray-700">
           {navItems.map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
               onClick={() => setMobileSidebarOpen(false)}
-              className="before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize"
+              className="relative capitalize transition-colors duration-300 hover:text-[#3B9DF8] before:w-0 hover:before:w-full before:h-[2px] before:bg-[#3B9DF8] before:absolute before:bottom-[-2px] before:left-0 before:transition-all before:duration-300 before:rounded-full"
             >
               {label}
             </NavLink>
@@ -133,7 +146,7 @@ const Navbar: React.FC = () => {
           <li>{renderThemeSelector()}</li>
         </ul>
       </aside>
-    </nav>
+    </>
   );
 };
 
