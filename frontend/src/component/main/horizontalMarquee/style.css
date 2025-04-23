@@ -1,0 +1,30 @@
+.marqueeSliderLeft {
+    animation: marqueeLeft 20s linear infinite;
+}
+
+@keyframes marqueeLeft {
+    from {
+        transform: translateX(0)
+    }
+    to {
+        transform: translateX(-100%)
+    }
+}
+
+.marqueeSliderRight {
+    animation: marqueeRight 20s linear infinite;
+}
+
+@keyframes marqueeRight {
+    from {
+        transform: translateX(0)
+    }
+    to {
+        transform: translateX(100%)
+    }
+}
+
+.slider-container:hover .marqueeSliderLeft,
+.slider-container:hover .marqueeSliderRight {
+    animation-play-state: paused;
+}

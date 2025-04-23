@@ -16,6 +16,7 @@ const SwiperSlider = () => {
     <>
       <NameSutter name="ZHSUST DEPARTMENT" />
       <Swiper
+        spaceBetween={50}
         effect={"coverflow"}
         grabCursor={true}
         centeredSlides={true}
@@ -25,8 +26,11 @@ const SwiperSlider = () => {
           rotate: 50,
           stretch: 0,
           depth: 50,
-          modifier: 1,
+          modifier: 2,
           slideShadows: true,
+        }}
+        pagination={{
+          clickable: true,
         }}
         // pagination={true}
         modules={[EffectCoverflow, Pagination]}
@@ -34,7 +38,7 @@ const SwiperSlider = () => {
       >
         {bannerImage.map((image, index) => (
           <SwiperSlide key={index}>
-            <img src={image.src} alt={image.alt} />
+            <img src={image.src} alt={image.alt} className="min-w-[300px] min-h-[300px]" />
           </SwiperSlide>
         ))}
       </Swiper>

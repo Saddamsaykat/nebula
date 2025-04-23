@@ -10,7 +10,7 @@ const NameSutter: React.FC<nameRegProps> = ({ name }) => {
       const theme = useSelector((state) => (state as any).theme.theme);
       const styles = getThemeStyles(theme);
   return (
-    <div className="mt-2 mb-2" style={styles}>
+    <div className="mt-10 mb-10" style={styles}>
       <div className="flex justify-center items-center">
         <hr className="border w-[300px] mt-2 mb-2" />
       </div>
