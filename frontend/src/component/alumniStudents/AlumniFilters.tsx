@@ -26,7 +26,7 @@ const AlumniFilters: React.FC<AlumniFiltersProps> = ({
     <div className="flex flex-wrap gap-4 mb-4">
       <input
         type="text"
-        placeholder="Search by batch, name, number, email..."
+        placeholder="Search by student name"
         value={searchTerm}
         onChange={(e) => handleSearch(e.target.value)}
         className="border p-2 rounded-lg w-full md:w-1/3"

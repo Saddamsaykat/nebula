@@ -5,7 +5,8 @@
     "department": {
       "EEE": [
         {
-          "name": "string",
+          "firstName": "string",
+          "lastName": "string",
           "email": "string",
           "number": "string",
           "presentAddress": "string",
@@ -15,14 +16,51 @@
       ],
       "CSE": [
         {
-          "name": "string",
+          "firstName": "string",
+          "lastName": "string",
           "email": "string",
           "number": "string",
           "presentAddress": "string",
           "permanentAddress": "string"
         },
         {
-          "name": "string",
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
+        }
+      ]
+    }
+  },
+  {
+    "_id": "string",
+    "batch": "string",
+    "department": {
+      "EEE": [
+        {
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
+        }
+      
+      ],
+      "CSE": [
+        {
+          "firstName": "string",
+          "lastName": "string",
+          "email": "string",
+          "number": "string",
+          "presentAddress": "string",
+          "permanentAddress": "string"
+        },
+        {
+          "firstName": "string",
+          "lastName": "string",
           "email": "string",
           "number": "string",
           "presentAddress": "string",
