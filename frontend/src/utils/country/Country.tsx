@@ -10,10 +10,11 @@ const Country = ({
   selectedCountry: any;
 }) => {
   const { data: countries = [], isLoading, isError } = useGetCountryQuery();
+  console.log(countries)
   const [showDropdown, setShowDropdown] = useState(false);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading countries.</p>;
+  if (isLoading) return <p className="text-black">Loading...</p>;
+  if (isError) return <p className="text-black">Error loading countries.</p>;
 
   return (
     <div className="relative w-full">

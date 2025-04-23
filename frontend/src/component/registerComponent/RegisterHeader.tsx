@@ -19,7 +19,7 @@ const RegisterHeader = () => {
         <hr className="border border-black mb-2 mt-2" />
       </div>
 
-      <div className="flex justify-center items-center">
+      {/* <div className="flex justify-center items-center">
         <h1 className="text-xl text-black">
           Personal Information
           <span>
@@ -27,7 +27,7 @@ const RegisterHeader = () => {
             <hr className="border border-black w-46 mt-2 mb-2" />
           </span>
         </h1>
-      </div>
+      </div> */}
     </div>
   );
 };

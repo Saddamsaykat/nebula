@@ -26,14 +26,14 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
   department,
 }) => {
   return (
-    <div className="p-4 rounded-md shadow-sm dark:bg-gray-50 mt-3">
-      <div className="flex flex-col items-center mt-4 mb-4 sm:flex-row sm:justify-center sm:gap-4">
+    <div className="p-4 rounded-md shadow-lg border-2 border-gray-300 dark:bg-gray-50 mt-4">
+      {/* <div className="flex flex-col items-center mt-4 mb-4 sm:flex-row sm:justify-center sm:gap-4">
         <hr className="border border-black w-2/3 sm:w-40 lg:w-60 mb-2 sm:mb-0" />
         <h1 className="text-lg sm:text-xl text-black whitespace-nowrap px-2 text-center">
           Additional Information
         </h1>
         <hr className="border border-black w-2/3 sm:w-40 lg:w-60 mt-2 sm:mt-0" />
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
         <div>

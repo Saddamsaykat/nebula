@@ -13,7 +13,7 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
   setSelectedCity,
 }) => {
   return (
-    <div className="p-4 max-w-[720px] rounded-md shadow-sm dark:bg-gray-50">
+    <div className="p-4 max-w-[720px] rounded-md shadow-lg border-2 border-gray-300 dark:bg-gray-50 mt-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
         <InputField
           id="firstName"

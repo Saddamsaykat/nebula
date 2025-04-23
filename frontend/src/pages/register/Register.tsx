@@ -137,7 +137,8 @@ console.log(selectedCountry)
         <div className="bg-white p-5 rounded-lg m-auto max-w-[1080px]">
           <RegisterHeader />
           <div className="">
-            <PersonalInformation
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-4">
+           <PersonalInformation
               setSelectedCountry={setSelectedCountry}
               selectedCountry={selectedCountry}
               selectedCity={selectedCity}
@@ -147,6 +148,7 @@ console.log(selectedCountry)
               batchOptions={batchOptions}
               department={department}
             />
+           </div>
             {/* Agreement */}
             <div className=" mt-2">
               <input
