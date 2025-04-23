@@ -17,7 +17,8 @@ const Home = () => {
     location.pathname === "/dashboard/profile" ||
     location.pathname === "/dashboard/update-profile" ||
     location.pathname === "/forget-password" ||
-    location.pathname === "/dashboard/settings";
+    location.pathname === "/dashboard/settings" ||
+    location.pathname === "/register";
 
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
