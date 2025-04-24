@@ -44,6 +44,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
             id="batch"
             name="batch"
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
+            required
           >
             {batchOptions?.map((batch, index) => (
               <option key={index} value={batch} className="bg-black text-white">
@@ -60,6 +61,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
             id="department"
             name="department"
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
+            required
           >
             {department?.map((department, index) => (
               <option
@@ -83,6 +85,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
           <input
             id={"image"}
             type="file"
+            required
             name="image"
             className={` w-full px-3 py-2 border border-amber-400 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400 appearance-none [&::-webkit-inner-spin-button]:appearance-none 
             [&::-webkit-outer-spin-button]:appearance-none 
@@ -110,7 +113,9 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
       </div>
 
       {/* Social Media */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
+      <div
+      //  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2"
+       >
         <InputField
           id="facebook"
           name="facebook"
@@ -120,7 +125,9 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
         <InputField id="github" name="github" label="Github" type="text" />
       </div>
       {/* Whatsapp & Linkedin*/}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
+      <div
+      //  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2"
+      >
         <div>
           <InputField
             id="linkedin"

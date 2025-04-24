@@ -34,6 +34,7 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
         name="email"
         type="email"
         placeholder="Email"
+        required={true}
       />
       <InputField
         id="number"
@@ -42,12 +43,23 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
         type="number"
         placeholder="Contact Number"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">
-        <PasswordField id="password" label="Password" name="password" />
+      <div
+      // className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2"
+      >
+        <PasswordField
+          id="password"
+          label="Password"
+          name="password"
+          placeholder="Password"
+          required={true}
+        />
         <PasswordField
           id="confirmPassword"
           label="Confirm Password"
           name="confirmPassword"
+          placeholder="Confirm Password"
+          required={true}
+
         />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">

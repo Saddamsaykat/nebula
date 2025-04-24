@@ -18,8 +18,8 @@ import Swal from "sweetalert2";
 const Register: React.FC<propsTypeRegister> = () => {
   const dispatch = useDispatch();
   const [addStudent] = useAddPostMutation();
-  const batchOptions = ["", " 1", " 2", " 3", " 4 ", "5", "6"];
-  const department = ["Department", "CSE", "EEE", "CE"];
+  const batchOptions = ["", " 1", " 2", " 3", " 4 ", "5", "6", "7", "8", "9", "10" , "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"];
+  const department = ["Department", "CSE", "EEE", "CE", "LAW", "BBA", "ENGLISH", "CHE" ];
   const { uploadImage } = useImageUpload(logo);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -150,14 +150,14 @@ const Register: React.FC<propsTypeRegister> = () => {
               />
             </div>
             {/* Agreement */}
-            <div className=" mt-2">
+            <div className="flex justify-center items-center mt-4">
               <input
                 type="checkbox"
                 id="agree"
                 name="agree"
-                className="mr-2 text-black"
+                className="mr-2 text-black w-5 h-5"
               />
-              <label htmlFor="agree" className="text-black">
+              <label htmlFor="agree" className="text-black text-lg">
                 I agree with the terms and conditions
               </label>
             </div>
