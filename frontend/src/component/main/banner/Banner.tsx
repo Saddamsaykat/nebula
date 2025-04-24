@@ -26,9 +26,9 @@ const Banner = () => {
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper rounded-2xl"
       >
-        {bannerImage.map((image, index) => (
+        {bannerImage?.map((image, index) => (
           <SwiperSlide key={index}>
-            <img src={image.src} alt={image.alt} />
+            <img src={image?.src} alt={image?.alt} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex overflow-auto">
         {/* Sidebar */}
         <div
           ref={sidebarRef}

@@ -20,4 +20,6 @@ export interface postDataProps {
   batch?: string;
   department?: string;
   gender?: string;
+  newBatch?: string;
+  newDepartment?: string;
 }
