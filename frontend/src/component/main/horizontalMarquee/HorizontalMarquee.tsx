@@ -11,47 +11,20 @@ const MarqueeData = [
     url: "/components/rating",
     groupName: "navigation",
   },
-  {
-    title: "stepper",
-    image: "https://i.ibb.co.com/QKcvgbC/stepper.png",
-    url: "/components/stepper",
-    groupName: "navigation",
-  },
-  {
-    title: "tab",
-    image: "https://i.ibb.co/tzFdVZt/Name-14.png",
-    url: "/components/tabs",
-    groupName: "navigation",
-  },
-  {
-    title: "modal",
-    image: "https://i.ibb.co/yFRHYKV/Name-17.png",
-    url: "/components/modal",
-    groupName: "navigation",
-  },
-  {
-    title: "pagination",
-    image: "https://i.ibb.co/C9ytCym/Name-15.png",
-    url: "/components/pagination",
-    groupName: "navigation",
-  },
-  {
-    title: "tooltip",
-    image: "https://i.ibb.co/mcF2bX8/Name-7.png",
-    url: "/components/tooltip",
-    groupName: "data_display",
-  },
-  {
-    title: "badge",
-    image: "https://i.ibb.co/HgvLrtK/Name-6.png",
-    url: "/components/badge",
-    groupName: "data_display",
-  },
+  
 ];
 
+import { useEffect } from "react";
+import { useGetAllImageQuery } from "../../../redux/slice/imageAPi/imageApi";
 import NameSutter from "../../../utils/nameSutter/NameSutter";
 import "./style.css";
 const HorizontalMarquee = () => {
+  const { data: AllImageFile } = useGetAllImageQuery();
+
+useEffect(() => {
+  console.log(AllImageFile); // Should now log an array of image URLs or null
+}, [AllImageFile]);
+
   const doubledComponents = MarqueeData ? [...MarqueeData, ...MarqueeData] : [];
 
   return (

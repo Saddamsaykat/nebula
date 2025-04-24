@@ -104,7 +104,8 @@ const Register: React.FC<propsTypeRegister> = () => {
         icon: "success",
         confirmButtonText: "OK",
       }).then(() => {
-        navigate("/home");
+        // navigate("http://www.gmail.com");
+        <a href="http://www.gmail.com"></a>
       });
 
       form.reset();

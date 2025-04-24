@@ -17,40 +17,40 @@ const Gallery = () => {
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/21FybxKq/3.jpg"
+            src="https://i.ibb.co.com/4wxv1hML/6.jpg"
           />
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/B2mfjQ9t/4.jpg"
+            src="https://i.ibb.co.com/Hpg6XNR9/5.jpg"
           />
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/Lht369qz/5.jpg"
+            src="https://i.ibb.co.com/S4zTgbmf/1.jpg"
           />
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/YFfQQn3P/6.jpg"
+            src="https://i.ibb.co.com/HLv3CbP0/4.jpg"
           />
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/bgZddpxv/7.jpg"
+            src="https://i.ibb.co.com/W4CyjYgH/3.jpg"
           />
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/YFfQQn3P/6.jpg"
+            src="https://i.ibb.co.com/S4zTgbmf/1.jpg"
           />
           <img
             alt=""
             className="w-full h-full rounded shadow-sm min-h-48 dark:bg-gray-500 aspect-square"
-            src="https://i.ibb.co.com/YFfQQn3P/6.jpg"
+            src="https://i.ibb.co.com/TDhJ2v7X/2.jpg"
           />
           <img
-            src="https://i.ibb.co.com/21FybxKq/3.jpg"
+            src="https://i.ibb.co.com/Hpg6XNR9/5.jpg"
             alt=""
             className="w-full h-full col-span-2 row-span-2 rounded shadow-sm min-h-96 md:col-start-1 md:row-start-3 dark:bg-gray-500 aspect-square"
           />
