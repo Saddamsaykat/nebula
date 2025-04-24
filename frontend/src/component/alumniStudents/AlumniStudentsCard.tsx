@@ -1,8 +1,10 @@
 import { useProjectImage } from "../../hook/getImageUrl";
 import varsityLogo from "../../assets/FavIcon.jpg";
 import { BsArrowRight } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 interface Student {
+  _id: string;
   image?: string;
   firstName: string;
   lastName: string;
@@ -15,11 +17,12 @@ interface Student {
   linkedin: string;
   github: string;
   aboutYour: string;
+  studentId: string;
 }
 
 const AlumniStudentsCard = ({ student, index }: { student: Student; index: number }) => {
   const { imageUrl } = useProjectImage(student?.image);
-
+console.log(student)
   return (
     <div
       key={index}
@@ -32,7 +35,7 @@ const AlumniStudentsCard = ({ student, index }: { student: Student; index: numbe
       />
 
       <div className="p-5">
-        <h1 className="text-[1.3rem] font-bold leading-[24px]">
+        <h1 className="text-[1.3rem] font-bold leading-[24px] text-black">
           {student.firstName} {student.lastName}
         </h1>
         <span className="text-[0.9rem] text-gray-400">{student.email}</span>
@@ -51,12 +54,13 @@ const AlumniStudentsCard = ({ student, index }: { student: Student; index: numbe
           <a href={student.github} className="text-blue-500 underline">GitHub</a>
         </div>
 
-        <button
+        <Link 
+          to={`/alumni-students/${student?.studentId}`}
           className="py-2.5 px-4 bg-gray-300 mt-4 rounded-md w-full flex items-center justify-center gap-[10px] group"
         >
           Learn more
           <BsArrowRight className="text-[1.3rem] text-gray-600 group-hover:ml-2 transition-all duration-200" />
-        </button>
+        </Link>
       </div>
     </div>
   );

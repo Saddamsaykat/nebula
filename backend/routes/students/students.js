@@ -46,6 +46,29 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
+// Get student by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const studentId = req.params.id;
+    const data = await studentsCollection.find().toArray();
+    for (const batch of data) {
+      for (const dept in batch.department) {
+        const found = batch.department[dept].find((s) => s.studentId === studentId);
+      //  const dataSet =   res.json(found);
+        if (found) {
+          return res.json({ ...batch, ...found });
+        }
+      }
+    }
+
+    return res.status(404).json({ message: "Student not found!" });
+  } catch (error) {
+    console.error("Error fetching student:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+
 // Add Student API (Checks Email & Saves Data)
 router.post("/", async (req, res) => {
   try {
@@ -163,7 +186,6 @@ router.post("/", async (req, res) => {
     });
   }
 });
-
 
 
 router.patch("/", async (req, res) => {

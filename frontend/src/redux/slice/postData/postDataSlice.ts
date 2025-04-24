@@ -21,7 +21,24 @@ export const postDataSlice = createApi({
       },
       providesTags: ["Post"],
     }),
-        addPost: builder.mutation<postDataProps, Partial<postDataProps>>({
+
+    getPostById: builder.query<postDataProps, string>({
+      query: (id) => {
+        const token = localStorage.getItem("Token");
+        return {
+          url: `students/${id}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        };
+      },
+      providesTags: ["Post"],
+    }),
+
+
+    addPost: builder.mutation<postDataProps, Partial<postDataProps>>({
       query: (postData) => ({
         url: "students",
         method: "POST",
@@ -43,35 +60,34 @@ export const postDataSlice = createApi({
       invalidatesTags: ["Post"],
     }),
     updatePost: builder.mutation<
-    { message: string },
-    {
-      updateFields: Partial<postDataProps>;
-    }
-  >({
-    query: (updateFields) => {
-      const token = localStorage.getItem("Token");
-      return {
-        url: `students`,
-        method: "PATCH",
-        body: updateFields,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token ? `Bearer ${token}` : "",
-        },
-      };
-    },
-    invalidatesTags: ["Post"],
+      { message: string },
+      {
+        updateFields: Partial<postDataProps>;
+      }
+    >({
+      query: (updateFields) => {
+        const token = localStorage.getItem("Token");
+        return {
+          url: `students`,
+          method: "PATCH",
+          body: updateFields,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        };
+      },
+      invalidatesTags: ["Post"],
+    }),
   }),
-  }),
-
 });
 
 export const {
   useAddPostMutation,
   useGetPostsQuery,
+  useGetPostByIdQuery,
   useDeletePostMutation,
   useUpdatePostMutation,
-  
 } = postDataSlice;
 
 export default postDataSlice;

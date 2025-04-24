@@ -12,6 +12,8 @@ import Gallery from "../../component/main/galary/Gallery";
 import UpdateProfile from "../../component/dashboard/UpdateProfile";
 import Settings from "../../component/dashboard/settings/Settings";
 import Welcome from "../../component/dashboard/Welcome";
+import About from "../../component/about/About";
+import AlumniFullView from "../../pages/alumni/AlumniFullView";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -28,7 +30,7 @@ const MainRoutes = createBrowserRouter([
       },
       {
         path: "about",
-        element: <div>About</div>,
+        element: <About />,
       },
       {
         path: "contact",
@@ -78,6 +80,10 @@ const MainRoutes = createBrowserRouter([
         element: <div>Not Found</div>,
       },
       {
+        path: "/alumni-students/:id",
+        element: <AlumniFullView />,
+      },
+      {
         path: "/dashboard",
         element: (
           <PrivateRoute>
@@ -87,7 +93,7 @@ const MainRoutes = createBrowserRouter([
         children: [
           {
             path: "/dashboard",
-            element: <Welcome/>,
+            element: <Welcome />,
           },
           {
             path: "/dashboard/profile",
