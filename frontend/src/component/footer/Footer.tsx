@@ -123,7 +123,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="py-6 text-sm text-center dark:text-gray-600">
-          © 2025 NexGen Lab Company Co. All rights reserved.
+          © 2025 NexGen Lab Company Co. CEO & Founder (Md. Saddam Hossain Saykat) All rights reserved.
         </div>
       </footer>
     </div>

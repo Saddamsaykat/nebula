@@ -18,8 +18,64 @@ import Swal from "sweetalert2";
 const Register: React.FC<propsTypeRegister> = () => {
   const dispatch = useDispatch();
   const [addStudent] = useAddPostMutation();
-  const batchOptions = ["", " 1", " 2", " 3", " 4 ", "5", "6", "7", "8", "9", "10" , "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50"];
-  const department = ["Department", "CSE", "EEE", "CE", "LAW", "BBA", "ENGLISH", "CHE" ];
+  const batchOptions = [
+    "",
+    " 1",
+    " 2",
+    " 3",
+    " 4 ",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "41",
+    "42",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50",
+  ];
+  const department = [
+    "Department",
+    "CSE",
+    // "EEE", "CE", "LAW", "BBA", "ENGLISH", "CHE"
+  ];
   const { uploadImage } = useImageUpload(logo);
   // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -27,7 +83,17 @@ const Register: React.FC<propsTypeRegister> = () => {
   const [selectedCity, setSelectedCity] = useState<{
     name: { common: string };
   } | null>(null);
-  console.log(selectedCountry);
+  const [jobCategory, setJobCategory] = useState("");
+  const [jobCategoryType, setJobCategoryType] = useState("");
+
+  const [customJobCategoryType, setCustomJobCategoryType] = useState("");
+  const [customJobCategory, setCustomJobCategory] = useState("");
+
+  const finalJobCategoryType =
+    jobCategoryType === "Other" ? customJobCategoryType : jobCategoryType;
+  const finalJobCategory =
+    jobCategory === "Other" ? customJobCategory : jobCategory;
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -54,9 +120,12 @@ const Register: React.FC<propsTypeRegister> = () => {
     const github = formData.get("github") as string;
     const aboutYour = formData.get("aboutYour") as string;
     const studentId = generateRandomId();
+    const jobType = finalJobCategoryType;
+    const jobCategoryData = finalJobCategory;
     const agree = formData.get("agree") as string;
     const country = selectedCountry?.name?.common as string;
     const city = selectedCity || "";
+    console.log({ jobType, jobCategoryData });
     if (!agree) {
       alert("You must agree to the terms and conditions");
       setLoading(false);
@@ -93,10 +162,14 @@ const Register: React.FC<propsTypeRegister> = () => {
         country,
         city,
         agree,
+        jobType,
+        jobCategoryData,
       };
       await addStudent(studentInfo as any).unwrap();
-      // @ts-expect-error - reason: whatever the issue is (e.g. "Type mismatch workaround")
-      await dispatch(registerWithEmail(email, password));
+      // // @ts-expect-error - reason: whatever the issue is (e.g. "Type mismatch workaround")
+      await dispatch(registerWithEmail(email, password) as any);
+
+      console.log(studentInfo);
 
       Swal.fire({
         title: "Success!",
@@ -105,7 +178,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         confirmButtonText: "OK",
       }).then(() => {
         // navigate("http://www.gmail.com");
-        <a href="http://www.gmail.com"></a>
+        <a href="http://www.gmail.com"></a>;
       });
 
       form.reset();
@@ -148,6 +221,14 @@ const Register: React.FC<propsTypeRegister> = () => {
               <AdditionalInformation
                 batchOptions={batchOptions}
                 department={department}
+                jobCategoryType={jobCategoryType}
+                setJobCategoryType={setJobCategoryType}
+                jobCategory={jobCategory}
+                setJobCategory={setJobCategory}
+                customJobCategoryType={customJobCategoryType}
+                setCustomJobCategoryType={setCustomJobCategoryType}
+                customJobCategory={customJobCategory}
+                setCustomJobCategory={setCustomJobCategory}
               />
             </div>
             {/* Agreement */}

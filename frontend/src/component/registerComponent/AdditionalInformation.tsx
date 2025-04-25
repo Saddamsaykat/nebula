@@ -1,30 +1,20 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import InputField from "../../utils/inputField/InputField";
 import TextAreaField from "../../utils/textAreaField/TextAreaField";
+import JobExperience from "./jobExperience/JobExperience";
 
-interface registerAdditionalProps {
-  batchOptions?: string[];
-  department?: string[];
-  handleBatchChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  handleDepartmentChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  id?: string;
-  name?: string;
-  label?: string;
-  type?: string;
-  value?: string;
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
-  errorMessage?: string;
-  success?: boolean;
-  successMessage?: string;
-  handleSuccess?: () => void;
-  placeholder?: string;
-}
-
-const AdditionalInformation: React.FC<registerAdditionalProps> = ({
+const AdditionalInformation = ({
   batchOptions,
   department,
-}) => {
+  jobCategoryType,
+  setJobCategoryType,
+  jobCategory,
+  setJobCategory,
+  customJobCategoryType,
+  setCustomJobCategoryType,
+  customJobCategory,
+  setCustomJobCategory,
+}: any) => {
   return (
     <div className="p-4 rounded-md shadow-lg border-2 border-gray-300 dark:bg-gray-50 mt-4">
       {/* <div className="flex flex-col items-center mt-4 mb-4 sm:flex-row sm:justify-center sm:gap-4">
@@ -46,7 +36,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
             required
           >
-            {batchOptions?.map((batch, index) => (
+            {batchOptions?.map((batch: any, index: any) => (
               <option key={index} value={batch} className="bg-black text-white">
                 Batch {batch}
               </option>
@@ -63,7 +53,7 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
             required
           >
-            {department?.map((department, index) => (
+            {department?.map((department: any, index: any) => (
               <option
                 key={index}
                 value={department}
@@ -95,13 +85,17 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
         </div>
         <div>
           {/* Gender dropdown*/}
-          <label htmlFor="gender" className="text-black">Gender</label>
+          <label htmlFor="gender" className="text-black">
+            Gender
+          </label>
           <select
             name="gender"
             id="gender"
             className="w-full px-3 py-2 border border-amber-400 rounded-md text-black"
           >
-            <option className="bg-black text-white" value="">Select your Gender</option>
+            <option className="bg-black text-white" value="">
+              Select your Gender
+            </option>
             <option className="bg-black text-white" value="male">
               Male
             </option>
@@ -112,10 +106,23 @@ const AdditionalInformation: React.FC<registerAdditionalProps> = ({
         </div>
       </div>
 
+      <div className="text-black">
+        <JobExperience
+          jobCategoryType={jobCategoryType}
+          setJobCategoryType={setJobCategoryType}
+          jobCategory={jobCategory}
+          setJobCategory={setJobCategory}
+          customJobCategoryType={customJobCategoryType}
+          setCustomJobCategoryType={setCustomJobCategoryType}
+          customJobCategory={customJobCategory}
+          setCustomJobCategory={setCustomJobCategory}
+        />
+      </div>
+
       {/* Social Media */}
       <div
       //  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2"
-       >
+      >
         <InputField
           id="facebook"
           name="facebook"

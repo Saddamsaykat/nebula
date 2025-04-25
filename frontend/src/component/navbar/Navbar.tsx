@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { CiMenuFries } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
@@ -54,7 +54,9 @@ const Navbar: React.FC = () => {
             <li
               key={t}
               onClick={() => {
-                handleThemeChange({ target: { value: t } } as React.ChangeEvent<HTMLSelectElement>);
+                handleThemeChange({
+                  target: { value: t },
+                } as React.ChangeEvent<HTMLSelectElement>);
                 setIsDropdownOpen(false);
               }}
               className="px-3 py-1.5 text-black hover:bg-gray-200 cursor-pointer"
@@ -105,9 +107,9 @@ const Navbar: React.FC = () => {
             </NavLink>
           ))}
         </ul>
-
         {/* Right Actions */}
         <div className="items-center gap-[10px] flex">
+          <Link to={"register"}>Register</Link>
           <div className="sm:flex hidden">{renderAuthSection()}</div>
           <div className="sm:flex hidden">{renderThemeSelector()}</div>
           <CiMenuFries
@@ -120,7 +122,9 @@ const Navbar: React.FC = () => {
       {/* Mobile Backdrop */}
       <div
         className={`fixed inset-0 bg-black bg-opacity-30 z-10 transition-opacity duration-300 ${
-          mobileSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          mobileSidebarOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         } md:hidden`}
         onClick={() => setMobileSidebarOpen(false)}
       />
@@ -142,6 +146,7 @@ const Navbar: React.FC = () => {
               {label}
             </NavLink>
           ))}
+          <Link to={"register"}>Register</Link>
           <li>{renderAuthSection()}</li>
           <li>{renderThemeSelector()}</li>
         </ul>
