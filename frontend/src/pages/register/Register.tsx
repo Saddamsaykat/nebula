@@ -125,7 +125,6 @@ const Register: React.FC<propsTypeRegister> = () => {
     const agree = formData.get("agree") as string;
     const country = selectedCountry?.name?.common as string;
     const city = selectedCity || "";
-    console.log({ jobType, jobCategoryData });
     if (!agree) {
       alert("You must agree to the terms and conditions");
       setLoading(false);

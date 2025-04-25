@@ -93,6 +93,8 @@ router.post("/", async (req, res) => {
       country,
       city,
       agree,
+      jobType,
+jobCategoryData
     } = req.body;
 
     // Validate required fields
@@ -239,8 +241,6 @@ router.patch("/", async (req, res) => {
     });
   }
 });
-
-
 
 
 // Delated
