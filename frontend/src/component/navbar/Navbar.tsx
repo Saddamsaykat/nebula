@@ -109,7 +109,7 @@ const Navbar: React.FC = () => {
         </ul>
         {/* Right Actions */}
         <div className="items-center gap-[10px] flex">
-          <Link to={"register"}>Register</Link>
+          <Link style={{ color: "#424242" }} to={"register"}>Register</Link>
           <div className="sm:flex hidden">{renderAuthSection()}</div>
           <div className="sm:flex hidden">{renderThemeSelector()}</div>
           <CiMenuFries

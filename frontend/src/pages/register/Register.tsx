@@ -1,130 +1,103 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+
 import bgImageRegistry from "../../assets/public/ZHSUSTFullView.png";
 import logo from "../../assets/FavIcon.jpg";
-import { Link } from "react-router-dom";
+
+import RegisterHeader from "../../component/registerComponent/RegisterHeader";
 import PersonalInformation from "../../component/registerComponent/PersonalInformation";
 import AdditionalInformation from "../../component/registerComponent/AdditionalInformation";
-import { propsTypeRegister } from "./propsType/propsTypeRegister";
-import useImageUpload from "../../hook/uploadImage";
-import { generateRandomId } from "../../hook/generateRandomId";
-import RegisterHeader from "../../component/registerComponent/RegisterHeader";
+
 import { useAddPostMutation } from "../../redux/slice/postData/postDataSlice";
 import { registerWithEmail } from "../../authActions/authActions";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
-import Swal from "sweetalert2";
+
+import useImageUpload from "../../hook/uploadImage";
+import { generateRandomId } from "../../hook/generateRandomId";
+import { propsTypeRegister } from "./propsType/propsTypeRegister";
+
+// Constants
+const batchOptions = Array.from({ length: 51 }, (_, i) =>
+  i === 0 ? "" : `${i}`
+);
+const departmentOptions = ["Department", "CSE"];
 
 const Register: React.FC<propsTypeRegister> = () => {
   const dispatch = useDispatch();
   const [addStudent] = useAddPostMutation();
-  const batchOptions = [
-    "",
-    " 1",
-    " 2",
-    " 3",
-    " 4 ",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30",
-    "31",
-    "32",
-    "33",
-    "34",
-    "35",
-    "36",
-    "37",
-    "38",
-    "39",
-    "40",
-    "41",
-    "42",
-    "43",
-    "44",
-    "45",
-    "46",
-    "47",
-    "48",
-    "49",
-    "50",
-  ];
-  const department = [
-    "Department",
-    "CSE",
-    // "EEE", "CE", "LAW", "BBA", "ENGLISH", "CHE"
-  ];
   const { uploadImage } = useImageUpload(logo);
-  // const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState(1);
+
   const [selectedCountry, setSelectedCountry] = useState<any | null>(null);
   const [selectedCity, setSelectedCity] = useState<{
     name: { common: string };
   } | null>(null);
+
+  // Step 1: Personal Info
+  const [formDataStep1, setFormDataStep1] = useState({
+    batch: "",
+    department: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    number: "",
+    gender: "",
+    presentAddress: "",
+    permanentAddress: "",
+    whatsapp: "",
+    facebook: "",
+    linkedin: "",
+    github: "",
+    aboutYourself: "",
+    image: null as File | null,
+    password: "",
+    confirmPassword: "",
+    agree: false,
+  });
+
+  console.log(formDataStep1);
+
+  // Step 2: Job & Academic Info
+  const [batch, setBatch] = useState("");
+  const [department, setDepartment] = useState("");
   const [jobCategory, setJobCategory] = useState("");
   const [jobCategoryType, setJobCategoryType] = useState("");
-
   const [customJobCategoryType, setCustomJobCategoryType] = useState("");
   const [customJobCategory, setCustomJobCategory] = useState("");
-
-  const finalJobCategoryType =
+  const finalJobType =
     jobCategoryType === "Other" ? customJobCategoryType : jobCategoryType;
   const finalJobCategory =
     jobCategory === "Other" ? customJobCategory : jobCategory;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const form = e.currentTarget as HTMLFormElement;
-    const formData = new FormData(form);
+    const {
+      batch,
+      department,
+      firstName,
+      lastName,
+      email,
+      number,
+      gender,
+      presentAddress,
+      permanentAddress,
+      whatsapp,
+      facebook,
+      linkedin,
+      github,
+      aboutYourself,
+      image,
+      password,
+      confirmPassword,
+      agree,
+    } = formDataStep1;
 
-    // Extract data
-    const firstName = formData.get("firstName") as string;
-    const lastName = formData.get("lastName") as string;
-    const email = formData.get("email") as string;
-    const batch = formData.get("batch") as string;
-    const department = formData.get("department") as string;
-    const password = formData.get("password") as string;
-    const confirmPassword = formData.get("confirmPassword") as string;
-    const imageFile = formData.get("image") as File;
-    const number = formData.get("number") as string;
-    const gender = formData.get("gender") as string;
-    const presentAddress = formData.get("presentAddress") as string;
-    const permanentAddress = formData.get("permanentAddress") as string;
-    const whatsUp = formData.get("whatsapp") as string;
-    const facebook = formData.get("facebook") as string;
-    const linkedin = formData.get("linkedin") as string;
-    const github = formData.get("github") as string;
-    const aboutYour = formData.get("aboutYour") as string;
-    const studentId = generateRandomId();
-    const jobType = finalJobCategoryType;
-    const jobCategoryData = finalJobCategory;
-    const agree = formData.get("agree") as string;
-    const country = selectedCountry?.name?.common as string;
-    const city = selectedCity || "";
     if (!agree) {
       alert("You must agree to the terms and conditions");
       setLoading(false);
@@ -138,8 +111,9 @@ const Register: React.FC<propsTypeRegister> = () => {
     }
 
     try {
-      const uploadedImageId = await uploadImage(imageFile);
+      const imageId = image ? await uploadImage(image) : "";
 
+      const studentId = generateRandomId();
       const studentInfo = {
         batch,
         department,
@@ -150,37 +124,39 @@ const Register: React.FC<propsTypeRegister> = () => {
         gender,
         presentAddress,
         permanentAddress,
-        whatsUp,
+        whatsUp: whatsapp,
         facebook,
         linkedin,
         github,
-        aboutYour,
-        image: uploadedImageId,
+        aboutYourself,
+        image: imageId,
         role: "student",
         studentId,
-        country,
-        city,
+        country: selectedCountry?.name?.common,
+        city: selectedCity,
         agree,
-        jobType,
-        jobCategoryData,
+        jobType: finalJobType,
+        jobCategoryData: finalJobCategory,
       };
-      await addStudent(studentInfo as any).unwrap();
-      // // @ts-expect-error - reason: whatever the issue is (e.g. "Type mismatch workaround")
-      await dispatch(registerWithEmail(email, password) as any);
 
-      console.log(studentInfo);
+      await addStudent(studentInfo as any).unwrap();
+      await dispatch(registerWithEmail(email, password) as any);
 
       Swal.fire({
         title: "Success!",
         text: "Register successful!",
         icon: "success",
         confirmButtonText: "OK",
-      }).then(() => {
-        // navigate("http://www.gmail.com");
-        <a href="http://www.gmail.com"></a>;
       });
 
-      form.reset();
+      // Reset form states
+      setFormDataStep1({
+        ...formDataStep1,
+        password: "",
+        confirmPassword: "",
+        agree: false,
+      });
+      setStep(1);
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -198,66 +174,92 @@ const Register: React.FC<propsTypeRegister> = () => {
       style={{
         backgroundImage: `url(${bgImageRegistry})`,
         backgroundSize: "cover",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         backgroundColor: "#000000",
         color: "#ffffff",
       }}
-      className="flex justify-center items-center h-full p-8"
+      className="flex justify-center items-center h-full min-h-screen p-8"
     >
-      <form onSubmit={handleSubmit}>
-        <div className="bg-white p-5 rounded-lg m-auto max-w-[1080px]">
-          <RegisterHeader />
-          <div className="">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-4">
-              <PersonalInformation
-                setSelectedCountry={setSelectedCountry}
-                selectedCountry={selectedCountry}
-                selectedCity={selectedCity}
-                setSelectedCity={setSelectedCity}
-              />
-              <AdditionalInformation
-                batchOptions={batchOptions}
-                department={department}
-                jobCategoryType={jobCategoryType}
-                setJobCategoryType={setJobCategoryType}
-                jobCategory={jobCategory}
-                setJobCategory={setJobCategory}
-                customJobCategoryType={customJobCategoryType}
-                setCustomJobCategoryType={setCustomJobCategoryType}
-                customJobCategory={customJobCategory}
-                setCustomJobCategory={setCustomJobCategory}
-              />
-            </div>
-            {/* Agreement */}
-            <div className="flex justify-center items-center mt-4">
-              <input
-                type="checkbox"
-                id="agree"
-                name="agree"
-                className="mr-2 text-black w-5 h-5"
-              />
-              <label htmlFor="agree" className="text-black text-lg">
-                I agree with the terms and conditions
-              </label>
-            </div>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-[720px] bg-white p-5 rounded-lg"
+      >
+        <RegisterHeader />
+
+        <div className="grid grid-cols-1 gap-4">
+          {step === 1 && (
+            <PersonalInformation
+              formData={formDataStep1}
+              setFormData={setFormDataStep1}
+              selectedCountry={selectedCountry}
+              setSelectedCountry={setSelectedCountry}
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
+            />
+          )}
+          {step === 2 && (
+            <AdditionalInformation
+              formData={formDataStep1}
+              setFormData={setFormDataStep1}
+              batchOptions={batchOptions}
+              departmentOptions={departmentOptions}
+              batch={batch}
+              setBatch={setBatch}
+              department={department}
+              setDepartment={setDepartment}
+              jobCategory={jobCategory}
+              setJobCategory={setJobCategory}
+              jobCategoryType={jobCategoryType}
+              setJobCategoryType={setJobCategoryType}
+              customJobCategoryType={customJobCategoryType}
+              setCustomJobCategoryType={setCustomJobCategoryType}
+              customJobCategory={customJobCategory}
+              setCustomJobCategory={setCustomJobCategory}
+              loading={loading}
+            />
+          )}
+        </div>
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-between mt-6">
+          {step > 1 && (
+            <button
+              type="button"
+              onClick={() => setStep((prev) => prev - 1)}
+              className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+            >
+              Previous
+            </button>
+          )}
+          {step < 2 && (
+            <button
+              type="button"
+              onClick={() => setStep((prev) => prev + 1)}
+              className="ml-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              Next
+            </button>
+          )}
+        </div>
+
+        {step === 2 && (
+          <div className="flex justify-center mt-6">
             <button
               type="submit"
               disabled={loading}
-              className={`mt-4 px-4 py-2 bg-amber-500 text-white rounded-md w-full`}
+              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
-              {loading ? <span>Loading...</span> : "Register"}
+              {loading ? "Registering..." : "Register"}
             </button>
           </div>
-          <div className="flex justify-center mt-4">
-            <Link
-              to={"/forgetPassword"}
-              className="text-amber-500 hover:text-amber-400"
-            >
-              Forgot Password?
-            </Link>
-          </div>
+        )}
+
+        <div className="flex justify-center mt-4">
+          <Link
+            to="/forgetPassword"
+            className="text-amber-500 hover:text-amber-400"
+          >
+            Forgot Password?
+          </Link>
         </div>
       </form>
     </div>

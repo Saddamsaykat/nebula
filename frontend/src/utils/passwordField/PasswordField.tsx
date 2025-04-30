@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getThemeStyles } from "../themeStyles/themeStyles";
 import { RootState } from "../../redux/store";
-
-// react icons
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
-interface inputPasswordProps {
+interface PasswordFieldProps {
   id: string;
   label: string;
   name: string;
   placeholder?: string;
   required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PasswordField: React.FC<inputPasswordProps> = ({ id, label, name, placeholder }) => {
+const PasswordField: React.FC<PasswordFieldProps> = ({
+  id,
+  label,
+  name,
+  placeholder,
+  value,
+  onChange,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
 
   const theme = useSelector((state: RootState) => state.theme.theme);
   const themeStyles = getThemeStyles(theme);
@@ -38,10 +44,7 @@ const PasswordField: React.FC<inputPasswordProps> = ({ id, label, name, placehol
 
   const strengthProgress = Math.floor(countTrueItems(signal));
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setPassword(value);
-
+  useEffect(() => {
     const hasUpperCase = /[A-Z]/.test(value);
     const hasLowerCase = /[a-z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
@@ -56,7 +59,7 @@ const PasswordField: React.FC<inputPasswordProps> = ({ id, label, name, placehol
       strong:
         hasUpperCase && hasLowerCase && hasNumber && hasSymbol && value.length >= 8,
     });
-  };
+  }, [value]);
 
   return (
     <div className={`w-full relative mt-2 ${themeStyles}`}>
@@ -69,9 +72,10 @@ const PasswordField: React.FC<inputPasswordProps> = ({ id, label, name, placehol
           id={id}
           name={name}
           type={showPassword ? "text" : "password"}
-          value={password}
-          onChange={handlePasswordChange}
+          value={value}
+          onChange={onChange}
           placeholder={placeholder}
+          required
           className="peer border-[#e5eaf2] border rounded-md outline-none pl-4 pr-12 py-3 w-full mt-1 focus:border-[#3B9DF8] transition-colors duration-300 text-black"
         />
 
@@ -95,7 +99,7 @@ const PasswordField: React.FC<inputPasswordProps> = ({ id, label, name, placehol
             className={`${
               strengthProgress > progress ? "bg-green-500" : "dark:bg-slate-700 bg-gray-200"
             } h-[9px] w-full rounded-md`}
-          ></div>
+          />
         ))}
       </div>
     </div>
