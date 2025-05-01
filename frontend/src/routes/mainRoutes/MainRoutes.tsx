@@ -71,6 +71,7 @@ const MainRoutes = createBrowserRouter([
               batch: "",
               department: "",
               agree: false,
+              jobDescription: "",
             }}
             setFormData={() => {}}
             selectedCountry=""
