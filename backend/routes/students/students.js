@@ -83,7 +83,7 @@ router.post("/", async (req, res) => {
       presentAddress,
       permanentAddress,
       whatsUp,
-      aboutYour,
+      aboutYourself,
       facebook,
       linkedin,
       github,
@@ -94,7 +94,7 @@ router.post("/", async (req, res) => {
       city,
       agree,
       jobType,
-jobCategoryData
+      jobCategoryData
     } = req.body;
 
     // Validate required fields
@@ -148,7 +148,7 @@ jobCategoryData
       facebook,
       linkedin,
       github,
-      aboutYour,
+      aboutYourself,
       image,
       role,
       studentId,
@@ -156,7 +156,9 @@ jobCategoryData
       city,
       agree,
       batch,
-      department
+      department,
+      jobType,
+      jobCategoryData
     };
 
     if (!batchData) {

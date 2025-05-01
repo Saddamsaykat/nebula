@@ -22,4 +22,7 @@ export interface postDataProps {
   gender?: string;
   newBatch?: string;
   newDepartment?: string;
+  aboutYourself: string;
+  jobType?: string;
+  jobCategoryData?: string;
 }

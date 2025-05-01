@@ -15,8 +15,8 @@ const AllStudentInfo = () => {
   // Flatten all students from all batches & departments
   const getAllStudents = () => {
     if (!data) return [];
-    return data.flatMap((batch: any) =>
-      Object.values(batch.department).flat()
+    return data?.flatMap((batch: any) =>
+      Object?.values(batch.department)?.flat()
     );
   };
 
@@ -37,7 +37,7 @@ const AllStudentInfo = () => {
           setPage((prev) => prev + 1);
         }
       },
-      { rootMargin: "100px" } // preload just before reaching
+      { rootMargin: "100px" }
     );
 
     const currentLoader = loader.current;
@@ -75,10 +75,10 @@ const AllStudentInfo = () => {
         >
           <div className="bg-white rounded-xl shadow-md p-4 hover:scale-[1.02] transition-all duration-300 border hover:border-indigo-400">
             <h2 className="font-bold text-lg mb-1 text-yellow-500">
-              {student.firstName} {student.lastName}
+              {student?.firstName} {student?.lastName}
             </h2>
-            <p className="text-sm text-gray-700 mb-1">📧 {student.email}</p>
-            <p className="text-sm text-gray-700 mb-1">📱 {student.number}</p>
+            <p className="text-sm text-gray-700 mb-1">📧 {student?.email}</p>
+            <p className="text-sm text-gray-700 mb-1">📱 {student?.number}</p>
             <p className="text-sm text-gray-700 mb-1">
               🏠 Present: {student.presentAddress}
             </p>
@@ -91,7 +91,7 @@ const AllStudentInfo = () => {
 
       {/* Loader */}
       <div ref={loader} className="h-12 mt-6 flex justify-center items-center">
-        {visibleStudents.length < allStudents.length ? (
+        {visibleStudents?.length < allStudents?.length ? (
           <span className="text-gray-500 animate-pulse">Loading more...</span>
         ) : (
           <span className="text-gray-400">No more students</span>

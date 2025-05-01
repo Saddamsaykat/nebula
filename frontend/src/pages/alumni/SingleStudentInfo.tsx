@@ -19,6 +19,7 @@ import { useProjectImage } from "../../hook/getImageUrl";
   };
   
   const SingleStudentInfo = ({ student }: StudentInfoProps) => {
+    console.log(student)
     const { imageUrl } = useProjectImage(student?.image);
   
     return (
@@ -27,7 +28,7 @@ import { useProjectImage } from "../../hook/getImageUrl";
           <div className="relative group">
             <img
               src={imageUrl || varsityLogo}
-              alt={`${student.firstName} ${student.lastName}`}
+              alt={`${student?.firstName} ${student?.lastName}`}
               className="w-40 h-40 rounded-full object-cover border-4 border-indigo-500 shadow-md transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute bottom-0 right-0 bg-indigo-500 p-2 rounded-full shadow-lg scale-0 group-hover:scale-100 transition duration-300">
@@ -37,13 +38,13 @@ import { useProjectImage } from "../../hook/getImageUrl";
   
           <div className="text-center md:text-left transition-all">
             <h1 className="text-3xl font-extrabold text-gray-800 capitalize group-hover:text-indigo-600 transition duration-300">
-              {student.firstName} {student.lastName}
+              {student?.firstName} {student?.lastName}
             </h1>
             <p className="text-gray-600 flex items-center justify-center md:justify-start gap-2 mt-2 transition hover:text-indigo-500">
-              <FaEnvelope /> {student.email || "N/A"}
+              <FaEnvelope /> {student?.email || "N/A"}
             </p>
             <p className="text-sm mt-1 text-gray-500 italic">
-              {student.department}, Batch {student.batch}
+              {student?.department}, Batch {student?.batch}
             </p>
           </div>
         </div>
@@ -53,50 +54,50 @@ import { useProjectImage } from "../../hook/getImageUrl";
             {
               icon: <FaPhoneAlt className="text-indigo-500" />,
               label: "Phone",
-              value: student.number,
+              value: student?.number,
             },
             {
               icon: <FaWhatsapp className="text-green-500" />,
               label: "WhatsApp",
-              value: student.whatsUp,
+              value: student?.whatsUp,
             },
             {
               icon: <FaMapMarkerAlt className="text-blue-500" />,
               label: "Present Address",
-              value: student.presentAddress,
+              value: student?.presentAddress,
             },
             {
               icon: <FaMapMarkerAlt className="text-pink-500" />,
               label: "Permanent Address",
-              value: student.permanentAddress,
+              value: student?.permanentAddress,
             },
             {
               icon: <FaMapMarkedAlt className="text-emerald-500" />,
               label: "Country",
-              value: student.country,
+              value: student?.country,
             },
             {
               icon: <FaMapMarkedAlt className="text-emerald-500" />,
               label: "City",
-              value: student.city,
+              value: student?.city || "N/A",
             },
           ].map((item, idx) => (
             <p
               key={idx}
               className="flex items-center gap-3 p-4 bg-gray-100 hover:bg-indigo-50 rounded-xl shadow-sm transition-all duration-300 hover:scale-[1.01]"
             >
-              {item.icon} <strong>{item.label}:</strong> {item.value || "N/A"}
+              {item?.icon} <strong>{item?.label}:</strong> {item?.value || "N/A"}
             </p>
           ))}
   
           <p className="flex items-center gap-3 col-span-1 sm:col-span-2 p-4 bg-yellow-100 hover:bg-yellow-200 rounded-xl shadow-sm transition-all hover:scale-[1.01]">
             <FaInfoCircle className="text-yellow-600" /> <strong>About:</strong>{" "}
-            {student.aboutYour || "N/A"}
+            {student?.aboutYourself || "N/A"}
           </p>
         </div>
   
         <div className="flex gap-4 mt-6 justify-center md:justify-start">
-          {student.facebook && (
+          {student?.facebook && (
             <a
               href={student.facebook}
               target="_blank"
@@ -108,7 +109,7 @@ import { useProjectImage } from "../../hook/getImageUrl";
           )}
           {student.linkedin && (
             <a
-              href={student.linkedin}
+              href={student?.linkedin}
               target="_blank"
               rel="noreferrer"
               className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 hover:scale-110 transition duration-300 shadow-md"
@@ -118,7 +119,7 @@ import { useProjectImage } from "../../hook/getImageUrl";
           )}
           {student.github && (
             <a
-              href={student.github}
+              href={student?.github}
               target="_blank"
               rel="noreferrer"
               className="bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 hover:scale-110 transition duration-300 shadow-md"

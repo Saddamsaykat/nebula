@@ -16,7 +16,7 @@ interface Student {
   facebook: string;
   linkedin: string;
   github: string;
-  aboutYour: string;
+  aboutYourself: string;
   studentId: string;
 }
 
@@ -45,7 +45,7 @@ console.log(student)
           <strong>Present Address:</strong> {student.presentAddress} <br />
           <strong>Permanent Address:</strong> {student.permanentAddress} <br />
           <strong>WhatsApp:</strong> {student.whatsUp} <br />
-          <strong>About:</strong> {student.aboutYour.length > 100 ? student.aboutYour.slice(0, 100) + '...' : student.aboutYour}
+          <strong>About:</strong> {student?.aboutYourself?.length > 100 ? student?.aboutYourself?.slice(0, 100) + '...' : student.aboutYourself}
         </p>
 
         <div className="mt-3 flex flex-wrap gap-2 text-sm">

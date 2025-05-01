@@ -28,7 +28,7 @@ const UpdateProfile = () => {
       facebook: formData.get("facebook")?.toString(),
       linkedin: formData.get("linkedin")?.toString(),
       github: formData.get("github")?.toString(),
-      aboutYour: formData.get("aboutYour")?.toString(),
+      aboutYourself: formData.get("aboutYour")?.toString(),
       country: formData.get("country")?.toString(),
       city: formData.get("city")?.toString(),
       gender: formData.get("gender")?.toString() ?? "",
@@ -236,7 +236,7 @@ const UpdateProfile = () => {
             </label>
             <textarea
               name="aboutYour"
-              defaultValue={student.aboutYour}
+              defaultValue={student.aboutYourself}
               placeholder="Tell us about yourself..."
               rows={5}
               className="input resize-none w-full"
