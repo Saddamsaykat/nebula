@@ -16,8 +16,9 @@ interface inputFieldPropstypes {
 const InputField: React.FC<inputFieldPropstypes> = ({
   id,
   label,
-  type = "text",
+  type ="text",
   dynamicClassName,
+  required = false,
   name,
   value, onChange,
   ...props
@@ -25,7 +26,7 @@ const InputField: React.FC<inputFieldPropstypes> = ({
   return (
     <div className="mt-2">
       <label htmlFor={id} className="text-sm text-black">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <input
         id={id}

@@ -116,6 +116,20 @@ export const checkAuthState = (): any => async (dispatch: AppDispatch) => {
   });
 };
 
+// re send email verification
+export const sendVerificationEmail = (email: string) => async () => {
+  try {
+    if (auth.currentUser && auth.currentUser.email === email) {
+      await sendEmailVerification(auth.currentUser);
+      alert("Verification email sent successfully.");
+    } else {
+      throw new Error("No matching user is currently signed in.");
+    }
+  } catch (error) {
+    console.error("Verification email failed:", error);
+    alert("Verification email failed. Please try again.");
+  }
+};
 
 export const deleteAccount = (_userEmail: string): AuthAction => async (dispatch: any) => {
   const user = auth.currentUser;

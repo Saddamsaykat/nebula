@@ -20,6 +20,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
   name,
   placeholder,
   value,
+  required,
   onChange,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +65,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({
   return (
     <div className={`w-full relative mt-2 ${themeStyles}`}>
       <label htmlFor={id} className="text-sm text-black">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
 
       <div className="relative w-full">

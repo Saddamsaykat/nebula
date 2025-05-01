@@ -19,6 +19,9 @@ const City = ({
   if (isError) return <p>Error loading countries.</p>;
   return (
     <div className="relative w-full">
+      <label htmlFor="city" className="text-black">
+        City
+      </label>
       <button
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}

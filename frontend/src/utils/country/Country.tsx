@@ -17,6 +17,9 @@ const Country = ({
 
   return (
     <div className="relative w-full">
+      <label htmlFor="country" className="text-black">
+        Country
+      </label>
       <button
         type="button"
         onClick={() => setShowDropdown(!showDropdown)}
@@ -50,11 +53,7 @@ const Country = ({
                 }}
                 className="flex items-center gap-2 p-2 hover:bg-white hover:text-black cursor-pointer"
               >
-                <img
-                  src={country?.flags?.png}
-                  alt="flag"
-                  className="w-6 h-4"
-                />
+                <img src={country?.flags?.png} alt="flag" className="w-6 h-4" />
                 <span>{country?.name?.common}</span>
               </li>
             ))}

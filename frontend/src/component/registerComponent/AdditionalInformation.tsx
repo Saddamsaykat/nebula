@@ -54,7 +54,7 @@ const AdditionalInformation = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2 mt-4">
         <div>
           <label htmlFor="image" className="text-sm text-black">
-            Image
+            Image <span className="text-red-500">*</span>
           </label>
           <input
             id="image"

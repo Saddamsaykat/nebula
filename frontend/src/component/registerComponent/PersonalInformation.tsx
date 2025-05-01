@@ -43,6 +43,7 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
           id="firstName"
           label="First Name"
           name="firstName"
+          required
           placeholder="First Name"
           value={formData.firstName}
           onChange={handleChange}
@@ -72,6 +73,7 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
           label="Contact Number"
           name="number"
           type="number"
+          required
           placeholder="Contact Number"
           value={formData.number}
           onChange={handleChange}

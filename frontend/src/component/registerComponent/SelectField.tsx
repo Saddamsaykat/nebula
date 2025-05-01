@@ -18,7 +18,7 @@ interface SelectFieldProps {
     return (
       <div>
         <label htmlFor={name} className="text-black">
-          {label}
+          {label} <span className="text-red-500">*</span>
         </label>
         <select
           id={name}

@@ -15,6 +15,7 @@ import Welcome from "../../component/dashboard/Welcome";
 import About from "../../component/about/About";
 import AlumniFullView from "../../pages/alumni/AlumniFullView";
 import UpdateImage from "../../component/dashboard/updateImage/UpdateImage";
+import EmailVerification from "../../pages/emailVerification/EmailVerification";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -84,8 +85,8 @@ const MainRoutes = createBrowserRouter([
         ),
       },
       {
-        path: "events",
-        element: <div>jfdsal</div>,
+        path: "/emailVerification",
+        element: <EmailVerification/>,
       },
       {
         path: "gallery",

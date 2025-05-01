@@ -122,6 +122,11 @@ const Login: React.FC = () => {
             Register
           </Link>
         </p>
+        <p>
+          <Link to={"/emailVerification"} className="font-medium hover:underline">
+            Email Verification
+          </Link>
+        </p>
       </form>
     </div>
   );
