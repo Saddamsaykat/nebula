@@ -86,7 +86,7 @@ const SocialInformation: React.FC<SocialInformationProps> = ({
         label="About Yourself"
         type="text"
         placeholder=" Software Engineer passionate about AI and Web Development."
-        value={formData.aboutYour || ""}
+        value={formData.aboutYourself || ""}
         onChange={handleInputChange}
       />
       <div>

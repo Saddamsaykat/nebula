@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import bgImageRegistry from "../../assets/public/ZHSUSTFullView.png";
@@ -24,6 +24,7 @@ const departmentOptions = ["CSE"];
 
 const Register: React.FC<propsTypeRegister> = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [addStudent] = useAddPostMutation();
   const { uploadImage } = useImageUpload(logo);
   const [loading, setLoading] = useState(false);
@@ -57,6 +58,7 @@ const Register: React.FC<propsTypeRegister> = () => {
     agree: false,
     jobDescription: "",
   });
+  console.log(formDataStep1);
   // Step 2: Job & Academic Info
   const [batch, setBatch] = useState("");
   const [department, setDepartment] = useState("");
@@ -124,8 +126,8 @@ const Register: React.FC<propsTypeRegister> = () => {
         whatsUp: whatsapp,
         facebook,
         linkedin,
-        github,
         aboutYourself,
+        github,
         image: imageId,
         role: "student",
         studentId,
@@ -146,7 +148,7 @@ const Register: React.FC<propsTypeRegister> = () => {
         icon: "success",
         confirmButtonText: "OK",
       });
-
+      navigate("/");
       // Reset form states
       setFormDataStep1({
         ...formDataStep1,
