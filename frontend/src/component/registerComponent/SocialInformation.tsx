@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import InputField from "../../utils/inputField/InputField";
-import TextAreaField from "../../utils/textAreaField/TextAreaField";
+// import TextAreaField from "../../utils/textAreaField/TextAreaField";
 
 interface SocialInformationProps {
   setFormData: React.Dispatch<React.SetStateAction<any>>;
@@ -31,7 +31,7 @@ const SocialInformation: React.FC<SocialInformationProps> = ({
   };
   return (
     <div className="p-4 rounded-md shadow-lg border-2 border-gray-300 dark:bg-gray-50 mt-4">
-        <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center">
         <h1 className="text-xl text-black">
           Social Information
           <span>
@@ -79,16 +79,21 @@ const SocialInformation: React.FC<SocialInformationProps> = ({
         />
       </div>
 
-      {/* About Yourself */}
-      <TextAreaField
-        id="about"
-        name="aboutYour"
-        label="About Yourself"
-        type="text"
-        placeholder=" Software Engineer passionate about AI and Web Development."
-        value={formData.aboutYourself || ""}
-        onChange={handleInputChange}
-      />
+      <div className="mt-4">
+        <label htmlFor="aboutYourself" className="text-black">
+          About Yourself
+          <input
+            type="text"
+            id="aboutYourself"
+            name="aboutYourself"
+            className="border border-amber-400 text-black w-full px-3 py-2 rounded-md focus:outline-none focus:ring-1 focus:ring-amber-400"
+            onChange={handleInputChange}
+            value={formData.aboutYourself || ""}
+            placeholder=" Software Engineer passionate about AI and Web Development."
+          />
+        </label>
+      </div>
+
       <div>
         <div className="flex justify-center items-center mt-4">
           <input

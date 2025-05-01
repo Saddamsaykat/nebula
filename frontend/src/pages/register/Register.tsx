@@ -137,8 +137,8 @@ const Register: React.FC<propsTypeRegister> = () => {
         jobCategoryData: finalJobCategory,
         jobDescription,
       };
-      await addStudent(studentInfo as any).unwrap();
       await dispatch(registerWithEmail(email, password) as any);
+      await addStudent(studentInfo as any).unwrap();
 
       Swal.fire({
         title: "Success!",
