@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useRef } from "react";
 import { useProjectImage } from "../../../hook/getImageUrl";
 import useUserDetails from "../../../hook/useUserDetails";
@@ -38,7 +37,7 @@ const UpdateImage = () => {
     formData.append("image", selectedFile);
 
     try {
-      const res = await updateProfileImage({
+      await updateProfileImage({
         id: projectId,
         formData,
       }).unwrap();
