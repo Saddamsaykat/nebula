@@ -14,6 +14,7 @@ import Settings from "../../component/dashboard/settings/Settings";
 import Welcome from "../../component/dashboard/Welcome";
 import About from "../../component/about/About";
 import AlumniFullView from "../../pages/alumni/AlumniFullView";
+import UpdateImage from "../../component/dashboard/updateImage/UpdateImage";
 
 const MainRoutes = createBrowserRouter([
   {
@@ -142,6 +143,10 @@ const MainRoutes = createBrowserRouter([
               </PrivateRoute>
             ),
           },
+          {
+            path: '/dashboard/updateImage',
+            element: <UpdateImage />
+          }
         ],
       },
     ],

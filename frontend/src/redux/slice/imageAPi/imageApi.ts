@@ -39,6 +39,22 @@ export const imageApi = createApi({
       providesTags: ["Image"],
     }),
     
+    updateProfileImage: builder.mutation<any, { id: string; formData: FormData }>({
+      query: ({ id, formData }) => ({
+        url: `/upload-image/${id}`,
+        method: "PUT",
+        body: formData,
+        headers: {
+          Authorization: (() => {
+            const token = localStorage.getItem("Token");
+            return token ? `Bearer ${token}` : "";
+          })(),
+        },
+      }),
+      invalidatesTags: ["Image"],
+    }),
+    
+    
 
     getAllImage: builder.query<string[] | null, void>({
       query: () => {
@@ -86,4 +102,5 @@ export const {
   useGetProjectImageQuery,
   useDeleteImageMutation,
   useGetAllImageQuery,
+  useUpdateProfileImageMutation,
 } = imageApi;

@@ -89,6 +89,42 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
+// Update Image by put
+router.put("/:id", upload.single("image"), async (req, res) => {
+  try {
+    const imageId = req.params.id;
+    const file = req.file;
+
+    if (!ObjectId.isValid(imageId)) {
+      return res.status(400).json({ success: false, message: "Invalid ID format" });
+    }
+
+    if (!file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+
+    const result = await studentsCollection.updateOne(
+      { _id: new ObjectId(imageId) },
+      {
+        $set: {
+          name: file.originalname,
+          data: file.buffer,
+          contentType: file.mimetype,
+        },
+      }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ success: false, message: "Image not found" });
+    }
+
+    res.status(200).json({ success: true, message: "Image updated successfully!" });
+  } catch (error) {
+    console.error("Error updating image:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 
 // Delated Image
 router.delete("/:id", async (req, res) => {

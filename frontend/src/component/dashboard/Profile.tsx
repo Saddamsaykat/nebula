@@ -11,6 +11,7 @@ const Profile = () => {
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
   const { userInfo, userEmail } = useUserDetails();
+  console.log(userInfo)
   const projectId = userInfo?.student?.image;
   const { imageUrl, isLoading } = useProjectImage(projectId);
   const handleExport = async () => {

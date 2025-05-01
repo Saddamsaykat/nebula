@@ -12,6 +12,12 @@ const navItems = [
     roles: ["admin", "student", "superAdmin"],
   },
   {
+    label: "Update Image",
+    to: "/dashboard/updateImage",
+    icon: MdOutlineSpaceDashboard,
+    roles: ["admin", "student", "superAdmin"],
+  },
+  {
     label: "Update Profile",
     to: "/dashboard/update-profile",
     icon: FiSearch,

@@ -17,16 +17,18 @@ const Home = () => {
     location.pathname === "/dashboard/profile" ||
     location.pathname === "/dashboard/update-profile" ||
     location.pathname === "/forget-password" ||
-    location.pathname === "/dashboard/settings";
-    
+    location.pathname === "/dashboard/settings" ||
+    location.pathname === "/dashboard/updateImage" ||
+    location.pathname === "/dashboard/chat-history";
+
   const theme = useSelector((state: any) => state.theme.theme);
   const styles = getThemeStyles(theme);
 
   return (
     <div style={styles}>
       {!hideNavbarFooter && (
-        <p className="text-center text-3xl">
-          Welcome to the Alumni Association of ZHSUST University!{" "}
+        <p className="text-center text-sm md:text-base  lg:text-lg xl:text-2xl 2xl:text-3xl mt-4 mb-4">
+          Welcome to the Alumni Association of CSE Family{" "}
           <span className="text-lime-500 ">আপনাকে স্বাগতম</span>{" "}
         </p>
       )}

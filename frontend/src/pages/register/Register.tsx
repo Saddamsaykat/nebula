@@ -111,7 +111,6 @@ const Register: React.FC<propsTypeRegister> = () => {
 
     try {
       const imageId = image ? await uploadImage(image) : "";
-
       const studentId = generateRandomId();
       const studentInfo = {
         batch,
@@ -138,7 +137,6 @@ const Register: React.FC<propsTypeRegister> = () => {
         jobCategoryData: finalJobCategory,
         jobDescription,
       };
-
       await addStudent(studentInfo as any).unwrap();
       await dispatch(registerWithEmail(email, password) as any);
 
