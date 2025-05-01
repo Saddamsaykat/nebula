@@ -15,9 +15,12 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
   formData,
   setFormData,
 }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, type } = e.target as HTMLInputElement;
-    const checked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+    const checked =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
     setFormData((prev: any) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -26,6 +29,15 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
 
   return (
     <div className="p-4 max-w-[720px] rounded-md shadow-lg border-2 border-gray-300 dark:bg-gray-50 mt-4">
+      <div className="flex justify-center items-center">
+        <h1 className="text-xl text-black">
+          Personal Information
+          <span>
+            {" "}
+            <hr className="border border-black w-46 mt-2 mb-2" />
+          </span>
+        </h1>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <InputField
           id="firstName"
@@ -110,7 +122,9 @@ const PersonalInformation: React.FC<propsTypeRegister> = ({
         />
         <City
           selectedCity={selectedCity?.name.common || null}
-          setSelectedCity={(city: string) => setSelectedCity({ name: { common: city } })}
+          setSelectedCity={(city: string) =>
+            setSelectedCity({ name: { common: city } })
+          }
         />
       </div>
     </div>

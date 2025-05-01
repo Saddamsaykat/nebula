@@ -19,6 +19,7 @@ const MainRoutes = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <div className="text-red-600 h-screen flex items-center justify-center">Not Found............</div>,
     children: [
       {
         path: "/",

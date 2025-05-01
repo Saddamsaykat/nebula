@@ -4,26 +4,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-
 import bgImageRegistry from "../../assets/public/ZHSUSTFullView.png";
 import logo from "../../assets/FavIcon.jpg";
-
 import RegisterHeader from "../../component/registerComponent/RegisterHeader";
 import PersonalInformation from "../../component/registerComponent/PersonalInformation";
 import AdditionalInformation from "../../component/registerComponent/AdditionalInformation";
-
 import { useAddPostMutation } from "../../redux/slice/postData/postDataSlice";
 import { registerWithEmail } from "../../authActions/authActions";
-
 import useImageUpload from "../../hook/uploadImage";
 import { generateRandomId } from "../../hook/generateRandomId";
 import { propsTypeRegister } from "./propsType/propsTypeRegister";
+import SocialInformation from "../../component/registerComponent/SocialInformation";
 
 // Constants
-const batchOptions = Array.from({ length: 51 }, (_, i) =>
+const batchOptions = Array.from({ length: 32 }, (_, i) =>
   i === 0 ? "" : `${i}`
 );
-const departmentOptions = ["Department", "CSE"];
+const departmentOptions = ["CSE"];
 
 const Register: React.FC<propsTypeRegister> = () => {
   const dispatch = useDispatch();
@@ -41,7 +38,7 @@ const Register: React.FC<propsTypeRegister> = () => {
   // Step 1: Personal Info
   const [formDataStep1, setFormDataStep1] = useState({
     batch: "",
-    department: "",
+    department: "CSE",
     firstName: "",
     lastName: "",
     email: "",
@@ -60,7 +57,6 @@ const Register: React.FC<propsTypeRegister> = () => {
     agree: false,
     jobDescription: "",
   });
-console.log(formDataStep1.jobDescription)
   // Step 2: Job & Academic Info
   const [batch, setBatch] = useState("");
   const [department, setDepartment] = useState("");
@@ -219,42 +215,48 @@ console.log(formDataStep1.jobDescription)
               loading={loading}
             />
           )}
+
+          {step === 3 && (
+            <SocialInformation
+              formData={formDataStep1}
+              setFormData={setFormDataStep1}
+            />
+          )}
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-between mt-6 gap-4">
           {step > 1 && (
             <button
               type="button"
               onClick={() => setStep((prev) => prev - 1)}
-              className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+              className="w-full px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
             >
               Previous
             </button>
           )}
-          {step < 2 && (
+          {step < 3 && (
             <button
               type="button"
               onClick={() => setStep((prev) => prev + 1)}
-              className="ml-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
               Next
             </button>
           )}
         </div>
-
-        {step === 2 && (
+        {step === 3 && (
           <div className="flex justify-center mt-6">
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 w-full"
             >
               {loading ? "Registering..." : "Register"}
             </button>
           </div>
         )}
-
+        <hr className="border-t-2 border-gray-300 mt-6" />
         <div className="flex justify-center mt-4">
           <Link
             to="/forgetPassword"

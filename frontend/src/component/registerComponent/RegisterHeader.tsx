@@ -13,21 +13,11 @@ const RegisterHeader = () => {
           />
         </Link>
         <h1 className="text-4xl font-semibold text-black">
-          Welcome to ZHSUST Alumni!
+          Welcome to CSE Alumni!
         </h1>
         <p className="text-lg text-black">Register your account</p>
         <hr className="border border-black mb-2 mt-2" />
       </div>
-
-      {/* <div className="flex justify-center items-center">
-        <h1 className="text-xl text-black">
-          Personal Information
-          <span>
-            {" "}
-            <hr className="border border-black w-46 mt-2 mb-2" />
-          </span>
-        </h1>
-      </div> */}
     </div>
   );
 };
