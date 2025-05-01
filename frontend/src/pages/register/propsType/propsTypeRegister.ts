@@ -17,6 +17,8 @@ export interface propsTypeRegister {
     password: string;
     confirmPassword: string;
     agree: boolean;
+    batch: string;
+    department: string;
   };
   setFormData: React.Dispatch<
   React.SetStateAction<{

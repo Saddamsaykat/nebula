@@ -52,9 +52,30 @@ const MainRoutes = createBrowserRouter([
         path: "/register",
         element: (
           <Register
+            formData={{
+              firstName: "",
+              lastName: "",
+              email: "",
+              number: "",
+              gender: "",
+              presentAddress: "",
+              permanentAddress: "",
+              whatsapp: "",
+              facebook: "",
+              linkedin: "",
+              github: "",
+              aboutYourself: "",
+              image: null,
+              password: "",
+              confirmPassword: "",
+              batch: "",
+              department: "",
+              agree: false,
+            }}
+            setFormData={() => {}}
+            selectedCountry=""
             setSelectedCountry={() => {}}
-            selectedCountry={""}
-            selectedCity={""}
+            selectedCity={{ name: { common: "" } }}
             setSelectedCity={() => {}}
           />
         ),
