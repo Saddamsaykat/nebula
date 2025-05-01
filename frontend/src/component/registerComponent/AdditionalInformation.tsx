@@ -146,6 +146,15 @@ const AdditionalInformation = ({
           setCustomJobCategory={setCustomJobCategory}
         />
       </div>
+      <div>
+        <TextAreaField
+          id="jobDescription"
+          name="jobDescription"
+          label="Job Description"
+          value={formData.jobDescription || ""}
+          onChange={handleInputChange}
+        />
+      </div>
 
       {/* Social Media */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-2">

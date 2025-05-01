@@ -19,6 +19,7 @@ export interface propsTypeRegister {
     agree: boolean;
     batch: string;
     department: string;
+    jobDescription: string;
   };
   setFormData: React.Dispatch<
   React.SetStateAction<{
@@ -40,6 +41,7 @@ export interface propsTypeRegister {
     password: string;
     confirmPassword: string;
     agree: boolean;
+    jobDescription: string;
   }>
 >;
   selectedCountry: any | null;

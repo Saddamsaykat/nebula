@@ -38,7 +38,6 @@ const Register: React.FC<propsTypeRegister> = () => {
   } | null>(null);
 
   const cityName = selectedCity?.name?.common;
-console.log(cityName)
   // Step 1: Personal Info
   const [formDataStep1, setFormDataStep1] = useState({
     batch: "",
@@ -59,8 +58,9 @@ console.log(cityName)
     password: "",
     confirmPassword: "",
     agree: false,
+    jobDescription: "",
   });
-
+console.log(formDataStep1.jobDescription)
   // Step 2: Job & Academic Info
   const [batch, setBatch] = useState("");
   const [department, setDepartment] = useState("");
@@ -96,6 +96,7 @@ console.log(cityName)
       password,
       confirmPassword,
       agree,
+      jobDescription,
     } = formDataStep1;
 
     if (!agree) {
@@ -137,6 +138,7 @@ console.log(cityName)
         agree,
         jobType: finalJobType,
         jobCategoryData: finalJobCategory,
+        jobDescription,
       };
 
       await addStudent(studentInfo as any).unwrap();

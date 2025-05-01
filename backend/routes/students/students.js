@@ -94,7 +94,8 @@ router.post("/", async (req, res) => {
       city,
       agree,
       jobType,
-      jobCategoryData
+      jobCategoryData,
+      jobDescription
     } = req.body;
 
     // Validate required fields
@@ -158,7 +159,8 @@ router.post("/", async (req, res) => {
       batch,
       department,
       jobType,
-      jobCategoryData
+      jobCategoryData,
+      jobDescription
     };
 
     if (!batchData) {
